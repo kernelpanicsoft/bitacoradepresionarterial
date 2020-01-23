@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Bitacora de presión arterial</string>
+    <string name="nombre">Nombre:</string>
+    <string name="apellidos">Apellidos</string>
+    <string name="seleccionar_fecha_de_nacimiento">Fecha de nacimiento</string>
+    <string name="masculino">Masculino</string>
+    <string name="femenino">Femenino</string>
+    <string name="genero">Genero:</string>
+    <string name="registrar_usuario">Registrar usuario</string>
+    <string name="usuarios_registrados">Usuarios registrados</string>
+    <string name="configuracion">configuración</string>
+    <string name="exportar_reportes">Exportar reportes</string>
+    <string name="mi_perfil">Mi perfil</string>
+    <string name="cambiar_usuario">Cambiar usuario</string>
+
+    <array name="generos">
+        <item>Masculino</item>
+        <item>Femenino</item>
+    </array>
+
+</resources>
