@@ -38,7 +38,17 @@ class MainActivity : AppCompatActivity() {
             drawer_layout.closeDrawers()
 
             when (menuItem.itemId) {
-
+                R.id.nav_account ->{
+                    val navProfile = Intent(this, UserDetailsActivity::class.java)
+                    startActivity(navProfile)
+                }
+                R.id.nav_change_user ->{
+                    val navChangeUser = Intent(this, UserListActivity::class.java)
+                    startActivity(navChangeUser)
+                }
+                R.id.nav_settings ->{
+                    
+                }
 
             }
             true
@@ -95,9 +105,6 @@ class MainActivity : AppCompatActivity() {
 
             }
 
-            R.id.itemSettings ->{
-
-            }
         }
         return super.onOptionsItemSelected(item)
     }

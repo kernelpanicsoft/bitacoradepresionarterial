@@ -12,6 +12,8 @@
     <string name="exportar_reportes">Exportar reportes</string>
     <string name="mi_perfil">Mi perfil</string>
     <string name="cambiar_usuario">Cambiar usuario</string>
+    <string name="detalles_de_perfil">Detalles de perfil</string>
+    <string name="editar">Editar</string>
 
     <array name="generos">
         <item>Masculino</item>
