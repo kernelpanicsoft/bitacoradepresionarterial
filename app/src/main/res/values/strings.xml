@@ -26,6 +26,8 @@
     <string name="fecha">Fecha:</string>
     <string name="hora">Hora:</string>
     <string name="nota">Nota:</string>
+    <string name="mmhg">mmHg</string>
+    <string name="ppm">ppm</string>
 
     <array name="generos">
         <item>Masculino</item>

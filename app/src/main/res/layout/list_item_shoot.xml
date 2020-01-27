@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/ValorSistolicaTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="118"
+        android:textColor="@android:color/black"
+        android:textSize="35sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/separadorTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="/"
+        android:textColor="@android:color/black"
+        android:textSize="35sp"
+        app:layout_constraintBottom_toBottomOf="@+id/ValorSistolicaTV"
+        app:layout_constraintStart_toEndOf="@+id/ValorSistolicaTV"
+        app:layout_constraintTop_toTopOf="@+id/ValorSistolicaTV" />
+
+    <TextView
+        android:id="@+id/valorDiastolicaTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="76"
+        android:textSize="35sp"
+        app:layout_constraintBottom_toBottomOf="@+id/separadorTV"
+        app:layout_constraintStart_toEndOf="@+id/separadorTV"
+        app:layout_constraintTop_toTopOf="@+id/separadorTV"
+        android:textColor="@android:color/black"/>
+
+    <TextView
+        android:id="@+id/mmHgTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/mmhg"
+        android:textColor="@android:color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/valorDiastolicaTV"
+        app:layout_constraintStart_toEndOf="@+id/valorDiastolicaTV"
+        app:layout_constraintTop_toTopOf="@+id/valorDiastolicaTV"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/valorPulsoTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:text="76"
+        android:textColor="@android:color/black"
+        android:textSize="35sp"
+        app:layout_constraintBottom_toBottomOf="@+id/valorDiastolicaTV"
+        app:layout_constraintEnd_toStartOf="@+id/ppmTV"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/mmHgTV"
+        app:layout_constraintTop_toTopOf="@+id/valorDiastolicaTV" />
+
+    <TextView
+        android:id="@+id/ppmTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/ppm"
+        android:textColor="@android:color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/valorPulsoTV"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/valorPulsoTV"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/valoracionTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Normal"
+        android:textColor="@android:color/holo_green_dark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/ValorSistolicaTV"
+        app:layout_constraintTop_toBottomOf="@+id/separadorTV" />
+
+    <TextView
+        android:id="@+id/fechaHoraTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="7:10pm 26/10/2020"
+        android:textColor="@android:color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/valorPulsoTV" />
+</androidx.constraintlayout.widget.ConstraintLayout>
