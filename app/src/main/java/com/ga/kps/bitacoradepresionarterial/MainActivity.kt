@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
+import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
@@ -33,6 +34,30 @@ class MainActivity : AppCompatActivity() {
 
         setupViewPager(ViewPagerPrincipal)
         TabLayoutPrincipal.setupWithViewPager(ViewPagerPrincipal)
+
+        ViewPagerPrincipal.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
+            override fun onPageScrollStateChanged(state: Int) {
+
+            }
+
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+            }
+
+            override fun onPageSelected(position: Int) {
+                if(position == 0){
+                    addShotFAB.show()
+                }else{
+                    addShotFAB.hide()
+                }
+
+
+            }
+        })
+
+        addShotFAB.setOnClickListener {
+            val nav = Intent(this, AddShotActivity::class.java)
+            startActivity(nav)
+        }
 
         nav_view.setNavigationItemSelectedListener { menuItem ->
             drawer_layout.closeDrawers()

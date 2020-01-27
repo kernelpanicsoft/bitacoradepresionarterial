@@ -17,4 +17,10 @@ interface UsuarioDAO {
 
     @Query("SELECT * FROM Usuario")
     fun getAllUsuarios() : LiveData<List<Usuario>>
+
+    @Query("SELECT * FROM Usuario WHERE Usuario.id = :id")
+    fun getUsuario( id : Int?) : LiveData<Usuario>
+
+    @Query("SELECT max(id) FROM Usuario")
+    fun getLastUserID() : LiveData<Long>
 }

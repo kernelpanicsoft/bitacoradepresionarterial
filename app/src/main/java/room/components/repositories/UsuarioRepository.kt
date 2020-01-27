@@ -31,6 +31,15 @@ class UsuarioRepository (application: Application){
         return usuarioDao.getAllUsuarios()
     }
 
+    fun getUsuario( id : Int) : LiveData<Usuario>{
+        return usuarioDao.getUsuario(id)
+    }
+
+    fun getLastInsertedUserID() : LiveData<Long>{
+        return usuarioDao.getLastUserID()
+    }
+
+
 
     private class InsertUsuarioAsyncTask constructor(private val usuarioDAO: UsuarioDAO) : AsyncTask<Usuario, Void, Void>(){
         override fun doInBackground(vararg params: Usuario): Void? {

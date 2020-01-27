@@ -14,10 +14,50 @@
     <string name="cambiar_usuario">Cambiar usuario</string>
     <string name="detalles_de_perfil">Detalles de perfil</string>
     <string name="editar">Editar</string>
+    <string name="usuario_registrado_correctamente">Usuario registrado correctamente</string>
+    <string name="usuario_seleccionado_correctamente">Usuario seleccionado correctamente</string>
+    <string name="anadir_toma">Añadir toma</string>
+    <string name="sistolica">Sistólica</string>
+    <string name="diastolica">Diastólica:</string>
+    <string name="pulso">Pulso:</string>
+    <string name="extremidad">Extremidad:</string>
+    <string name="posicion">Posición:</string>
+    <string name="momento_dia">Momento del día:</string>
+    <string name="fecha">Fecha:</string>
+    <string name="hora">Hora:</string>
+    <string name="nota">Nota:</string>
 
     <array name="generos">
         <item>Masculino</item>
         <item>Femenino</item>
     </array>
+
+    <string-array name="extremidades">
+        <item>Brazo izquierdo</item>
+        <item>Brazo derecho</item>
+        <item>Muñeca izquierda</item>
+        <item>Muñeca derecha</item>
+        <item>Tobillo izquierdo</item>
+        <item>Tobillo derecho</item>
+        <item>Muslo izquierdo</item>
+        <item>Muslo derecho</item>
+    </string-array>
+
+    <string-array name="posiciones">
+        <item>Sentado</item>
+        <item>Acostado</item>
+        <item>Recostado</item>
+        <item>De pie</item>
+    </string-array>
+
+    <string-array name="momento">
+        <item>Después de despertar</item>
+        <item>Antes de dormir</item>
+        <item>Antes de medicamento</item>
+        <item>Después de medicamento</item>
+        <item>Antes de comer</item>
+        <item>Después de comer</item>
+        <item>Aleatorió</item>
+    </string-array>
 
 </resources>

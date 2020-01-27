@@ -24,4 +24,13 @@ class UsuarioViewModel (application: Application) : AndroidViewModel(application
     fun getAllUsuarios() : LiveData<List<Usuario>>{
         return repository.getAllUsuarios()
     }
+
+    fun getUsuario(id : Int) : LiveData<Usuario>{
+        return repository.getUsuario(id)
+    }
+
+    fun getLastUserID() : LiveData<Long>{
+        return repository.getLastInsertedUserID()
+    }
+
 }

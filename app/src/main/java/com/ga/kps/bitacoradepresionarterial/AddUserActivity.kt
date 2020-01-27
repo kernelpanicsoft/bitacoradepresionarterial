@@ -1,5 +1,6 @@
 package com.ga.kps.bitacoradepresionarterial
 
+import android.app.Activity
 import android.app.DatePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -38,7 +39,7 @@ class AddUserActivity : AppCompatActivity() {
                 calendario.set(Calendar.DAY_OF_MONTH, dayOfMonth)
                 //Toast.makeText(this@AnadirCitaMedicaActivity,"Fecha seleccionada: " + sdf.format(calendario.time), Toast.LENGTH_SHORT).show()
 
-
+                fechaNacimientoBT.text =  sdf.format(calendario.time)
             }, calendario.get(Calendar.YEAR),calendario.get(Calendar.MONTH), calendario.get(Calendar.DAY_OF_MONTH))
             datePickerFragment.show()
         }
@@ -50,9 +51,7 @@ class AddUserActivity : AppCompatActivity() {
             newUser.apellidos = apellidosET.text.toString()
             newUser.fecha_nacimiento = fechaNacimientoBT.text.toString()
 
-            val selectedRadioButton  = findViewById<RadioButton>(generoRG.checkedRadioButtonId)
-
-            when(selectedRadioButton){
+            when(findViewById<RadioButton>(generoRG.checkedRadioButtonId)){
                 masculinoRB ->{
                     newUser.genero = Genero.MASCULINO
                 }
@@ -78,5 +77,6 @@ class AddUserActivity : AppCompatActivity() {
 
     private fun saveUserToDB(usuario: Usuario){
         usuarioViewModel.insert(usuario)
+        setResult(Activity.RESULT_OK)
     }
 }
