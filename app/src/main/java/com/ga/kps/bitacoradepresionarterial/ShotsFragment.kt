@@ -1,15 +1,56 @@
 package com.ga.kps.bitacoradepresionarterial
 
 import android.os.Bundle
+import android.preference.PreferenceManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.fragment_shots.*
+import room.components.viewmodels.TomaViewModel
 
 class ShotsFragment : Fragment(){
+    lateinit var RV : RecyclerView
+    lateinit var tomasViewModel : TomaViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_shots,container, false)
+
+        val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
+        val usuarioID = sharedPref.getInt("actualUserID", -1)
+
+
+        RV = v.findViewById(R.id.RecViewTomas)
+        RV.setHasFixedSize(true)
+
+
+        val mLayoutManager = LinearLayoutManager(
+            context,
+            LinearLayoutManager.VERTICAL,
+            true
+        )
+        mLayoutManager.stackFromEnd = true
+        RV.layoutManager = mLayoutManager
+
+        val adapter = ShotsAdapter(context)
+        tomasViewModel = ViewModelProviders.of(this).get(TomaViewModel::class.java)
+        tomasViewModel.getTomasUsuario(usuarioID).observe(this, Observer {
+            adapter.submitList(it)
+            Log.d("Lista", it.toString())
+        })
+
+        RV.adapter = adapter
+
+        adapter.setOnClickListener(View.OnClickListener {
+            Toast.makeText(context, "Estas tocando el item", Toast.LENGTH_SHORT).show()
+        })
+
         return v
     }
 }

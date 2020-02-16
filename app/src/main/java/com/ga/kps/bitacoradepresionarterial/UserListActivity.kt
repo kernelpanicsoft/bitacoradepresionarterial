@@ -10,7 +10,6 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -45,7 +44,7 @@ class UserListActivity : AppCompatActivity() {
         mLayoutManager.stackFromEnd = true
         RV.layoutManager = mLayoutManager
 
-        val adapter = UsuariosAdapter(this)
+        val adapter = UsersAdapter(this)
         usuarioViewModel = ViewModelProviders.of(this).get(UsuarioViewModel::class.java)
         usuarioViewModel.getAllUsuarios().observe(this, Observer {
             adapter.submitList(it)

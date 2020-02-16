@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import model.Usuario
 
-class UsuariosAdapter(val context: Context) : ListAdapter<Usuario, UsuariosAdapter.ViewHolder>(DIFF_CALLBACK()), View.OnClickListener {
+class UsersAdapter(val context: Context) : ListAdapter<Usuario, UsersAdapter.ViewHolder>(DIFF_CALLBACK()), View.OnClickListener {
     private var listener : View.OnClickListener? = null
 
     class DIFF_CALLBACK: DiffUtil.ItemCallback<Usuario>(){

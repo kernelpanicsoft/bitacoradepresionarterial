@@ -23,4 +23,6 @@ interface UsuarioDAO {
 
     @Query("SELECT max(id) FROM Usuario")
     fun getLastUserID() : LiveData<Long>
+
+
 }

@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/ValorSistolicaTV"
+        android:id="@+id/valorSistolicaTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -24,9 +24,9 @@
         android:text="/"
         android:textColor="@android:color/black"
         android:textSize="35sp"
-        app:layout_constraintBottom_toBottomOf="@+id/ValorSistolicaTV"
-        app:layout_constraintStart_toEndOf="@+id/ValorSistolicaTV"
-        app:layout_constraintTop_toTopOf="@+id/ValorSistolicaTV" />
+        app:layout_constraintBottom_toBottomOf="@+id/valorSistolicaTV"
+        app:layout_constraintStart_toEndOf="@+id/valorSistolicaTV"
+        app:layout_constraintTop_toTopOf="@+id/valorSistolicaTV" />
 
     <TextView
         android:id="@+id/valorDiastolicaTV"
@@ -87,7 +87,7 @@
         android:text="Normal"
         android:textColor="@android:color/holo_green_dark"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/ValorSistolicaTV"
+        app:layout_constraintStart_toStartOf="@+id/valorSistolicaTV"
         app:layout_constraintTop_toBottomOf="@+id/separadorTV" />
 
     <TextView

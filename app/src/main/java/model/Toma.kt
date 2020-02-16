@@ -14,13 +14,13 @@ import androidx.room.PrimaryKey
         )
 ))
 data class Toma (@PrimaryKey(autoGenerate = true) val id: Int,
-                 var sistolica: Int,
-                 var diatolica: Int,
-                 var pulso: Int,
-                 var fecha_hora: String,
-                 var posicion: Int,
-                 var extremidad: Int,
-                 var nota: String,
-                 var momento: Int,
-                 var usuario_id: Int
+                 var sistolica: Int? = null,
+                 var diastolica: Int? = null,
+                 var pulso: Int? = null,
+                 var fecha_hora: String? = null,
+                 var posicion: Int? = null,
+                 var extremidad: Int? = null,
+                 var nota: String? = null,
+                 var momento: Int? = null,
+                 var usuario_id: Int ? = null
                  )
