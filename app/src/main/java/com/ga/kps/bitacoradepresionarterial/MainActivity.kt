@@ -45,9 +45,9 @@ class MainActivity : AppCompatActivity() {
 
             override fun onPageSelected(position: Int) {
                 if(position == 0){
-                    addShotFAB.show()
+                  //  addShotFAB.show()
                 }else{
-                    addShotFAB.hide()
+                  //  addShotFAB.hide()
                 }
 
 
@@ -58,6 +58,8 @@ class MainActivity : AppCompatActivity() {
             val nav = Intent(this, AddShotActivity::class.java)
             startActivity(nav)
         }
+
+
 
         nav_view.setNavigationItemSelectedListener { menuItem ->
             drawer_layout.closeDrawers()
@@ -78,6 +80,8 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
+
+
 
     }
 

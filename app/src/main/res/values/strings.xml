@@ -28,6 +28,7 @@
     <string name="nota">Nota:</string>
     <string name="mmhg">mmHg</string>
     <string name="ppm">ppm</string>
+    <string name="detalles_de_toma">Detalles de toma</string>
 
     <array name="generos">
         <item>Masculino</item>
