@@ -21,13 +21,21 @@ class ShotsFragment : Fragment(){
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_shots,container, false)
 
-        val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
-        val usuarioID = sharedPref.getInt("actualUserID", -1)
-
 
         RV = v.findViewById(R.id.RecViewTomas)
         RV.setHasFixedSize(true)
 
+
+
+
+        return v
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
+        val usuarioID = sharedPref.getInt("actualUserID", -1)
 
         val mLayoutManager = LinearLayoutManager(
             context,
@@ -50,7 +58,5 @@ class ShotsFragment : Fragment(){
             val nav = Intent(context,ShotDetailActivity::class.java)
             startActivity(nav)
         })
-
-        return v
     }
 }

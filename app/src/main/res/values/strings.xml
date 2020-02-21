@@ -29,6 +29,9 @@
     <string name="mmhg">mmHg</string>
     <string name="ppm">ppm</string>
     <string name="detalles_de_toma">Detalles de toma</string>
+    <string name="valores">Valores</string>
+    <string name="estado">Estado:</string>
+    <string name="posicion_label">Posición</string>
 
     <array name="generos">
         <item>Masculino</item>
