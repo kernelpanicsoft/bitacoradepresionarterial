@@ -34,7 +34,8 @@
                 android:layout_height="wrap_content"
                 app:tabIndicatorColor="@color/colorAccent"
                 app:tabGravity="fill"
-                app:tabMode="fixed"/>
+                app:tabMode="fixed"
+                />
 
 
 

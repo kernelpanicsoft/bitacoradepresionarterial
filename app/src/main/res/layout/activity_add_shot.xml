@@ -36,7 +36,7 @@
                 android:id="@+id/sistoIV"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="16dp"
                 android:src="@drawable/ic_heart"
                 android:tint="@color/colorAccent"
                 app:layout_constraintBottom_toBottomOf="@+id/SistolicaTIET"
@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/sistoIV"
                 app:layout_constraintTop_toTopOf="parent">
@@ -61,6 +61,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/sistolica"
 
+                    android:inputType="number"
                     android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -69,7 +70,7 @@
                 android:id="@+id/diastoIV"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="16dp"
                 android:src="@drawable/ic_heart_outline"
                 android:tint="@color/colorAccent"
                 app:layout_constraintBottom_toBottomOf="@+id/DiastolicaTIET"
@@ -83,7 +84,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/diastoIV"
                 app:layout_constraintTop_toBottomOf="@+id/SistolicaTIET">
@@ -94,6 +95,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/diastolica"
 
+                    android:inputType="number"
                     android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -101,7 +103,7 @@
                 android:id="@+id/pulsoIV"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="16dp"
                 android:src="@drawable/ic_heart_pulse"
                 android:tint="@color/colorAccent"
                 app:layout_constraintBottom_toBottomOf="@+id/PulsoTIET"
@@ -114,7 +116,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/pulsoIV"
                 app:layout_constraintTop_toBottomOf="@+id/DiastolicaTIET">
@@ -133,7 +135,7 @@
                 android:id="@+id/extremidadTV"
                 android:layout_width="wrap_content"
                 android:layout_height="19dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="16dp"
                 android:text="@string/extremidad"
                 app:layout_constraintEnd_toStartOf="@+id/guideline2"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -162,7 +164,7 @@
                 android:id="@+id/extremidadSP"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginEnd="8dp"
                 app:layout_constraintEnd_toStartOf="@+id/guideline2"
                 app:layout_constraintStart_toStartOf="parent"
@@ -173,7 +175,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/extremidadSP"
                 app:layout_constraintTop_toBottomOf="@+id/posicionTV" />
@@ -182,7 +184,7 @@
                 android:id="@+id/momentoDiaTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/momento_dia"
                 app:layout_constraintStart_toStartOf="parent"
@@ -192,8 +194,8 @@
                 android:id="@+id/momentoDiaSP"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/momentoDiaTV" />
@@ -202,7 +204,7 @@
                 android:id="@+id/fechaTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/fecha"
                 app:layout_constraintStart_toStartOf="parent"
@@ -212,7 +214,7 @@
                 android:id="@+id/fechaBT"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:background="@color/colorAccent"
@@ -238,7 +240,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="16dp"
                 android:background="@color/colorAccent"
                 android:text="05:53"
                 android:textColor="@android:color/white"
@@ -251,7 +253,7 @@
                 android:id="@+id/notaIV"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="16dp"
                 android:src="@drawable/ic_note_text_outline"
                 android:tint="@color/colorAccent"
                 app:layout_constraintBottom_toBottomOf="@+id/NotaTIET"
@@ -264,7 +266,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/notaIV"
                 app:layout_constraintTop_toBottomOf="@+id/fechaBT">

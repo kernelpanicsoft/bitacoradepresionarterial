@@ -18,6 +18,8 @@ class ShotsFragment : Fragment(){
     lateinit var RV : RecyclerView
     lateinit var tomasViewModel : TomaViewModel
 
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_shots,container, false)
 
@@ -56,6 +58,8 @@ class ShotsFragment : Fragment(){
 
         adapter.setOnClickListener(View.OnClickListener {
             val nav = Intent(context,ShotDetailActivity::class.java)
+            val selectedShot = adapter.getShotAt(RV.getChildAdapterPosition(it))
+            nav.putExtra("SHOT_ID", selectedShot.id)
             startActivity(nav)
         })
     }

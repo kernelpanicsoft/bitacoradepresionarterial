@@ -8,10 +8,19 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import helpers.BloodPressureEvaluatorHelper
+
 import model.Toma
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ShotsAdapter(val context: Context?) : ListAdapter<Toma, ShotsAdapter.ViewHolder>(DIFF_CALLBACK()), View.OnClickListener {
     private var listener: View.OnClickListener? = null
+    private val shotEvaluation : BloodPressureEvaluatorHelper = BloodPressureEvaluatorHelper(context!!)
+    private val calendar = Calendar.getInstance()
+    private val sdf = SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy")
+    private val sdfDisplay = SimpleDateFormat.getDateTimeInstance()
+
 
     class DIFF_CALLBACK: DiffUtil.ItemCallback<Toma>(){
         override fun areContentsTheSame(oldItem: Toma, newItem: Toma): Boolean {
@@ -42,8 +51,11 @@ class ShotsAdapter(val context: Context?) : ListAdapter<Toma, ShotsAdapter.ViewH
         holder.sistolicaTV.text = tomaActual.sistolica.toString()
         holder.diastolicaTV.text = tomaActual.diastolica.toString()
         holder.pulsoTV.text = tomaActual.pulso.toString()
-        holder.valoracionTV.text = "Hipertension"
-        holder.fechaHotaTV.text = tomaActual.fecha_hora
+        holder.valoracionTV.text = shotEvaluation.getBloodPressureEvaluation(tomaActual.sistolica!!,tomaActual.diastolica!!)
+        holder.valoracionTV.setTextColor(shotEvaluation.getBloodPressureColor(shotEvaluation.getBloodPressureEvaluation(tomaActual.sistolica!!,tomaActual.diastolica!!)))
+
+        calendar.time = sdf.parse(tomaActual.fecha_hora)
+        holder.fechaHotaTV.text = sdfDisplay.format(calendar.time)
 
     }
 

@@ -17,7 +17,7 @@
     <string name="usuario_registrado_correctamente">Usuario registrado correctamente</string>
     <string name="usuario_seleccionado_correctamente">Usuario seleccionado correctamente</string>
     <string name="anadir_toma">Añadir toma</string>
-    <string name="sistolica">Sistólica</string>
+    <string name="sistolica">Sistólica:</string>
     <string name="diastolica">Diastólica:</string>
     <string name="pulso">Pulso:</string>
     <string name="extremidad">Extremidad:</string>
@@ -32,6 +32,14 @@
     <string name="valores">Valores</string>
     <string name="estado">Estado:</string>
     <string name="posicion_label">Posición</string>
+    <string name="fecha_label">Fecha y hora</string>
+    <string name="nota_label">Nota</string>
+    <string name="ordenar_lista">Ordenar lista</string>
+    <string name="opciones_de_toma">Opciones de toma</string>
+    <string name="esta_seguro_eliminar_toma">¿Está seguro de eliminar esta toma?</string>
+    <string name="eliminar_toma_mensajes">Eliminar el registro de esta toma es un proceso irreversible, ¿desea continuar?</string>
+    <string name="eliminar">Eliminar</string>
+    <string name="cancelar">Cancelar</string>
 
     <array name="generos">
         <item>Masculino</item>
@@ -64,6 +72,20 @@
         <item>Después de medicamento</item>
         <item>Antes de comer</item>
         <item>Después de comer</item>
+    </string-array>
+
+    <string-array name="presion_arterial">
+        <item>Hipotensión</item>
+        <item>Normal</item>
+        <item>Prehipertensión</item>
+        <item>Hipertensión estado 1</item>
+        <item>Hipertensión estado 2</item>
+        <item>Crisis hipertensiva</item>
+    </string-array>
+
+    <string-array name="opciones_toma">
+        <item>Editar</item>
+        <item>Eliminar</item>
     </string-array>
 
 </resources>

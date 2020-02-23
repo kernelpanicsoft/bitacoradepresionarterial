@@ -25,5 +25,11 @@ class TomaViewModel(application: Application) : AndroidViewModel(application) {
         return repository.getTomasUsuario(id)
     }
 
+    fun getToma(id: Int) : LiveData<Toma>{
+        return repository.getToma(id)
+    }
+
+
+
 
 }

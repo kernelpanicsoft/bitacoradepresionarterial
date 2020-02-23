@@ -88,7 +88,8 @@
         android:textColor="@android:color/holo_green_dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/valorSistolicaTV"
-        app:layout_constraintTop_toBottomOf="@+id/separadorTV" />
+        app:layout_constraintTop_toBottomOf="@+id/separadorTV"
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/fechaHoraTV"

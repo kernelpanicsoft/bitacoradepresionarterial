@@ -24,4 +24,6 @@ interface TomaDAO {
     @Query("SELECT * FROM Toma WHERE Toma.usuario_id = :id")
     fun getTomasUsuario(id: Int) : LiveData<List<Toma>>
 
+
+
 }

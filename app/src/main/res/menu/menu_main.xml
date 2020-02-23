@@ -8,5 +8,11 @@
         android:title="@string/exportar_reportes"
         app:showAsAction="ifRoom"/>
 
+    <item
+        android:id="@+id/itemSort"
+        android:icon="@drawable/ic_sort_white_24dp"
+        android:title="@string/ordenar_lista"
+        app:showAsAction="ifRoom"/>
+
 
 </menu>

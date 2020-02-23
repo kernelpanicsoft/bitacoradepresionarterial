@@ -32,6 +32,10 @@ class TomaRepository(application: Application) {
         return tomaDao.getTomasUsuario(id)
     }
 
+    fun getToma(id: Int) : LiveData<Toma>{
+        return tomaDao.getToma(id)
+    }
+
     private class InsertTomaAsyncTask constructor(private val tomaDAO: TomaDAO) : AsyncTask<Toma, Void, Void>(){
         override fun doInBackground(vararg params: Toma): Void? {
             tomaDAO.insert(params[0])

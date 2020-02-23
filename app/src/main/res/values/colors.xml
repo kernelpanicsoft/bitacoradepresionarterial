@@ -3,4 +3,11 @@
     <color name="colorPrimary">#d32f2f</color>
     <color name="colorPrimaryDark">#9a0007</color>
     <color name="colorAccent">#ff6659</color>
+
+    <color name="hipotension">#39a6ce</color>
+    <color name="normalBP">#a6ce39</color>
+    <color name="prehipertensionBP">#ffec00</color>
+    <color name="hipertension1">#ffb600</color>
+    <color name="hipertension2">#ba3a02</color>
+    <color name="hipertensioncrysis">#990711</color>
 </resources>
