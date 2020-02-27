@@ -13,9 +13,15 @@ import helpers.Genero
 import kotlinx.android.synthetic.main.activity_user_details.*
 import model.Usuario
 import room.components.viewmodels.UsuarioViewModel
+import java.text.SimpleDateFormat
+import java.util.*
 
 class UserDetailsActivity : AppCompatActivity() {
     lateinit var usuarioViewModel : UsuarioViewModel
+    private val sdfDisplayDate = SimpleDateFormat.getDateInstance()
+    private val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US)
+
+    private val calendar = Calendar.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,7 +64,8 @@ class UserDetailsActivity : AppCompatActivity() {
     fun populateUserFields(usuario: Usuario){
         nombreTV.text = usuario.nombre
         apellidosTV.text = usuario.apellidos
-        fechaNacimientoTV.text = usuario.fecha_nacimiento
+        calendar.time = sdf.parse(usuario.fecha_nacimiento)
+        fechaNacimientoTV.text = sdfDisplayDate.format(calendar.time)
 
         when(usuario.genero){
             Genero.MASCULINO->{

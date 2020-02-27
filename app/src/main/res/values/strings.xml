@@ -40,6 +40,8 @@
     <string name="eliminar_toma_mensajes">Eliminar el registro de esta toma es un proceso irreversible, ¿desea continuar?</string>
     <string name="eliminar">Eliminar</string>
     <string name="cancelar">Cancelar</string>
+    <string name="es_necesario_especificar_nombre_apellidos">Es necesario especificar al menos nombre y apellidos para registrar un nuevo perfil.</string>
+    <string name="es_necesario_especificar_sis_dia_pul">Es necesario especificar al menos la presión sistólica, diastólica y pulso.</string>
 
     <array name="generos">
         <item>Masculino</item>

@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.activity_shot_detail.*
 import model.Toma
 import room.components.viewmodels.TomaViewModel
 import helpers.ShotEvaluatorHelper
+import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -23,9 +24,9 @@ class ShotDetailActivity : AppCompatActivity() {
     private lateinit var shotEvaluatorHelper: ShotEvaluatorHelper
     private lateinit  var shotEvaluation : BloodPressureEvaluatorHelper
     private val calendar = Calendar.getInstance()
-    private val sdf = SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy")
+    private val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US)
     private val sdfDisplayDate = SimpleDateFormat.getDateInstance()
-    private val sdfDisplayTime = SimpleDateFormat.getTimeInstance()
+    private val sdfDisplayTime = SimpleDateFormat.getTimeInstance(DateFormat.SHORT)
     private lateinit var shotLiveData :  LiveData<Toma>
 
 

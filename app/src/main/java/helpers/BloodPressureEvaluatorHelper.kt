@@ -10,15 +10,15 @@ class BloodPressureEvaluatorHelper (val context: Context) {
     fun getBloodPressureEvaluation(sys: Int, dia: Int) : String{
         return if(sys < 90 || dia < 60){
             bloodPressureCategories[0]
-        }else if(sys < 120 && dia < 80){
+        }else if(sys <= 120 && dia <= 80){
             bloodPressureCategories[1]
-        }else if(sys < 129 && dia < 80){
+        }else if(sys <= 129 && dia <= 80){
             bloodPressureCategories[2]
-        }else if(sys < 139 || dia < 89){
+        }else if(sys <= 139 || dia <= 89){
             bloodPressureCategories[3]
-        }else if(sys > 140 || dia >= 90){
+        }else if(sys >= 140 || dia >= 90){
             bloodPressureCategories[4]
-        }else if(sys > 180 || dia > 120){
+        }else if(sys >= 180 || dia >= 120){
             bloodPressureCategories[5]
         }else{
             bloodPressureCategories[0]

@@ -8,6 +8,7 @@ import android.provider.SyncStateContract
 import android.view.MenuItem
 import android.widget.RadioButton
 import androidx.lifecycle.ViewModelProviders
+import com.google.android.material.snackbar.Snackbar
 import helpers.Genero
 import kotlinx.android.synthetic.main.activity_add_user.*
 import model.Usuario
@@ -19,7 +20,8 @@ import java.util.*
 class AddUserActivity : AppCompatActivity() {
     lateinit var usuarioViewModel: UsuarioViewModel
     private val calendario: Calendar = Calendar.getInstance()
-    private val sdf: DateFormat = SimpleDateFormat.getDateInstance(DateFormat.SHORT)
+    private val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US)
+    private val sdfDisplayDate = SimpleDateFormat.getDateInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,29 +41,35 @@ class AddUserActivity : AppCompatActivity() {
                 calendario.set(Calendar.DAY_OF_MONTH, dayOfMonth)
                 //Toast.makeText(this@AnadirCitaMedicaActivity,"Fecha seleccionada: " + sdf.format(calendario.time), Toast.LENGTH_SHORT).show()
 
-                fechaNacimientoBT.text =  sdf.format(calendario.time)
+                fechaNacimientoBT.text =  sdfDisplayDate.format(calendario.time)
             }, calendario.get(Calendar.YEAR),calendario.get(Calendar.MONTH), calendario.get(Calendar.DAY_OF_MONTH))
             datePickerFragment.show()
         }
 
         addUserFAB.setOnClickListener {
-            val newUser = Usuario(0)
-            newUser.imagen_perfil = "aux"
-            newUser.nombre = nombreET.text.toString()
-            newUser.apellidos = apellidosET.text.toString()
-            newUser.fecha_nacimiento = fechaNacimientoBT.text.toString()
 
-            when(findViewById<RadioButton>(generoRG.checkedRadioButtonId)){
-                masculinoRB ->{
-                    newUser.genero = Genero.MASCULINO
+            if(nombreET.text.isNullOrEmpty() || apellidosET.text.isNullOrEmpty()){
+                Snackbar.make(it,getString(R.string.es_necesario_especificar_nombre_apellidos), Snackbar.LENGTH_LONG).show()
+            }else{
+                val newUser = Usuario(0)
+                newUser.imagen_perfil = "aux"
+                newUser.nombre = nombreET.text.toString()
+                newUser.apellidos = apellidosET.text.toString()
+                newUser.fecha_nacimiento = sdf.format(calendario.time)
+
+                when(findViewById<RadioButton>(generoRG.checkedRadioButtonId)){
+                    masculinoRB ->{
+                        newUser.genero = Genero.MASCULINO
+                    }
+                    femeninoRB ->{
+                        newUser.genero = Genero.FEMENINO
+                    }
                 }
-                femeninoRB ->{
-                    newUser.genero = Genero.FEMENINO
-                }
+
+                saveUserToDB(newUser)
+                finish()
             }
 
-            saveUserToDB(newUser)
-            finish()
         }
     }
 

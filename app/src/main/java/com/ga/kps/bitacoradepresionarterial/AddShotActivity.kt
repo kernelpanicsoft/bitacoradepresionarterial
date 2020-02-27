@@ -10,7 +10,9 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_add_shot.*
 import model.Toma
 import room.components.viewmodels.TomaViewModel
@@ -19,7 +21,7 @@ import java.util.*
 
 class AddShotActivity : AppCompatActivity() {
     val calendario = Calendar.getInstance()
-    val sdf = SimpleDateFormat.getDateTimeInstance()
+    val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US)
     val sdfHora = SimpleDateFormat("h:mm a")
     val sdfCalendario = SimpleDateFormat("EEE, MMM d, yyyy")
 
@@ -132,23 +134,27 @@ class AddShotActivity : AppCompatActivity() {
 
         saveShootFAB.setOnClickListener {
 
-            val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
-            val usuarioID = sharedPref.getInt("actualUserID", -1)
+            if(sistolicaET.text.isNullOrEmpty() || diastolicaET.text.isNullOrEmpty() || pulsoET.text.isNullOrEmpty()){
+                Snackbar.make(it,getString(R.string.es_necesario_especificar_sis_dia_pul), Snackbar.LENGTH_LONG).show()
+            }else{
+                val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
+                val usuarioID = sharedPref.getInt("actualUserID", -1)
 
-            val toma = Toma(0)
-            toma.usuario_id = usuarioID
-            toma.sistolica = sistolicaET.text.toString().toInt()
-            toma.diastolica = diastolicaET.text.toString().toInt()
-            toma.pulso = pulsoET.text.toString().toInt()
-            toma.extremidad = extremidad
-            toma.posicion = posicion
-            toma.momento = momento
-            toma.fecha_hora = calendario.time.toString()
-            toma.nota = notaET.text.toString()
-            tomasViewModel.insert(toma)
+                val toma = Toma(0)
+                toma.usuario_id = usuarioID
+                toma.sistolica = sistolicaET.text.toString().toInt()
+                toma.diastolica = diastolicaET.text.toString().toInt()
+                toma.pulso = pulsoET.text.toString().toInt()
+                toma.extremidad = extremidad
+                toma.posicion = posicion
+                toma.momento = momento
+                toma.fecha_hora = sdf.format(calendario.time)
+                toma.nota = notaET.text.toString()
+                tomasViewModel.insert(toma)
 
-            finish()
+                finish()
 
+            }
         }
     }
 

@@ -18,7 +18,7 @@ class ShotsAdapter(val context: Context?) : ListAdapter<Toma, ShotsAdapter.ViewH
     private var listener: View.OnClickListener? = null
     private val shotEvaluation : BloodPressureEvaluatorHelper = BloodPressureEvaluatorHelper(context!!)
     private val calendar = Calendar.getInstance()
-    private val sdf = SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy")
+    private val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US)
     private val sdfDisplay = SimpleDateFormat.getDateTimeInstance()
 
 
