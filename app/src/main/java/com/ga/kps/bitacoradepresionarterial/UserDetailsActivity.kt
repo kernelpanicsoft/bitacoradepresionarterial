@@ -1,6 +1,8 @@
 package com.ga.kps.bitacoradepresionarterial
 
+import android.app.Activity
 import android.content.DialogInterface
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -9,6 +11,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import helpers.Genero
@@ -21,6 +24,7 @@ import java.util.*
 
 class UserDetailsActivity : AppCompatActivity() {
     lateinit var usuarioViewModel : UsuarioViewModel
+    private lateinit var usuarioLive : LiveData<Usuario>
     private val sdfDisplayDate = SimpleDateFormat.getDateInstance()
     private val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US)
 
@@ -41,7 +45,8 @@ class UserDetailsActivity : AppCompatActivity() {
         usuarioViewModel = ViewModelProviders.of(this).get(UsuarioViewModel::class.java)
 
        Log.e("Fallo",usuarioID.toString())
-        usuarioViewModel.getUsuario(usuarioID).observe(this, Observer {
+        usuarioLive = usuarioViewModel.getUsuario(usuarioID)
+        usuarioLive.observe(this, Observer {
             populateUserFields(it)
         })
 
@@ -65,20 +70,23 @@ class UserDetailsActivity : AppCompatActivity() {
                     when(which){
                         0 ->{ }
                         1 ->{
-                            val builder = AlertDialog.Builder(this)
-                            builder.setTitle(getString(R.string.esta_seguro_eliminar_usuario))
-                            builder.setMessage(getString(R.string.eliminar_usuario_mensaje))
-                            builder.setPositiveButton(getString(R.string.eliminar)) { dialog, id ->
+                            val innerBuilder = AlertDialog.Builder(this)
+                            innerBuilder.setTitle(getString(R.string.esta_seguro_eliminar_usuario))
+                            innerBuilder.setMessage(getString(R.string.eliminar_usuario_mensaje))
+                            innerBuilder.setPositiveButton(getString(R.string.eliminar)) { dialog, id ->
+                                deleteUser()
+                            }
+                            innerBuilder.setNegativeButton(getString(R.string.cancelar)) { dialog, id ->
 
                             }
-                            builder.setNegativeButton(getString(R.string.cancelar)) { dialog, id ->
-
-                            }
-                            val alertDialog = builder.create()
+                            val alertDialog = innerBuilder.create()
                             alertDialog.show()
                         }
                     }
                 }
+
+                val dialog = builder.create()
+                dialog.show()
             }
         }
         return super.onOptionsItemSelected(item)
@@ -116,5 +124,14 @@ class UserDetailsActivity : AppCompatActivity() {
         val cal = Calendar.getInstance(Locale.US)
         cal.time = date
         return cal
+    }
+
+    private fun deleteUser(){
+        if(usuarioLive.hasObservers()){
+            usuarioLive.removeObservers(this)
+            usuarioViewModel.delete(usuarioLive.value!!)
+            setResult(Activity.RESULT_OK)
+            finish()
+        }
     }
 }

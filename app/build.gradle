@@ -8,11 +8,11 @@ apply plugin: 'kotlin-kapt'
 
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         applicationId "com.ga.kps.bitacoradepresionarterial"
         minSdkVersion 23
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -36,14 +36,16 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
 
-    implementation 'androidx.room:room-runtime:2.2.3'
-    kapt 'androidx.room:room-compiler:2.2.3' // use kapt for Kotlin
+    implementation 'androidx.room:room-runtime:2.2.4'
+    kapt 'androidx.room:room-compiler:2.2.4' // use kapt for Kotlin
 
     implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'com.google.android.material:material:1.1.0'
 
     // ViewModel and LiveData
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation 'androidx.preference:preference-ktx:1.1.0'
+
 
 
 }

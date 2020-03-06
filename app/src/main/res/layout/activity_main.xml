@@ -32,7 +32,7 @@
                 android:id="@+id/TabLayoutPrincipal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:tabIndicatorColor="@color/colorAccent"
+                app:tabIndicatorColor="@android:color/white"
                 app:tabGravity="fill"
                 app:tabMode="fixed"
                 />

@@ -22,14 +22,8 @@ class ShotsFragment : Fragment(){
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_shots,container, false)
-
-
         RV = v.findViewById(R.id.RecViewTomas)
         RV.setHasFixedSize(true)
-
-
-
-
         return v
     }
 

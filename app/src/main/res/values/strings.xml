@@ -16,6 +16,7 @@
     <string name="editar">Editar</string>
     <string name="usuario_registrado_correctamente">Usuario registrado correctamente</string>
     <string name="usuario_seleccionado_correctamente">Usuario seleccionado correctamente</string>
+    <string name="usuario_eliminado_correctamente">Usuario eliminado correctamente</string>
     <string name="anadir_toma">Añadir toma</string>
     <string name="sistolica">Sistólica:</string>
     <string name="diastolica">Diastólica:</string>
@@ -46,6 +47,22 @@
     <string name="opciones_de_usuario">Opciones de usuario</string>
     <string name="esta_seguro_eliminar_usuario">¿Esta seguro de eliminar este usuario?</string>
     <string name="eliminar_usuario_mensaje">Al eliminar un usuario todos sus registros, estadísticas, reportes y recordatorios serán eliminados también, ¿Desea continuar?</string>
+    <string name="politica_de_privacidad">Política de privacidad</string>
+    <string name="leer_politica_privacidad">Leer la política privacidad y términos de uso de la aplicación.</string>
+    <string name="calificanos_en_ps">Califícanos en la Play Store</string>
+    <string name="tu_opinion_es_importante">Tu opinión es muy importante para nosotros.</string>
+    <string name="version">Versión</string>
+    <string name="filtrar">Filtrar</string>
+    <string name="anadir_recordatorio">Añadir recordatorio</string>
+    <string name="tipo_recordatorio">Tipo de recordatorio:</string>
+    <string name="hora_recordatorio">Hora del recordatorio:</string>
+    <string name="dias_que_se_repite">Días que se repite:</string>
+    <string name="L">L</string>
+    <string name="ma">M</string>
+    <string name="ju">J</string>
+    <string name="vi">V</string>
+    <string name="sa">S</string>
+    <string name="dom">D</string>
     <array name="generos">
         <item>Masculino</item>
         <item>Femenino</item>
@@ -93,4 +110,8 @@
         <item>Eliminar</item>
     </string-array>
 
+    <string-array name="tipos_recordatorio">
+        <item>Toma de presión arterial</item>
+        <item>Toma de medicamento</item>
+    </string-array>
 </resources>

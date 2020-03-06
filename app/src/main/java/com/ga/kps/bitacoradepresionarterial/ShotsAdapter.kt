@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import helpers.BloodPressureEvaluatorHelper
 
 import model.Toma
+import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -19,8 +20,8 @@ class ShotsAdapter(val context: Context?) : ListAdapter<Toma, ShotsAdapter.ViewH
     private val shotEvaluation : BloodPressureEvaluatorHelper = BloodPressureEvaluatorHelper(context!!)
     private val calendar = Calendar.getInstance()
     private val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US)
-    private val sdfDisplay = SimpleDateFormat.getDateTimeInstance()
-
+    private val sdfDisplayDate = SimpleDateFormat.getDateInstance()
+    private val sdfDisplayTime = SimpleDateFormat.getTimeInstance(DateFormat.SHORT)
 
     class DIFF_CALLBACK: DiffUtil.ItemCallback<Toma>(){
         override fun areContentsTheSame(oldItem: Toma, newItem: Toma): Boolean {
@@ -55,7 +56,7 @@ class ShotsAdapter(val context: Context?) : ListAdapter<Toma, ShotsAdapter.ViewH
         holder.valoracionTV.setTextColor(shotEvaluation.getBloodPressureColor(shotEvaluation.getBloodPressureEvaluation(tomaActual.sistolica!!,tomaActual.diastolica!!)))
 
         calendar.time = sdf.parse(tomaActual.fecha_hora)
-        holder.fechaHotaTV.text = sdfDisplay.format(calendar.time)
+        holder.fechaHotaTV.text = sdfDisplayDate.format(calendar.time) + " " + sdfDisplayTime.format(calendar.time)
 
     }
 

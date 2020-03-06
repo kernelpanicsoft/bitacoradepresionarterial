@@ -1,16 +1,22 @@
 package com.ga.kps.bitacoradepresionarterial
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.preference.PreferenceManager
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
+import helpers.ELIMINAR_USUARIO
+import helpers.SIN_USUARIO_ACTIVO
 import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
@@ -23,14 +29,6 @@ class MainActivity : AppCompatActivity() {
         val ab = supportActionBar
         ab!!.setDisplayHomeAsUpEnabled(true)
         ab.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp)
-        /*
-        auxButton.setOnClickListener {
-            val nav = Intent(this, UserListActivity::class.java)
-            startActivity(nav)
-        }
-*/
-
-
 
         setupViewPager(ViewPagerPrincipal)
         TabLayoutPrincipal.setupWithViewPager(ViewPagerPrincipal)
@@ -44,22 +42,28 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onPageSelected(position: Int) {
-                if(position == 0){
-                  //  addShotFAB.show()
+                if(position == 0 || position == 2){
+                    addShotFAB.show()
                 }else{
-                  //  addShotFAB.hide()
+                    addShotFAB.hide()
                 }
-
-
             }
         })
 
         addShotFAB.setOnClickListener {
-            val nav = Intent(this, AddShotActivity::class.java)
-            startActivity(nav)
+            when(ViewPagerPrincipal.currentItem){
+                0 ->{
+                    val nav = Intent(this, AddShotActivity::class.java)
+                    startActivity(nav)
+                }
+                2 ->{
+                    val nav = Intent(this, AddReminderActivity::class.java)
+                    startActivity(nav)
+                }
+            }
+
+
         }
-
-
 
         nav_view.setNavigationItemSelectedListener { menuItem ->
             drawer_layout.closeDrawers()
@@ -67,24 +71,33 @@ class MainActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.nav_account ->{
                     val navProfile = Intent(this, UserDetailsActivity::class.java)
-                    startActivity(navProfile)
+                    startActivityForResult(navProfile, ELIMINAR_USUARIO)
                 }
                 R.id.nav_change_user ->{
                     val navChangeUser = Intent(this, UserListActivity::class.java)
                     startActivity(navChangeUser)
                 }
                 R.id.nav_settings ->{
-                    
+                    val nav = Intent(this, SettingsActivity::class.java)
+                    startActivity(nav)
                 }
-
             }
             true
         }
-
-
-
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
+        val usuarioID = sharedPref.getInt("actualUserID", -1)
+
+        if(usuarioID == -1){
+            val nav = Intent(this, UserListActivity::class.java)
+            startActivity(nav)
+        }
+
+    }
 
     private fun setupViewPager(pager: ViewPager){
         val adapter = ViewPagerAdapter(supportFragmentManager)
@@ -136,5 +149,24 @@ class MainActivity : AppCompatActivity() {
 
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == ELIMINAR_USUARIO){
+            if(resultCode == Activity.RESULT_OK){
+                Toast.makeText(this,getString(R.string.usuario_eliminado_correctamente), Toast.LENGTH_SHORT).show()
+                val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
+                with(sharedPref.edit()){
+                    putInt("actualUserID", SIN_USUARIO_ACTIVO)
+                    apply()
+
+                }
+
+                val nav = Intent(this, UserListActivity::class.java)
+                startActivity(nav)
+
+            }
+        }
     }
 }

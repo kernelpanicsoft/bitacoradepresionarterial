@@ -28,7 +28,11 @@ class UserListActivity : AppCompatActivity() {
 
         setSupportActionBar(toolbar)
         val ab = supportActionBar
-        ab!!.setDisplayHomeAsUpEnabled(true)
+        val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
+        val usuarioID = sharedPref.getInt("actualUserID", -1)
+        if(usuarioID != -1) {
+            ab!!.setDisplayHomeAsUpEnabled(true)
+        }
         title = getString(R.string.usuarios_registrados)
 
 
@@ -70,15 +74,7 @@ class UserListActivity : AppCompatActivity() {
         }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            android.R.id.home ->{
-                onBackPressed()
-                return true
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -96,4 +92,6 @@ class UserListActivity : AppCompatActivity() {
 
         }
     }
+
+
 }

@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddReminderActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            android:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            >
+
+            <TextView
+                android:id="@+id/tipoRecordatorioTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/tipo_recordatorio"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/tipoRecordatorioIV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/ic_heart_pulse"
+                android:tint="@color/colorAccent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tipoRecordatorioTV" />
+
+            <Spinner
+                android:id="@+id/tipoRecordatorioSP"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tipoRecordatorioIV"
+                app:layout_constraintTop_toTopOf="@+id/tipoRecordatorioIV" />
+
+            <TextView
+                android:id="@+id/horaRecodatorioTV"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/hora_recordatorio"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tipoRecordatorioSP" />
+
+            <Button
+                android:id="@+id/horaRecordatorioBT"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="128dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="128dp"
+                android:background="@color/colorAccent"
+                android:text="8:01"
+                android:textColor="@android:color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/horaRecodatorioTV" />
+
+            <TextView
+                android:id="@+id/diasRepeticionTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/dias_que_se_repite"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/horaRecordatorioBT" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/day_picker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/diasRepeticionTV">
+
+                <TextView
+                    android:id="@+id/luTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/L"
+                    app:layout_constraintBottom_toTopOf="@+id/luCB"
+                    app:layout_constraintEnd_toEndOf="@+id/luCB"
+                    app:layout_constraintStart_toStartOf="@+id/luCB"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/maTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ma"
+                    app:layout_constraintBottom_toTopOf="@+id/maCB"
+                    app:layout_constraintEnd_toEndOf="@+id/maCB"
+                    app:layout_constraintStart_toStartOf="@+id/maCB" />
+
+                <TextView
+                    android:id="@+id/miTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ma"
+                    app:layout_constraintBottom_toTopOf="@+id/miCB"
+                    app:layout_constraintEnd_toEndOf="@+id/miCB"
+                    app:layout_constraintStart_toStartOf="@+id/miCB"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/juTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ju"
+                    app:layout_constraintEnd_toEndOf="@+id/juCB"
+                    app:layout_constraintStart_toStartOf="@+id/juCB"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/viTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/vi"
+                    app:layout_constraintBottom_toTopOf="@+id/viCB"
+                    app:layout_constraintEnd_toEndOf="@+id/viCB"
+                    app:layout_constraintStart_toStartOf="@+id/viCB"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/saTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sa"
+                    app:layout_constraintBottom_toTopOf="@+id/saCB"
+                    app:layout_constraintEnd_toEndOf="@+id/saCB"
+                    app:layout_constraintStart_toStartOf="@+id/saCB"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/doTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dom"
+                    app:layout_constraintBottom_toTopOf="@+id/doCB"
+                    app:layout_constraintEnd_toEndOf="@+id/doCB"
+                    app:layout_constraintStart_toStartOf="@+id/doCB"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <CheckBox
+                    android:id="@+id/luCB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/maCB"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <CheckBox
+                    android:id="@+id/maCB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/miCB"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/luCB" />
+
+                <CheckBox
+                    android:id="@+id/miCB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/juCB"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/maCB" />
+
+                <CheckBox
+                    android:id="@+id/juCB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/viCB"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/miCB" />
+
+                <CheckBox
+                    android:id="@+id/viCB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/saCB"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/juCB" />
+
+                <CheckBox
+                    android:id="@+id/saCB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/doCB"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/viCB" />
+
+                <CheckBox
+                    android:id="@+id/doCB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/saCB" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ImageView
+                android:id="@+id/notaIV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:src="@drawable/ic_note_text_outline"
+                android:tint="@color/colorAccent"
+                app:layout_constraintBottom_toBottomOf="@+id/notaTIET"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/notaTIET" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/notaTIET"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/notaIV"
+                app:layout_constraintTop_toBottomOf="@+id/day_picker">
+
+                <EditText
+                    android:id="@+id/notaRecordatorioET"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/nota" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </ScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addReminderFAB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_check_white_24dp"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
