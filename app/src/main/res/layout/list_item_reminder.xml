@@ -1,6 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/reminderIconIV"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/ic_pill"
+        android:tint="@color/colorAccent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tipoRecordatorioTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Toma de Medicamento"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/reminderIconIV"
+        app:layout_constraintTop_toTopOf="@+id/reminderIconIV" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_add_shot.*
@@ -41,7 +42,8 @@ class AddShotActivity : AppCompatActivity() {
         title = getString(R.string.anadir_toma)
 
 
-        tomasViewModel = ViewModelProviders.of(this).get(TomaViewModel::class.java)
+        tomasViewModel = ViewModelProvider(this).get(TomaViewModel::class.java)
+
 
         fechaBT.text = sdfCalendario.format(calendario.time)
         horaBT.text = sdfHora.format(calendario.time)

@@ -13,8 +13,8 @@ import androidx.room.PrimaryKey
         onDelete = ForeignKey.CASCADE)
 ))
 data class Recordatorio (@PrimaryKey(autoGenerate = true) val id: Int,
-                         var hora: String,
-                         var dias_de_semana: String,
-                         var tipo: Int,
-                         var nota: String,
-                         var usuario_id: Int)
+                         var hora: String? = null,
+                         var dias_de_semana: String? = null,
+                         var tipo: Int? = null,
+                         var nota: String? = null,
+                         var usuario_id: Int? = null)
