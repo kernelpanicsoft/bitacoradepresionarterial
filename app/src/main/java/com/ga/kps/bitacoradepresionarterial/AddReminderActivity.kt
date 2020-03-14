@@ -10,6 +10,8 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.CheckBox
+import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.snackbar.Snackbar
 import helpers.TipoRecordatorio
 import kotlinx.android.synthetic.main.activity_add_reminder.*
 import kotlinx.android.synthetic.main.activity_add_reminder.toolbar
@@ -35,6 +37,7 @@ class AddReminderActivity : AppCompatActivity() {
         ab!!.setDisplayHomeAsUpEnabled(true)
         title = getString(R.string.anadir_recordatorio)
 
+        recordatorioViewModel = ViewModelProvider(this).get(RecordatorioViewModel::class.java)
         recordatorio = Recordatorio(0)
 
         ArrayAdapter.createFromResource(this, R.array.tipos_recordatorio,android.R.layout.simple_spinner_item)
@@ -75,6 +78,12 @@ class AddReminderActivity : AppCompatActivity() {
             }, calendario.get(Calendar.HOUR_OF_DAY), calendario.get(Calendar.MINUTE), DateFormat.is24HourFormat(this))
 
             timePickerFragment.show()
+        }
+
+        addReminderFAB.setOnClickListener {
+            recordatorio.hora = sdf.format(calendario.time)
+            recordatorio.nota = notaRecordatorioET.text.toString()
+            saveReminder(recordatorio)
         }
 
     }
@@ -149,6 +158,12 @@ class AddReminderActivity : AppCompatActivity() {
 
 
     private fun saveReminder(reminder : Recordatorio){
+        if(reminder.dias_de_semana.isNullOrBlank()){
+            Snackbar.make(addReminderFAB,getString(R.string.mensaje_anadir_recordatorio), Snackbar.LENGTH_SHORT).show()
+        }else{
+            recordatorioViewModel.insert(reminder)
+            finish()
+        }
 
     }
 }

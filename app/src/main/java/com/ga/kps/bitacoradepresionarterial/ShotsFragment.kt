@@ -2,14 +2,14 @@ package com.ga.kps.bitacoradepresionarterial
 
 import android.content.Intent
 import android.os.Bundle
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import room.components.viewmodels.TomaViewModel
@@ -42,7 +42,7 @@ class ShotsFragment : Fragment(){
         RV.layoutManager = mLayoutManager
 
         val adapter = ShotsAdapter(context)
-        tomasViewModel = ViewModelProviders.of(this).get(TomaViewModel::class.java)
+        tomasViewModel = ViewModelProvider(this).get(TomaViewModel::class.java)
         tomasViewModel.getTomasUsuario(usuarioID).observe(this, Observer {
             adapter.submitList(it)
             Log.d("Lista", it.toString())

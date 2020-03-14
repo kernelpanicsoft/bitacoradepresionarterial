@@ -12,4 +12,9 @@ class RemindersFragment : Fragment() {
 
         return v
     }
+
+    override fun onResume() {
+        super.onResume()
+
+    }
 }

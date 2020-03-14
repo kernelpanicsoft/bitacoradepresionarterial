@@ -63,6 +63,7 @@
     <string name="vi">V</string>
     <string name="sa">S</string>
     <string name="dom">D</string>
+    <string name="mensaje_anadir_recordatorio">Es necesario elegir al menos un día de repetición para el recordatorio.</string>
     <array name="generos">
         <item>Masculino</item>
         <item>Femenino</item>
