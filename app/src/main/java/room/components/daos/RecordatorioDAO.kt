@@ -20,4 +20,7 @@ interface RecordatorioDAO {
 
     @Query("SELECT * FROM Recordatorio WHERE Recordatorio.usuario_id = :id")
     fun getRecordatoriosUsuario(id: Int) : LiveData<List<Recordatorio>>
+
+    @Query("SELECT * FROM RECORDATORIO")
+    fun getAllRecordatorios() : LiveData<List<Recordatorio>>
 }

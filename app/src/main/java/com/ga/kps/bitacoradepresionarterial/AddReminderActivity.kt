@@ -3,7 +3,9 @@ package com.ga.kps.bitacoradepresionarterial
 import android.app.TimePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Debug
 import android.text.format.DateFormat
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -11,6 +13,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.CheckBox
 import androidx.lifecycle.ViewModelProvider
+import androidx.preference.PreferenceManager
 import com.google.android.material.snackbar.Snackbar
 import helpers.TipoRecordatorio
 import kotlinx.android.synthetic.main.activity_add_reminder.*
@@ -81,8 +84,11 @@ class AddReminderActivity : AppCompatActivity() {
         }
 
         addReminderFAB.setOnClickListener {
+            val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
+            val usuarioID = sharedPref.getInt("actualUserID", -1)
             recordatorio.hora = sdf.format(calendario.time)
             recordatorio.nota = notaRecordatorioET.text.toString()
+            recordatorio.usuario_id = usuarioID
             saveReminder(recordatorio)
         }
 
@@ -161,6 +167,7 @@ class AddReminderActivity : AppCompatActivity() {
         if(reminder.dias_de_semana.isNullOrBlank()){
             Snackbar.make(addReminderFAB,getString(R.string.mensaje_anadir_recordatorio), Snackbar.LENGTH_SHORT).show()
         }else{
+            Log.d("RecordatorioNuevo", reminder.toString())
             recordatorioViewModel.insert(reminder)
             finish()
         }

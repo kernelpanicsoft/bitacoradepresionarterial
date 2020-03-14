@@ -29,4 +29,8 @@ class RecordatorioViewModel(application: Application) : AndroidViewModel(applica
     fun getRecordatorio(id: Int) : LiveData<Recordatorio>{
         return repository.getRecordatorioUsuario(id)
     }
+
+    fun getAllRecordatorios() : LiveData<List<Recordatorio>>{
+        return repository.getAllRecordatorios()
+    }
 }
