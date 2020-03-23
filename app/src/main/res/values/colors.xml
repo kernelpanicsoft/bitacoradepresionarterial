@@ -10,4 +10,6 @@
     <color name="hipertension1">#ffb600</color>
     <color name="hipertension2">#ba3a02</color>
     <color name="hipertensioncrysis">#990711</color>
+
+    <color name="white">#ffffff</color>
 </resources>

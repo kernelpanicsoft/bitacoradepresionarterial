@@ -8,6 +8,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import helpers.BloodPressureEvaluatorHelper
 import kotlinx.android.synthetic.main.activity_shot_detail.*
@@ -41,7 +42,7 @@ class ShotDetailActivity : AppCompatActivity() {
         title = getString(R.string.detalles_de_toma)
 
         shotID = intent.getIntExtra("SHOT_ID", -1)
-        shotsViewModel = ViewModelProviders.of(this).get(TomaViewModel::class.java)
+        shotsViewModel = ViewModelProvider(this).get(TomaViewModel::class.java)
 
         shotEvaluatorHelper = ShotEvaluatorHelper(this)
         shotEvaluation =  BloodPressureEvaluatorHelper(this)
@@ -113,7 +114,6 @@ class ShotDetailActivity : AppCompatActivity() {
         timeTV.text = sdfDisplayTime.format(calendar.time)
 
         momentLabelTV.text = shotEvaluatorHelper.getMomentString(toma.momento!!)
-
     }
 
     private fun deleteShot(){

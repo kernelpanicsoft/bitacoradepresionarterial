@@ -14,7 +14,7 @@ import androidx.room.PrimaryKey
 ))
 data class Recordatorio (@PrimaryKey(autoGenerate = true) val id: Int,
                          var hora: String? = null,
-                         var dias_de_semana: String? = null,
+                         var dias_de_semana: String = "",
                          var tipo: Int? = null,
                          var nota: String? = null,
                          var usuario_id: Int? = null)

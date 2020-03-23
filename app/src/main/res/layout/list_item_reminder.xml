@@ -3,26 +3,32 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <ImageView
         android:id="@+id/reminderIconIV"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:src="@drawable/ic_pill"
         android:tint="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tipoRecordatorioTV"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Toma de Medicamento"
         android:textColor="@android:color/black"
         android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/horaRecordatorioTV"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/reminderIconIV"
         app:layout_constraintTop_toTopOf="@+id/reminderIconIV" />
 
@@ -32,27 +38,33 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:text="09:26 AM"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/tipoRecordatorioTV"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/tipoRecordatorioTV"
         app:layout_constraintTop_toTopOf="@+id/tipoRecordatorioTV" />
 
     <TextView
         android:id="@+id/luTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="25sp"
+        android:layout_height="25sp"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp"
+        android:gravity="center"
         android:text="@string/L"
         app:layout_constraintBottom_toBottomOf="@+id/reminderIconIV"
         app:layout_constraintEnd_toStartOf="@+id/maTV"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/reminderIconIV" />
+        app:layout_constraintStart_toEndOf="@+id/reminderIconIV"
+        app:layout_constraintTop_toBottomOf="@+id/tipoRecordatorioTV"
+
+        />
 
     <TextView
         android:id="@+id/maTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="25sp"
+        android:layout_height="25sp"
+        android:gravity="center"
         android:text="@string/ma"
         app:layout_constraintBottom_toBottomOf="@+id/luTV"
         app:layout_constraintEnd_toStartOf="@+id/miTV"
@@ -62,8 +74,9 @@
 
     <TextView
         android:id="@+id/miTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="25sp"
+        android:layout_height="25sp"
+        android:gravity="center"
         android:text="@string/ma"
         app:layout_constraintBottom_toBottomOf="@+id/maTV"
         app:layout_constraintEnd_toStartOf="@+id/juTV"
@@ -73,8 +86,9 @@
 
     <TextView
         android:id="@+id/juTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="25sp"
+        android:layout_height="25sp"
+        android:gravity="center"
         android:text="@string/ju"
         app:layout_constraintBottom_toBottomOf="@+id/miTV"
         app:layout_constraintEnd_toStartOf="@+id/viTV"
@@ -84,8 +98,9 @@
 
     <TextView
         android:id="@+id/viTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="25sp"
+        android:layout_height="25sp"
+        android:gravity="center"
         android:text="@string/vi"
         app:layout_constraintBottom_toBottomOf="@+id/juTV"
         app:layout_constraintEnd_toStartOf="@+id/saTV"
@@ -95,8 +110,9 @@
 
     <TextView
         android:id="@+id/saTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="25sp"
+        android:layout_height="25sp"
+        android:gravity="center"
         android:text="@string/sa"
         app:layout_constraintBottom_toBottomOf="@+id/viTV"
         app:layout_constraintEnd_toStartOf="@+id/doTV"
@@ -106,8 +122,9 @@
 
     <TextView
         android:id="@+id/doTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="25sp"
+        android:layout_height="25sp"
+        android:gravity="center"
         android:text="@string/dom"
         app:layout_constraintBottom_toBottomOf="@+id/saTV"
         app:layout_constraintEnd_toEndOf="parent"

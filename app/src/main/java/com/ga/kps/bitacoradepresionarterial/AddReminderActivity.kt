@@ -40,6 +40,7 @@ class AddReminderActivity : AppCompatActivity() {
         ab!!.setDisplayHomeAsUpEnabled(true)
         title = getString(R.string.anadir_recordatorio)
 
+        horaRecordatorioBT.text = sdfHora.format(calendario.time)
         recordatorioViewModel = ViewModelProvider(this).get(RecordatorioViewModel::class.java)
         recordatorio = Recordatorio(0)
 
@@ -97,7 +98,7 @@ class AddReminderActivity : AppCompatActivity() {
     fun onCheckboxClicked(view: View) {
         if (view is CheckBox) {
             val checked: Boolean = view.isChecked
-
+            Log.d("CNEvento", "CB presionado")
             when(view.id){
                 R.id.luCB -> {
                     if(checked){

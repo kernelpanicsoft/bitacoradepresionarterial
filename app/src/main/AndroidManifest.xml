@@ -9,10 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_bpa_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ReminderDetailActivity"></activity>
+        <activity android:name=".ReminderDetailActivity"/>
         <activity android:name=".AddReminderActivity" />
         <activity android:name=".SettingsActivity" />
-        <activity android:name=".RemainderDetailsActivity" />
         <activity android:name=".ShotDetailActivity" />
         <activity android:name=".AddShotActivity" />
         <activity android:name=".UserDetailsActivity" />

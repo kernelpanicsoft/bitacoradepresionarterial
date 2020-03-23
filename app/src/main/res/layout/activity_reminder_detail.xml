@@ -1,9 +1,276 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ReminderDetailActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/tipoRecordatorioCV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tipoRecordatorioLabelTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/tipo_de_recordatorio"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/iconoTipoREcordatorioIV"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_marginStart="8dp"
+                        android:src="@drawable/ic_pill"
+                        android:tint="@color/colorAccent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tipoRecordatorioLabelTV" />
+
+
+                    <TextView
+                        android:id="@+id/tipoRecordatorioTV"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:text="Toma de presión arterial"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/iconoTipoREcordatorioIV"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/iconoTipoREcordatorioIV"
+                        app:layout_constraintTop_toTopOf="@+id/iconoTipoREcordatorioIV" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/horaDiasCV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tipoRecordatorioCV">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp">
+
+                    <TextView
+                        android:id="@+id/horaDiasTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/hora_y_dias_repite"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/iconoHora"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:src="@drawable/ic_clock_outline"
+                        android:tint="@color/colorAccent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/horaDiasTV" />
+
+                    <TextView
+                        android:id="@+id/horaRecordatorioTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="10:00 AM"
+                        app:layout_constraintBottom_toBottomOf="@+id/iconoHora"
+                        app:layout_constraintStart_toEndOf="@+id/iconoHora"
+                        app:layout_constraintTop_toTopOf="@+id/iconoHora" />
+
+                    <TextView
+                        android:id="@+id/luTV"
+                        android:layout_width="25sp"
+                        android:layout_height="25sp"
+                        android:gravity="center"
+                        android:text="@string/L"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/maTV"
+                        app:layout_constraintHorizontal_bias="0.5"
+
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/iconoHora" />
+
+                    <TextView
+                        android:id="@+id/maTV"
+                        android:layout_width="25sp"
+                        android:layout_height="25sp"
+                        android:gravity="center"
+                        android:text="@string/ma"
+                        app:layout_constraintBottom_toBottomOf="@+id/luTV"
+                        app:layout_constraintEnd_toStartOf="@+id/miTV"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/luTV"
+                        app:layout_constraintTop_toTopOf="@+id/luTV" />
+
+                    <TextView
+                        android:id="@+id/miTV"
+                        android:layout_width="25sp"
+                        android:layout_height="25sp"
+                        android:gravity="center"
+                        android:text="@string/ma"
+                        app:layout_constraintBottom_toBottomOf="@+id/maTV"
+                        app:layout_constraintEnd_toStartOf="@+id/juTV"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/maTV"
+                        app:layout_constraintTop_toTopOf="@+id/maTV" />
+
+                    <TextView
+                        android:id="@+id/juTV"
+                        android:layout_width="25sp"
+                        android:layout_height="25sp"
+                        android:gravity="center"
+                        android:text="@string/ju"
+                        app:layout_constraintBottom_toBottomOf="@+id/miTV"
+                        app:layout_constraintEnd_toStartOf="@+id/viTV"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/miTV"
+                        app:layout_constraintTop_toTopOf="@+id/miTV" />
+
+                    <TextView
+                        android:id="@+id/viTV"
+                        android:layout_width="25sp"
+                        android:layout_height="25sp"
+                        android:gravity="center"
+                        android:text="@string/vi"
+                        app:layout_constraintBottom_toBottomOf="@+id/juTV"
+                        app:layout_constraintEnd_toStartOf="@+id/saTV"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/juTV"
+                        app:layout_constraintTop_toTopOf="@+id/juTV" />
+
+                    <TextView
+                        android:id="@+id/saTV"
+                        android:layout_width="25sp"
+                        android:layout_height="25sp"
+                        android:gravity="center"
+                        android:text="@string/sa"
+                        app:layout_constraintBottom_toBottomOf="@+id/viTV"
+                        app:layout_constraintEnd_toStartOf="@+id/doTV"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/viTV"
+                        app:layout_constraintTop_toTopOf="@+id/viTV" />
+
+                    <TextView
+                        android:id="@+id/doTV"
+                        android:layout_width="25sp"
+                        android:layout_height="25sp"
+                        android:gravity="center"
+                        android:text="@string/dom"
+                        app:layout_constraintBottom_toBottomOf="@+id/saTV"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/saTV"
+                        app:layout_constraintTop_toTopOf="@+id/saTV" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/horaDiasCV">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/iconoNotaIV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:src="@drawable/ic_note_text_outline"
+                        android:tint="@color/colorAccent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/notaLabelTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/nota_label"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/iconoNotaIV"
+                        app:layout_constraintStart_toEndOf="@+id/iconoNotaIV"
+                        app:layout_constraintTop_toTopOf="@+id/iconoNotaIV" />
+
+                    <TextView
+                        android:id="@+id/notaContentTV"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:text="Lorem ipsum es el texto que se usa habitualmente en diseño gráfico en demostraciones de tipografías o de borradores de diseño para probar el diseño visual antes de insertar el texto final."
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/iconoNotaIV" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout >

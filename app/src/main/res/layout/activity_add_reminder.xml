@@ -42,8 +42,8 @@
 
             <ImageView
                 android:id="@+id/tipoRecordatorioIV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:src="@drawable/ic_heart_pulse"
@@ -57,6 +57,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tipoRecordatorioIV"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/tipoRecordatorioIV"
                 app:layout_constraintTop_toTopOf="@+id/tipoRecordatorioIV" />
@@ -189,7 +190,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/miCB"
                     app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/luCB" />
+                    app:layout_constraintStart_toEndOf="@+id/luCB"
+                    android:onClick="onCheckboxClicked"/>
 
                 <CheckBox
                     android:id="@+id/miCB"
@@ -198,7 +200,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/juCB"
                     app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/maCB" />
+                    app:layout_constraintStart_toEndOf="@+id/maCB"
+                    android:onClick="onCheckboxClicked"/>
 
                 <CheckBox
                     android:id="@+id/juCB"
@@ -207,7 +210,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/viCB"
                     app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/miCB" />
+                    app:layout_constraintStart_toEndOf="@+id/miCB"
+                    android:onClick="onCheckboxClicked"/>
 
                 <CheckBox
                     android:id="@+id/viCB"
@@ -216,7 +220,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/saCB"
                     app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/juCB" />
+                    app:layout_constraintStart_toEndOf="@+id/juCB"
+                    android:onClick="onCheckboxClicked"/>
 
                 <CheckBox
                     android:id="@+id/saCB"
@@ -225,7 +230,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/doCB"
                     app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/viCB" />
+                    app:layout_constraintStart_toEndOf="@+id/viCB"
+                    android:onClick="onCheckboxClicked"/>
 
                 <CheckBox
                     android:id="@+id/doCB"
@@ -234,14 +240,15 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/saCB" />
+                    app:layout_constraintStart_toEndOf="@+id/saCB"
+                    android:onClick="onCheckboxClicked"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <ImageView
                 android:id="@+id/notaIV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_marginStart="16dp"
                 android:src="@drawable/ic_note_text_outline"
                 android:tint="@color/colorAccent"

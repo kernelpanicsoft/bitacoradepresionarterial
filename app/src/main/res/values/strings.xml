@@ -20,7 +20,10 @@
     <string name="anadir_toma">Añadir toma</string>
     <string name="sistolica">Sistólica:</string>
     <string name="diastolica">Diastólica:</string>
+    <string name="sistolica_label">Sistólica</string>
+    <string name="diastolica_label">Diastólica</string>
     <string name="pulso">Pulso:</string>
+    <string name="pulso_label">Pulso</string>
     <string name="extremidad">Extremidad:</string>
     <string name="posicion">Posición:</string>
     <string name="momento_dia">Momento del día:</string>
@@ -64,6 +67,13 @@
     <string name="sa">S</string>
     <string name="dom">D</string>
     <string name="mensaje_anadir_recordatorio">Es necesario elegir al menos un día de repetición para el recordatorio.</string>
+    <string name="detalles_de_recordatorio">Detalles de recordatorio</string>
+    <string name="hora_y_dias_repite">Hora y días que se repite</string>
+    <string name="tipo_de_recordatorio">Tipo de recordatorio</string>
+    <string name="esta_seguro_eliminar_recordatorio">¿Está seguro de eliminar este recordatorio?</string>
+    <string name="eliminar_recordatorio_mensaje">Eliminar el recordatorio es un proceso irreversible, ¿desea continuar?</string>
+    <string name="ver_detalles">Ver detalles</string>
+    <string name="distribucion_de_las_valoraciones">Distribución de las valoraciones:</string>
     <array name="generos">
         <item>Masculino</item>
         <item>Femenino</item>
