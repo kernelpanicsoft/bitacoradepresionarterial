@@ -3,6 +3,7 @@ package room.components.repositories
 import android.app.Application
 import android.os.AsyncTask
 import androidx.lifecycle.LiveData
+import model.CantidadTomasPorValoracion
 import model.Toma
 import room.components.BPADataBase
 import room.components.daos.TomaDAO
@@ -34,6 +35,10 @@ class TomaRepository(application: Application) {
 
     fun getToma(id: Int) : LiveData<Toma>{
         return tomaDao.getToma(id)
+    }
+
+    fun getCantidadPorValoracion(id: Int) : LiveData<List<CantidadTomasPorValoracion>> {
+        return tomaDao.getValoracionTomasUsuario(id)
     }
 
     private class InsertTomaAsyncTask constructor(private val tomaDAO: TomaDAO) : AsyncTask<Toma, Void, Void>(){

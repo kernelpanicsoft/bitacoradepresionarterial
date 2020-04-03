@@ -22,5 +22,6 @@ data class Toma (@PrimaryKey(autoGenerate = true) val id: Int,
                  var extremidad: Int? = null,
                  var nota: String? = null,
                  var momento: Int? = null,
+                 var valoracion: Int? = null,
                  var usuario_id: Int ? = null
                  )

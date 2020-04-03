@@ -3,6 +3,7 @@ package room.components.viewmodels
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import model.CantidadTomasPorValoracion
 import model.Toma
 import room.components.repositories.TomaRepository
 
@@ -29,6 +30,9 @@ class TomaViewModel(application: Application) : AndroidViewModel(application) {
         return repository.getToma(id)
     }
 
+    fun getCantidadPorValoracion(id: Int) : LiveData<List<CantidadTomasPorValoracion>>{
+        return repository.getCantidadPorValoracion(id)
+    }
 
 
 

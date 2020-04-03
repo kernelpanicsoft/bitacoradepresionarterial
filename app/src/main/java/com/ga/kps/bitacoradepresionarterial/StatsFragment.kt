@@ -3,6 +3,7 @@ package com.ga.kps.bitacoradepresionarterial
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,15 +15,17 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import com.github.mikephil.charting.components.Description
+import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.github.mikephil.charting.listener.OnChartGestureListener
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
+import com.github.mikephil.charting.utils.MPPointF
 import kotlinx.android.synthetic.main.fragment_stats.*
+import model.CantidadTomasPorValoracion
 import model.Toma
 import room.components.viewmodels.TomaViewModel
 import java.text.DecimalFormat
@@ -58,6 +61,22 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
         statsChartLC.setTouchEnabled(true)
         statsChartLC.setOnChartValueSelectedListener(this)
 
+        with(distributionPC){
+            setEntryLabelTextSize(14f)
+            description.isEnabled = false
+            legend.isEnabled = true
+            isDrawHoleEnabled = false
+            setUsePercentValues(true)
+            holeRadius = 0f
+            legend.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
+            legend.horizontalAlignment = Legend.LegendHorizontalAlignment.LEFT
+            legend.orientation = Legend.LegendOrientation.VERTICAL
+            legend.setDrawInside(false)
+
+        }
+
+
+
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
         val usuarioID = sharedPref.getInt("actualUserID", -1)
 
@@ -66,6 +85,11 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
         shots = tomaViewModel.getTomasUsuario(usuarioID)
         shots.observe(viewLifecycleOwner, Observer {
             setData(it)
+
+        })
+
+        tomaViewModel.getCantidadPorValoracion(usuarioID).observe(viewLifecycleOwner, Observer {
+            setDataForPieChart(it)
         })
 
 
@@ -74,6 +98,8 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
             nav.putExtra("SHOT_ID", currenctShotID)
             startActivity(nav)
         }
+
+
     }
 
     private fun setData(shotList: List<Toma>){
@@ -148,4 +174,34 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
         currenctShotID = shot.id
     }
 
+    private fun setDataForPieChart(shots: List<CantidadTomasPorValoracion>){
+        val pieEntries = ArrayList<PieEntry>()
+        for(i in shots){
+            pieEntries.add(
+                PieEntry(i.cantidad!!.toFloat(),getNameOfType(i.categoria))
+            )
+        }
+
+        val dataSet = PieDataSet(pieEntries,"")
+        dataSet.setDrawIcons(false)
+        dataSet.sliceSpace = 3f
+        dataSet.iconsOffset = MPPointF(0f, 40f)
+        dataSet.selectionShift = 5f
+        dataSet.valueTextSize = 12f
+        dataSet.valueTextColor = Color.WHITE
+        dataSet.valueFormatter = PercentFormatter(distributionPC)
+
+        val colors: ArrayList<Int>  = ArrayList()
+        val colorsArray = resources.getIntArray(R.array.colors_for_evaluation)
+        for(a in colorsArray) colors.add(a)
+        dataSet.colors = colors
+        val data = PieData(dataSet)
+        distributionPC.data = data
+        distributionPC.invalidate()
+    }
+
+    private fun getNameOfType(value: Int?) : String{
+        val valoracionArray = context?.resources?.getStringArray(R.array.presion_arterial)
+        return valoracionArray!![value!!]
+    }
 }

@@ -24,3 +24,5 @@ const val REGISTRAR_USUARIO = 1000
 const val VISUALIZAR_USUARIO = 1001
 const val ELIMINAR_USUARIO = 1002
 const val SIN_USUARIO_ACTIVO = -1
+
+const val DEFAULT_NOTIFICATION_CHANEL_ID = "primary_notification_channel"

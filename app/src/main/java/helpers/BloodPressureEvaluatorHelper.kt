@@ -25,6 +25,24 @@ class BloodPressureEvaluatorHelper (val context: Context) {
         }
     }
 
+    fun getBloodPressureEvalutationForDB(sys: Int, dia: Int) : Int{
+        return if(sys < 90 || dia < 60){
+            Valoracion.HIPOTENSION
+        }else if(sys <= 120 && dia <= 80){
+            Valoracion.NORMAL
+        }else if(sys <= 129 && dia <= 80){
+            Valoracion.PREHIPERTENSION
+        }else if(sys <= 139 || dia <= 89){
+            Valoracion.HIPERTENSION_1
+        }else if(sys >= 140 || dia >= 90){
+            Valoracion.HIPERTENSION_2
+        }else if(sys >= 180 || dia >= 120){
+            Valoracion.CRISIS
+        }else{
+            Valoracion.HIPOTENSION
+        }
+    }
+
     fun getBloodPressureColor(valuation : String) : Int{
         return when(valuation){
             bloodPressureCategories[0] -> ContextCompat.getColor(context,R.color.hipotension)

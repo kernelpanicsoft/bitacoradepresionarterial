@@ -2,6 +2,7 @@ package room.components.daos
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import model.CantidadTomasPorValoracion
 import model.Toma
 
 @Dao
@@ -24,6 +25,8 @@ interface TomaDAO {
     @Query("SELECT * FROM Toma WHERE Toma.usuario_id = :id")
     fun getTomasUsuario(id: Int) : LiveData<List<Toma>>
 
+    @Query("SELECT Toma.valoracion as categoria, COUNT(Toma.valoracion) as cantidad FROM Toma WHERE Toma.usuario_id = :id GROUP BY Toma.valoracion")
+    fun getValoracionTomasUsuario(id: Int) : LiveData<List<CantidadTomasPorValoracion>>
 
 
 }

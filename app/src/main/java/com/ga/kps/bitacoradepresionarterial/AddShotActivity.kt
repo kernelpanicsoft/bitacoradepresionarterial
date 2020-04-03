@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
+import helpers.BloodPressureEvaluatorHelper
 import kotlinx.android.synthetic.main.activity_add_shot.*
 import model.Toma
 import room.components.viewmodels.TomaViewModel
@@ -24,7 +25,7 @@ class AddShotActivity : AppCompatActivity() {
     val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US)
     val sdfHora = SimpleDateFormat("h:mm a")
     val sdfCalendario = SimpleDateFormat("EEE, MMM d, yyyy")
-
+    lateinit var evaluator : BloodPressureEvaluatorHelper
     var posicion = 0
     var extremidad = 0
     var momento = 0
@@ -40,7 +41,7 @@ class AddShotActivity : AppCompatActivity() {
         ab!!.setDisplayHomeAsUpEnabled(true)
         title = getString(R.string.anadir_toma)
 
-
+        evaluator = BloodPressureEvaluatorHelper(this)
         tomasViewModel = ViewModelProvider(this).get(TomaViewModel::class.java)
 
 
@@ -151,6 +152,7 @@ class AddShotActivity : AppCompatActivity() {
                 toma.momento = momento
                 toma.fecha_hora = sdf.format(calendario.time)
                 toma.nota = notaET.text.toString()
+                toma.valoracion = evaluator.getBloodPressureEvalutationForDB (sistolicaET.text.toString().toInt(), diastolicaET.text.toString().toInt() )
                 tomasViewModel.insert(toma)
 
                 finish()
