@@ -18,6 +18,8 @@ import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import helpers.ELIMINAR_USUARIO
 import helpers.SIN_USUARIO_ACTIVO
 import kotlinx.android.synthetic.main.activity_main.*
+import notifications.system.NotificationsManager
+
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -144,6 +146,13 @@ class MainActivity : AppCompatActivity() {
                 drawer_layout.openDrawer(GravityCompat.START)
             }
             R.id.itemExport ->{
+                val notificationManager = NotificationsManager(this)
+                notificationManager.sendNotificationForReminder("Hola mundo","Como estan")
+            }
+            R.id.itemSort ->{
+
+            }
+            R.id.itemFilter ->{
 
             }
 

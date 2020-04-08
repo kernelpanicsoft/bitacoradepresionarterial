@@ -104,6 +104,26 @@ class ShotDetailActivity : AppCompatActivity() {
 
         limbLabelTV.text = shotEvaluatorHelper.getLimbString(toma.extremidad!!)
         posicionLabelTV.text = shotEvaluatorHelper.getPositionString(toma.posicion!!)
+
+        when(toma.extremidad){
+            0 -> LimbIV.setImageResource(R.drawable.ic_man_left_arm)
+            1 -> LimbIV.setImageResource(R.drawable.ic_man_right_arm)
+            2 -> LimbIV.setImageResource(R.drawable.ic_man_left_wirst)
+            3 -> LimbIV.setImageResource(R.drawable.ic_man_right_wirst)
+            4 -> LimbIV.setImageResource(R.drawable.ic_man_left_ankle)
+            5 -> LimbIV.setImageResource(R.drawable.ic_man_right_ankle)
+            6 -> LimbIV.setImageResource(R.drawable.ic_man_left_tight_copia)
+            7 -> LimbIV.setImageResource(R.drawable.ic_man_right_tight)
+        }
+
+        when(toma.posicion){
+            0 -> positionIV.setImageResource(R.drawable.ic_man_sitting)
+            1 -> positionIV.setImageResource(R.drawable.ic_man_lying)
+            2 -> positionIV.setImageResource(R.drawable.ic_man_recumbing)
+            3 -> positionIV.setImageResource(R.drawable.ic_man_standing)
+        }
+
+
         momentLabelTV.text = shotEvaluatorHelper.getMomentString(toma.momento!!)
         valorationTV.text =  shotEvaluation.getBloodPressureEvaluation(toma.sistolica!!,toma.diastolica!!)
         valorationTV.setTextColor(shotEvaluation.getBloodPressureColor(shotEvaluation.getBloodPressureEvaluation(toma.sistolica!!,toma.diastolica!!)))

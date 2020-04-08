@@ -20,7 +20,7 @@ class NotificationsManager(val context: Context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = "BPA_notifiaction_channel"
             val descriptionText = "Allows BPA display notifications"
-            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val importance = NotificationManager.IMPORTANCE_HIGH
             val channel = NotificationChannel(DEFAULT_NOTIFICATION_CHANEL_ID, name, importance).apply {
                 description = descriptionText
             }
