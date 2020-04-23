@@ -1,11 +1,13 @@
 package com.ga.kps.bitacoradepresionarterial
 
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.preference.PreferenceManager
-import android.util.Log
+import androidx.preference.PreferenceManager
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -14,13 +16,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
-import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import helpers.ELIMINAR_USUARIO
+import helpers.Ordenes
 import helpers.SIN_USUARIO_ACTIVO
 import kotlinx.android.synthetic.main.activity_main.*
 import notifications.system.NotificationsManager
 
 class MainActivity : AppCompatActivity() {
+    lateinit var sharedPref: SharedPreferences
+    private lateinit var adapter: ViewPagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,7 +95,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
         val usuarioID = sharedPref.getInt("actualUserID", -1)
 
         if(usuarioID == -1){
@@ -102,10 +106,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupViewPager(pager: ViewPager){
-        val adapter = ViewPagerAdapter(supportFragmentManager)
-        adapter.addFragment(ShotsFragment(),"Tomas")
-        adapter.addFragment(StatsFragment(),"Estadisticas")
-        adapter.addFragment(RemindersFragment(),"Recordatorios")
+        adapter = ViewPagerAdapter(supportFragmentManager)
+        adapter.addFragment(ShotsFragment(),getString(R.string.tomas))
+        adapter.addFragment(StatsFragment(),getString(R.string.estadisticas))
+        adapter.addFragment(RemindersFragment(),getString(R.string.recordatorios))
 
         pager.adapter = adapter
 
@@ -128,6 +132,7 @@ class MainActivity : AppCompatActivity() {
         fun addFragment(fragment: Fragment, title: String){
             mFragmentList.add(fragment)
             mFragmentTitleList.add(title)
+
         }
 
         override fun getPageTitle(position: Int): CharSequence{
@@ -150,9 +155,89 @@ class MainActivity : AppCompatActivity() {
                 notificationManager.sendNotificationForReminder("Hola mundo","Como estan")
             }
             R.id.itemSort ->{
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle(getString(R.string.ordenar))
+                builder.setItems(R.array.ordenes, DialogInterface.OnClickListener { dialog, which ->
+                    with(sharedPref.edit()){
+                        when(which){
+                            0 ->{
+                                putInt("ShotsOrder",Ordenes.PREDETERMINADO)
+                                val shotsFragment = adapter.getItem(0) as ShotsFragment
+                                shotsFragment.displaySortedShotList(0)
+                                val statsFragment = adapter.getItem(1) as StatsFragment
+                                statsFragment.getSortedShotListForChart(0)
 
+                            }
+                            1 -> {
+                                putInt("ShotsOrder",Ordenes.ANTIGUEDAD_ASC)
+                                val shotsFragment = adapter.getItem(0) as ShotsFragment
+                                shotsFragment.displaySortedShotList(1)
+                                val statsFragment = adapter.getItem(1) as StatsFragment
+                                statsFragment.getSortedShotListForChart(1)
+                            }
+                            2 -> {
+                                putInt("ShotsOrder",Ordenes.ANTIGUEDAD_DESC)
+                                val shotsFragment = adapter.getItem(0) as ShotsFragment
+                                shotsFragment.displaySortedShotList(2)
+                                val statsFragment = adapter.getItem(1) as StatsFragment
+                                statsFragment.getSortedShotListForChart(2)
+                            }
+                            else -> putInt("ShotsOrder",Ordenes.PREDETERMINADO)
+                        }
+                        apply()
+                    }
+
+                })
+
+                val dialog = builder.create()
+                dialog.show()
             }
             R.id.itemFilter ->{
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle(getString(R.string.filtrar_tomas))
+                builder.setItems(R.array.filtros, DialogInterface.OnClickListener { dialog, which ->
+                    when(which){
+                        0 -> {
+
+                        }
+                        1 -> {
+                           AlertDialog.Builder(this).apply {
+                                setTitle(getString(R.string.por_evaluacion))
+                                setItems(R.array.presion_arterial, { dialog, which ->
+
+                                })
+                            }.create().show()
+                        }
+                        2 -> {
+                            AlertDialog.Builder(this).apply {
+                                setTitle(getString(R.string.por_momento_dia))
+                                setItems(R.array.presion_arterial, { dialog, which ->
+
+                                })
+                            }.create().show()
+                        }
+                        3 -> {
+                            AlertDialog.Builder(this).apply {
+                                setTitle(getString(R.string.por_extremidad))
+                                setItems(R.array.presion_arterial, { dialog, which ->
+
+                                })
+                            }.create().show()
+                        }
+
+                        4 -> {
+                            AlertDialog.Builder(this).apply {
+                                setTitle(getString(R.string.por_posicion))
+                                setItems(R.array.presion_arterial, { dialog, which ->
+
+                                })
+                            }.create().show()
+                        }
+                    }
+                })
+
+                val dialog = builder.create()
+                dialog.show()
 
             }
 

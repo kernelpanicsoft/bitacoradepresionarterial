@@ -33,6 +33,14 @@ class TomaRepository(application: Application) {
         return tomaDao.getTomasUsuario(id)
     }
 
+    fun getTomasUsuarioAsc(id: Int): LiveData<List<Toma>>{
+        return tomaDao.getTomasUsuarioAsc(id)
+    }
+
+    fun getTomasUsuarioDesc(id: Int): LiveData<List<Toma>>{
+        return tomaDao.getTomasUsuarioDesc(id)
+    }
+
     fun getToma(id: Int) : LiveData<Toma>{
         return tomaDao.getToma(id)
     }
@@ -40,6 +48,11 @@ class TomaRepository(application: Application) {
     fun getCantidadPorValoracion(id: Int) : LiveData<List<CantidadTomasPorValoracion>> {
         return tomaDao.getValoracionTomasUsuario(id)
     }
+
+    fun getTomasPorValoracion(id: Int, valoracion: Int, orden: Int) : LiveData<List<Toma>>{
+        return tomaDao.getTomasUsuarioPorValoracion(id,valoracion,orden)
+    }
+
 
     private class InsertTomaAsyncTask constructor(private val tomaDAO: TomaDAO) : AsyncTask<Toma, Void, Void>(){
         override fun doInBackground(vararg params: Toma): Void? {

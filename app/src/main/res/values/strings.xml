@@ -74,6 +74,15 @@
     <string name="eliminar_recordatorio_mensaje">Eliminar el recordatorio es un proceso irreversible, ¿desea continuar?</string>
     <string name="ver_detalles">Ver detalles</string>
     <string name="distribucion_de_las_valoraciones">Distribución de las valoraciones:</string>
+    <string name="filtrar_tomas">Filtrar tomas:</string>
+    <string name="ordenar">Ordenar:</string>
+    <string name="tomas">Tomas</string>
+    <string name="estadisticas">Estadisticas</string>
+    <string name="recordatorios">Recordatorios</string>
+    <string name="por_evaluacion">Por evaluación:</string>
+    <string name="por_momento_dia">Por momento del día:</string>
+    <string name="por_extremidad">Por extremidad:</string>
+    <string name="por_posicion">Por posición:</string>
     <array name="generos">
         <item>Masculino</item>
         <item>Femenino</item>
@@ -124,5 +133,19 @@
     <string-array name="tipos_recordatorio">
         <item>Toma de presión arterial</item>
         <item>Toma de medicamento</item>
+    </string-array>
+
+    <string-array name="filtros">
+        <item>Sin filtro</item>
+        <item>Por evaluación</item>
+        <item>Por momento del día</item>
+        <item>Por extremidad</item>
+        <item>Por posición</item>
+    </string-array>
+
+    <string-array name="ordenes">
+        <item>Orden predeterminado</item>
+        <item>Más recientes primero</item>
+        <item>Más antiguas primero</item>
     </string-array>
 </resources>

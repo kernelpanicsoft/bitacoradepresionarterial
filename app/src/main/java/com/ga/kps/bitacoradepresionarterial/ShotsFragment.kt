@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -32,6 +33,7 @@ class ShotsFragment : Fragment(){
 
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
         val usuarioID = sharedPref.getInt("actualUserID", -1)
+        val order = sharedPref.getInt("ShotsOrder",0)
 
         val mLayoutManager = LinearLayoutManager(
             context,
@@ -43,9 +45,9 @@ class ShotsFragment : Fragment(){
 
         val adapter = ShotsAdapter(context)
         tomasViewModel = ViewModelProvider(this).get(TomaViewModel::class.java)
-        tomasViewModel.getTomasUsuario(usuarioID).observe(this, Observer {
+
+        tomasViewModel.getSortedShotList(usuarioID,order).observe(this, Observer {
             adapter.submitList(it)
-            Log.d("Lista", it.toString())
         })
 
         RV.adapter = adapter
@@ -57,4 +59,22 @@ class ShotsFragment : Fragment(){
             startActivity(nav)
         })
     }
+
+    fun displaySortedShotList(order: Int){
+        val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
+        val usuarioID = sharedPref.getInt("actualUserID", -1)
+
+        val adapter = ShotsAdapter(context)
+
+        tomasViewModel.getSortedShotList(usuarioID,order).observe(this, Observer {
+            adapter.submitList(it)
+
+        })
+
+        Toast.makeText(context,"Orden: " + order, Toast.LENGTH_SHORT).show()
+
+
+    }
+
+
 }

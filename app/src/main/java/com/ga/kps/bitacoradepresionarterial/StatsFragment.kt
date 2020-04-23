@@ -3,7 +3,6 @@ package com.ga.kps.bitacoradepresionarterial
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,10 +30,10 @@ import room.components.viewmodels.TomaViewModel
 import java.text.DecimalFormat
 import kotlin.math.min
 import kotlin.math.roundToInt
+import android.util.Log
 
 class StatsFragment : Fragment(), OnChartValueSelectedListener {
     lateinit var tomaViewModel: TomaViewModel
-    lateinit var shots: LiveData<List<Toma>>
     var currenctShotID : Int = -1
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -70,7 +69,7 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
             holeRadius = 0f
             legend.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
             legend.horizontalAlignment = Legend.LegendHorizontalAlignment.LEFT
-            legend.orientation = Legend.LegendOrientation.VERTICAL
+            legend.orientation = Legend.LegendOrientation.HORIZONTAL
             legend.setDrawInside(false)
 
         }
@@ -79,11 +78,10 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
 
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
         val usuarioID = sharedPref.getInt("actualUserID", -1)
-
+        val order = sharedPref.getInt("ShotsOrder",0)
 
         tomaViewModel = ViewModelProvider(this).get(TomaViewModel::class.java)
-        shots = tomaViewModel.getTomasUsuario(usuarioID)
-        shots.observe(viewLifecycleOwner, Observer {
+        tomaViewModel.getSortedShotList(usuarioID,order).observe(viewLifecycleOwner, Observer {
             setData(it)
 
         })
@@ -161,8 +159,12 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
     }
 
     override fun onValueSelected(e: Entry?, h: Highlight?) {
-        tomaViewModel.getToma(e?.data as Int).observe(viewLifecycleOwner, Observer {
-            populateShotDataToUI(it)
+        tomaViewModel.getToma(e?.data as Int).observe(viewLifecycleOwner,object:   NonNullObserver<Toma>() {
+
+            override fun onNonNullChanged(toma: Toma) {
+                populateShotDataToUI(toma)
+            }
+
         })
     }
 
@@ -174,12 +176,15 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
         currenctShotID = shot.id
     }
 
+
     private fun setDataForPieChart(shots: List<CantidadTomasPorValoracion>){
         val pieEntries = ArrayList<PieEntry>()
         for(i in shots){
             pieEntries.add(
                 PieEntry(i.cantidad!!.toFloat(),getNameOfType(i.categoria))
+
             )
+            Log.d("Cantidad", i.cantidad.toString())
         }
 
         val dataSet = PieDataSet(pieEntries,"")
@@ -203,5 +208,23 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
     private fun getNameOfType(value: Int?) : String{
         val valoracionArray = context?.resources?.getStringArray(R.array.presion_arterial)
         return valoracionArray!![value!!]
+    }
+
+    abstract class NonNullObserver<Toma> : Observer<Toma>{
+        abstract fun onNonNullChanged(toma: Toma)
+
+        override fun onChanged(t: Toma) {
+            t?.let { onNonNullChanged(it) }
+        }
+    }
+
+    fun getSortedShotListForChart(order: Int){
+        val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
+        val usuarioID = sharedPref.getInt("actualUserID", -1)
+
+        tomaViewModel.getSortedShotList(usuarioID,order).observe(viewLifecycleOwner, Observer {
+            setData(it)
+
+        })
     }
 }
