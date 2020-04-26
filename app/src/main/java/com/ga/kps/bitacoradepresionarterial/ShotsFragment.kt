@@ -13,6 +13,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import helpers.Filtros
+import helpers.Ordenes
 import room.components.viewmodels.TomaViewModel
 
 class ShotsFragment : Fragment(){
@@ -60,19 +62,29 @@ class ShotsFragment : Fragment(){
         })
     }
 
-    fun displaySortedShotList(order: Int){
+    fun displaySortedShotList(){
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
         val usuarioID = sharedPref.getInt("actualUserID", -1)
-
+        val filter = sharedPref.getInt("ShotFilter", Filtros.PREDETERMINADO)
+        val order= sharedPref.getInt("ShotsOrder",Ordenes.PREDETERMINADO)
         val adapter = ShotsAdapter(context)
 
-        tomasViewModel.getSortedShotList(usuarioID,order).observe(this, Observer {
+        tomasViewModel.getFilteredShotList(usuarioID,filter,order).observe(this, Observer {
+            adapter.submitList(it)
+            Log.d("ListaFiltrada: ",it.size.toString() + "# " +it.toString())
+        })
+    }
+
+    fun displayFilteredShotList(filter: Int, subFilter: Int, order: Int){
+        val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
+        val usuarioID = sharedPref.getInt("actualUserID", -1)
+        val adapter = ShotsAdapter(context)
+/*
+        tomasViewModel.getFilteredShotList(usuarioID,filter,subFilter, order).observe(this, Observer {
             adapter.submitList(it)
 
         })
-
-        Toast.makeText(context,"Orden: " + order, Toast.LENGTH_SHORT).show()
-
+        */
 
     }
 

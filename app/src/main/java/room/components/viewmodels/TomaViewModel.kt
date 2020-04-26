@@ -1,10 +1,13 @@
 package room.components.viewmodels
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import helpers.Filtros
 import helpers.Ordenes
+import helpers.Valoracion
 import model.CantidadTomasPorValoracion
 import model.Toma
 import room.components.repositories.TomaRepository
@@ -58,6 +61,38 @@ class TomaViewModel(application: Application) : AndroidViewModel(application) {
                     }
             }
         }
+
+        return shots
+    }
+
+    fun getFilteredShotList(id: Int, filter: Int, order: Int) : LiveData<List<Toma>>{
+            when(filter / 1000){
+                Filtros.PREDETERMINADO -> {
+                    shots.addSource(repository.getTomasUsuario(id)){values ->
+                        shots.value = values
+                    }
+                }
+                Filtros.VALORACION -> {
+                    shots.addSource(repository.getTomasPorValoracion(id,filter,order)){ values ->
+                        shots.value = values
+                    }
+                }
+                Filtros.MOMENTO -> {
+                    shots.addSource(repository.getTomasPorMomento(id,filter,order)){ values ->
+                        shots.value = values
+                    }
+                }
+                Filtros.EXTREMIDAD -> {
+                    shots.addSource(repository.getTomasPorExtremidad(id,filter,order)){ values ->
+                        shots.value = values
+                    }
+                }
+                Filtros.POSICION -> {
+                    shots.addSource(repository.getTomasPorPosicion(id,filter,order)){ values ->
+                        shots.value = values
+                    }
+                }
+            }
 
         return shots
     }

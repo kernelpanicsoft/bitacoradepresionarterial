@@ -16,9 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
-import helpers.ELIMINAR_USUARIO
-import helpers.Ordenes
-import helpers.SIN_USUARIO_ACTIVO
+import helpers.*
 import kotlinx.android.synthetic.main.activity_main.*
 import notifications.system.NotificationsManager
 
@@ -162,25 +160,12 @@ class MainActivity : AppCompatActivity() {
                         when(which){
                             0 ->{
                                 putInt("ShotsOrder",Ordenes.PREDETERMINADO)
-                                val shotsFragment = adapter.getItem(0) as ShotsFragment
-                                shotsFragment.displaySortedShotList(0)
-                                val statsFragment = adapter.getItem(1) as StatsFragment
-                                statsFragment.getSortedShotListForChart(0)
-
                             }
                             1 -> {
                                 putInt("ShotsOrder",Ordenes.ANTIGUEDAD_ASC)
-                                val shotsFragment = adapter.getItem(0) as ShotsFragment
-                                shotsFragment.displaySortedShotList(1)
-                                val statsFragment = adapter.getItem(1) as StatsFragment
-                                statsFragment.getSortedShotListForChart(1)
                             }
                             2 -> {
                                 putInt("ShotsOrder",Ordenes.ANTIGUEDAD_DESC)
-                                val shotsFragment = adapter.getItem(0) as ShotsFragment
-                                shotsFragment.displaySortedShotList(2)
-                                val statsFragment = adapter.getItem(1) as StatsFragment
-                                statsFragment.getSortedShotListForChart(2)
                             }
                             else -> putInt("ShotsOrder",Ordenes.PREDETERMINADO)
                         }
@@ -196,43 +181,92 @@ class MainActivity : AppCompatActivity() {
                 val builder = AlertDialog.Builder(this)
                 builder.setTitle(getString(R.string.filtrar_tomas))
                 builder.setItems(R.array.filtros, DialogInterface.OnClickListener { dialog, which ->
-                    when(which){
-                        0 -> {
+                    sharedPref.edit().let {
 
+                        when (which) {
+                            0 -> {
+                                it.putInt("ShotFilter", Filtros.PREDETERMINADO)
+                                it.apply()
+                                updateDisplayedShots()
+                            }
+                            1 -> {
+                                AlertDialog.Builder(this).apply {
+                                    setTitle(getString(R.string.por_evaluacion))
+                                    setItems(R.array.presion_arterial) { dialog, which ->
+                                        when(which){
+                                            0 -> it.putInt("ShotFilter", Valoracion.HIPOTENSION)
+                                            1 -> it.putInt("ShotFilter", Valoracion.NORMAL)
+                                            2 -> it.putInt("ShotFilter", Valoracion.PREHIPERTENSION)
+                                            3 -> it.putInt("ShotFilter", Valoracion.HIPERTENSION_1)
+                                            4 -> it.putInt("ShotFilter", Valoracion.HIPERTENSION_2)
+                                            5 -> it.putInt("ShotFilter", Valoracion.CRISIS)
+                                        }
+                                        it.apply()
+                                        updateDisplayedShots()
+                                    }
+                                }
+                                    .create().show()
+                            }
+                            2 -> {
+                                AlertDialog.Builder(this).apply {
+                                    setTitle(getString(R.string.por_momento_dia))
+                                    setItems(R.array.momento) { dialog, which ->
+                                        when(which){
+                                            0 -> it.putInt("ShotFilter", Momento.ALEATORIO)
+                                            1 -> it.putInt("ShotFilter", Momento.DESPUES_DESPERTAR)
+                                            2 -> it.putInt("ShotFilter", Momento.ANTES_DORMIR)
+                                            3 -> it.putInt("ShotFilter", Momento.ANTES_MEDICAMENTO)
+                                            4 -> it.putInt("ShotFilter", Momento.DESPUES_MEDICAMENTO)
+                                            5 -> it.putInt("ShotFilter", Momento.ANTES_COMER)
+                                            6 -> it.putInt("ShotFilter", Momento.DESPUES_COMER)
+                                        }
+                                        it.apply()
+                                        updateDisplayedShots()
+                                    }
+                                }.create().show()
+                            }
+                            3 -> {
+                                AlertDialog.Builder(this).apply {
+                                    setTitle(getString(R.string.por_extremidad))
+                                    setItems(R.array.extremidades) { dialog, which ->
+                                        when(which){
+                                            0 -> it.putInt("ShotFilter", Extremidad.BRAZO_IZQUIERDO)
+                                            1 -> it.putInt("ShotFilter", Extremidad.BRAZO_DERECHO)
+                                            2 -> it.putInt("ShotFilter", Extremidad.MUNECA_IZQUIERDA)
+                                            3 -> it.putInt("ShotFilter", Extremidad.MUNECA_DERECHA)
+                                            4 -> it.putInt("ShotFilter", Extremidad.TOBILLO_IZQUIERDO)
+                                            5 -> it.putInt("ShotFilter", Extremidad.TOBILLO_DERECHO)
+                                            6 -> it.putInt("ShotFilter", Extremidad.MUSLO_IZQUIERDO)
+                                            7 -> it.putInt("ShotFilter", Extremidad.MUSLO_DERECHO)
+                                        }
+                                        it.apply()
+                                        updateDisplayedShots()
+                                    }
+                                }.create().show()
+                            }
+
+                            4 -> {
+                                AlertDialog.Builder(this).apply {
+                                    setTitle(getString(R.string.por_posicion))
+                                    setItems(R.array.posiciones) { dialog, which ->
+                                        when(which){
+                                            0 -> it.putInt("ShotFilter", Posicion.SENTADO)
+                                            1 -> it.putInt("ShotFilter", Posicion.ACOSTADO)
+                                            2 -> it.putInt("ShotFilter", Posicion.RECOSTADO)
+                                            3 -> it.putInt("ShotFilter", Posicion.DE_PIE)
+                                        }
+                                        it.apply()
+                                        updateDisplayedShots()
+                                    }
+                                }.create().show()
+                            }
+                            else ->{
+                                it.putInt("ShotFilter", Filtros.PREDETERMINADO)
+                                it.apply()
+                                updateDisplayedShots()
+                            }
                         }
-                        1 -> {
-                           AlertDialog.Builder(this).apply {
-                                setTitle(getString(R.string.por_evaluacion))
-                                setItems(R.array.presion_arterial, { dialog, which ->
 
-                                })
-                            }.create().show()
-                        }
-                        2 -> {
-                            AlertDialog.Builder(this).apply {
-                                setTitle(getString(R.string.por_momento_dia))
-                                setItems(R.array.presion_arterial, { dialog, which ->
-
-                                })
-                            }.create().show()
-                        }
-                        3 -> {
-                            AlertDialog.Builder(this).apply {
-                                setTitle(getString(R.string.por_extremidad))
-                                setItems(R.array.presion_arterial, { dialog, which ->
-
-                                })
-                            }.create().show()
-                        }
-
-                        4 -> {
-                            AlertDialog.Builder(this).apply {
-                                setTitle(getString(R.string.por_posicion))
-                                setItems(R.array.presion_arterial, { dialog, which ->
-
-                                })
-                            }.create().show()
-                        }
                     }
                 })
 
@@ -262,5 +296,16 @@ class MainActivity : AppCompatActivity() {
 
             }
         }
+    }
+
+    private fun updateDisplayedShots(){
+        Toast.makeText(this,"Estas actualizando UI Fitro:"+ sharedPref.getInt("ShotFilter", -1) + " | Orden: " + sharedPref.getInt("ShotsOrder",-2), Toast.LENGTH_SHORT).show()
+
+        val shotsFragment = adapter.getItem(0) as ShotsFragment
+        shotsFragment.displaySortedShotList()
+        val statsFragment = adapter.getItem(1) as StatsFragment
+        statsFragment.getSortedShotListForChart(0)
+
+
     }
 }

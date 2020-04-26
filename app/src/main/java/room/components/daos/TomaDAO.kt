@@ -34,6 +34,14 @@ interface TomaDAO {
     @Query("SELECT * FROM Toma WHERE Toma.usuario_id = :id AND Toma.valoracion = :valoracion ORDER BY CASE WHEN :order = 1 THEN date(Toma.fecha_hora) END ASC, CASE WHEN :order = 0 THEN date(Toma.fecha_hora) END DESC")
     fun getTomasUsuarioPorValoracion(id: Int, valoracion: Int, order: Int) : LiveData<List<Toma>>
 
+    @Query("SELECT * FROM Toma WHERE Toma.usuario_id = :id AND Toma.momento = :momento ORDER BY CASE WHEN :order = 1 THEN date(Toma.fecha_hora) END ASC, CASE WHEN :order = 0 THEN date(Toma.fecha_hora) END DESC")
+    fun getTomasUsuarioPorMomento(id: Int, momento: Int, order: Int) : LiveData<List<Toma>>
+
+    @Query("SELECT * FROM Toma WHERE Toma.usuario_id = :id AND Toma.extremidad = :extremidad ORDER BY CASE WHEN :order = 1 THEN date(Toma.fecha_hora) END ASC, CASE WHEN :order = 0 THEN date(Toma.fecha_hora) END DESC")
+    fun getTomasUsuarioPorExtremidad(id: Int, extremidad: Int, order: Int) : LiveData<List<Toma>>
+
+    @Query("SELECT * FROM Toma WHERE Toma.usuario_id = :id AND Toma.posicion = :posicion ORDER BY CASE WHEN :order = 1 THEN date(Toma.fecha_hora) END ASC, CASE WHEN :order = 0 THEN date(Toma.fecha_hora) END DESC")
+    fun getTomasUsuarioPorPosicion(id: Int, posicion: Int, order: Int) : LiveData<List<Toma>>
 
     @Query("SELECT Toma.valoracion as categoria, COUNT(Toma.valoracion) as cantidad FROM Toma WHERE Toma.usuario_id = :id GROUP BY Toma.valoracion")
     fun getValoracionTomasUsuario(id: Int) : LiveData<List<CantidadTomasPorValoracion>>

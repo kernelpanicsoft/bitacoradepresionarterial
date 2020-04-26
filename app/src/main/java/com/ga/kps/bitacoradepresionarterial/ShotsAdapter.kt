@@ -52,7 +52,7 @@ class ShotsAdapter(val context: Context?) : ListAdapter<Toma, ShotsAdapter.ViewH
         holder.sistolicaTV.text = tomaActual.sistolica.toString()
         holder.diastolicaTV.text = tomaActual.diastolica.toString()
         holder.pulsoTV.text = tomaActual.pulso.toString()
-        holder.valoracionTV.text = shotEvaluation.getBloodPressureEvaluation(tomaActual.sistolica!!,tomaActual.diastolica!!)
+        holder.valoracionTV.text = shotEvaluation.getBloodPressureEvaluation(tomaActual.sistolica!!,tomaActual.diastolica!!) + " ° " + tomaActual.valoracion
         holder.valoracionTV.setTextColor(shotEvaluation.getBloodPressureColor(shotEvaluation.getBloodPressureEvaluation(tomaActual.sistolica!!,tomaActual.diastolica!!)))
 
         calendar.time = sdf.parse(tomaActual.fecha_hora)

@@ -85,11 +85,11 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
             setData(it)
 
         })
-
+/*
         tomaViewModel.getCantidadPorValoracion(usuarioID).observe(viewLifecycleOwner, Observer {
             setDataForPieChart(it)
         })
-
+*/
 
         detallesTV.setOnClickListener {
             val nav = Intent(context,ShotDetailActivity::class.java)
