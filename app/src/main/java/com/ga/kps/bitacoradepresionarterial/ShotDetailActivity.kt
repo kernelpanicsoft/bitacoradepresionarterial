@@ -105,7 +105,8 @@ class ShotDetailActivity : AppCompatActivity() {
         limbLabelTV.text = shotEvaluatorHelper.getLimbString(toma.extremidad!!)
         posicionLabelTV.text = shotEvaluatorHelper.getPositionString(toma.posicion!!)
 
-        when(toma.extremidad){
+       
+        when((toma.extremidad!! - 3000)){
             0 -> LimbIV.setImageResource(R.drawable.ic_man_left_arm)
             1 -> LimbIV.setImageResource(R.drawable.ic_man_right_arm)
             2 -> LimbIV.setImageResource(R.drawable.ic_man_left_wirst)

@@ -9,7 +9,7 @@ class ShotEvaluatorHelper (val context: Context) {
     private val moment : Array<String> = context.resources.getStringArray(R.array.momento)
 
     fun getLimbString(code: Int) : String{
-        return limbs[code]
+        return limbs[code - 3000]
     }
 
     fun getPositionString(code: Int) : String{

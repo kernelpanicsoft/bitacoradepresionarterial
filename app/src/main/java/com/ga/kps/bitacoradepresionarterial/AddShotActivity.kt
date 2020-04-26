@@ -14,6 +14,9 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import helpers.BloodPressureEvaluatorHelper
+import helpers.Extremidad
+import helpers.Momento
+import helpers.Posicion
 import kotlinx.android.synthetic.main.activity_add_shot.*
 import model.Toma
 import room.components.viewmodels.TomaViewModel
@@ -64,7 +67,17 @@ class AddShotActivity : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                extremidad = position
+                when(position){
+                    0 -> extremidad = Extremidad.BRAZO_IZQUIERDO
+                    1 -> extremidad = Extremidad.BRAZO_DERECHO
+                    2 -> extremidad = Extremidad.MUNECA_IZQUIERDA
+                    3 -> extremidad = Extremidad.MUNECA_DERECHA
+                    4 -> extremidad = Extremidad.TOBILLO_IZQUIERDO
+                    5 -> extremidad = Extremidad.TOBILLO_DERECHO
+                    6 -> extremidad = Extremidad.MUSLO_IZQUIERDO
+                    7 -> extremidad = Extremidad.MUSLO_DERECHO
+                }
+
             }
         }
 
@@ -86,6 +99,12 @@ class AddShotActivity : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
+                when(position){
+                    0 -> posicion = Posicion.SENTADO
+                    1 -> posicion = Posicion.ACOSTADO
+                    2 -> posicion = Posicion.RECOSTADO
+                    3 -> posicion = Posicion.DE_PIE
+                }
                 posicion = position
             }
         }
@@ -107,6 +126,15 @@ class AddShotActivity : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
+                when(position){
+                    0 -> momento = Momento.ALEATORIO
+                    1 -> momento = Momento.DESPUES_DESPERTAR
+                    2 -> momento = Momento.ANTES_DORMIR
+                    3 -> momento = Momento.ANTES_MEDICAMENTO
+                    4 -> momento = Momento.DESPUES_MEDICAMENTO
+                    5 -> momento = Momento.ANTES_COMER
+                    6 -> momento = Momento.DESPUES_COMER
+                }
                 momento = position
             }
         }

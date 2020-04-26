@@ -60,8 +60,8 @@ object Extremidad{
     const val MUNECA_DERECHA = 3003
     const val TOBILLO_IZQUIERDO = 3004
     const val TOBILLO_DERECHO = 3005
-    const val MUSLO_DERECHO = 3006
-    const val MUSLO_IZQUIERDO = 3007
+    const val MUSLO_IZQUIERDO = 3006
+    const val MUSLO_DERECHO  = 3007
 }
 
 object Posicion{
