@@ -105,7 +105,7 @@ class ShotDetailActivity : AppCompatActivity() {
         limbLabelTV.text = shotEvaluatorHelper.getLimbString(toma.extremidad!!)
         posicionLabelTV.text = shotEvaluatorHelper.getPositionString(toma.posicion!!)
 
-       
+
         when((toma.extremidad!! - 3000)){
             0 -> LimbIV.setImageResource(R.drawable.ic_man_left_arm)
             1 -> LimbIV.setImageResource(R.drawable.ic_man_right_arm)
@@ -117,7 +117,7 @@ class ShotDetailActivity : AppCompatActivity() {
             7 -> LimbIV.setImageResource(R.drawable.ic_man_right_tight)
         }
 
-        when(toma.posicion){
+        when(toma.posicion!! - 4000){
             0 -> positionIV.setImageResource(R.drawable.ic_man_sitting)
             1 -> positionIV.setImageResource(R.drawable.ic_man_lying)
             2 -> positionIV.setImageResource(R.drawable.ic_man_recumbing)

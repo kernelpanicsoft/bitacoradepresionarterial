@@ -105,7 +105,6 @@ class AddShotActivity : AppCompatActivity() {
                     2 -> posicion = Posicion.RECOSTADO
                     3 -> posicion = Posicion.DE_PIE
                 }
-                posicion = position
             }
         }
 

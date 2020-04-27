@@ -13,7 +13,7 @@ class ShotEvaluatorHelper (val context: Context) {
     }
 
     fun getPositionString(code: Int) : String{
-        return positions[code]
+        return positions[code - 4000]
     }
 
     fun getMomentString(code: Int) : String{
