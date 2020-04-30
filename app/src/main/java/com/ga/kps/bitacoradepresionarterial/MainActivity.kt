@@ -149,8 +149,11 @@ class MainActivity : AppCompatActivity() {
                 drawer_layout.openDrawer(GravityCompat.START)
             }
             R.id.itemExport ->{
-                val notificationManager = NotificationsManager(this)
-                notificationManager.sendNotificationForReminder("Hola mundo","Como estan")
+               // val notificationManager = NotificationsManager(this)
+               // notificationManager.sendNotificationForReminder("Hola mundo","Como estan")
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle(getString(R.string.reportes))
+
             }
             R.id.itemSort ->{
                 val builder = AlertDialog.Builder(this)
@@ -293,19 +296,14 @@ class MainActivity : AppCompatActivity() {
 
                 val nav = Intent(this, UserListActivity::class.java)
                 startActivity(nav)
-
             }
         }
     }
 
     private fun updateDisplayedShots(){
-        Toast.makeText(this,"Estas actualizando UI Fitro:"+ sharedPref.getInt("ShotFilter", -1) + " | Orden: " + sharedPref.getInt("ShotsOrder",-2), Toast.LENGTH_SHORT).show()
-
         val shotsFragment = adapter.getItem(0) as ShotsFragment
         shotsFragment.displaySortedShotList()
         val statsFragment = adapter.getItem(1) as StatsFragment
-        statsFragment.getSortedShotListForChart(0)
-
-
+        statsFragment.getSortedShotListForChart()
     }
 }

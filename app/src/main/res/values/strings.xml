@@ -83,6 +83,7 @@
     <string name="por_momento_dia">Por momento del día:</string>
     <string name="por_extremidad">Por extremidad:</string>
     <string name="por_posicion">Por posición:</string>
+    <string name="reportes">Reportes</string>
     <array name="generos">
         <item>Masculino</item>
         <item>Femenino</item>
@@ -147,5 +148,10 @@
         <item>Orden predeterminado</item>
         <item>Más recientes primero</item>
         <item>Más antiguas primero</item>
+    </string-array>
+
+    <string-array name="reportes">
+        <item>Generar nuevo reporte</item>
+        <item>Ver reportes generados</item>
     </string-array>
 </resources>

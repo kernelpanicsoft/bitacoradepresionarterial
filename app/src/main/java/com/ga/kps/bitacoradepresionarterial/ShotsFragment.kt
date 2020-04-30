@@ -72,7 +72,6 @@ class ShotsFragment : Fragment(){
 
         tomasViewModel.getFilteredShotList(usuarioID,filter,order).observe(this, Observer {
             adapter.submitList(it)
-
         })
     }
 
