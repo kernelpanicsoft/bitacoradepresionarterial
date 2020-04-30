@@ -35,8 +35,8 @@ class ShotsFragment : Fragment(){
 
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
         val usuarioID = sharedPref.getInt("actualUserID", -1)
-        val order = sharedPref.getInt("ShotsOrder",0)
-
+        val order = sharedPref.getInt("ShotsOrder",Ordenes.PREDETERMINADO)
+        val filter = sharedPref.getInt("ShotFilter", Filtros.PREDETERMINADO)
         val mLayoutManager = LinearLayoutManager(
             context,
             LinearLayoutManager.VERTICAL,
@@ -48,10 +48,11 @@ class ShotsFragment : Fragment(){
         val adapter = ShotsAdapter(context)
         tomasViewModel = ViewModelProvider(this).get(TomaViewModel::class.java)
 
-        tomasViewModel.getSortedShotList(usuarioID,order).observe(this, Observer {
-            adapter.submitList(it)
-        })
 
+        tomasViewModel.getFilteredShotList(usuarioID,filter,order).observe(this, Observer {
+            adapter.submitList(it)
+
+        })
         RV.adapter = adapter
 
         adapter.setOnClickListener(View.OnClickListener {
@@ -71,22 +72,8 @@ class ShotsFragment : Fragment(){
 
         tomasViewModel.getFilteredShotList(usuarioID,filter,order).observe(this, Observer {
             adapter.submitList(it)
-            Log.d("ListaFiltrada: ",it.size.toString() + "# " +it.toString())
-        })
-    }
-
-    fun displayFilteredShotList(filter: Int, subFilter: Int, order: Int){
-        val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
-        val usuarioID = sharedPref.getInt("actualUserID", -1)
-        val adapter = ShotsAdapter(context)
-/*
-        tomasViewModel.getFilteredShotList(usuarioID,filter,subFilter, order).observe(this, Observer {
-            adapter.submitList(it)
 
         })
-        */
-
     }
-
 
 }
