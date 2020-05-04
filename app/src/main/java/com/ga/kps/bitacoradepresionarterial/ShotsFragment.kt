@@ -69,7 +69,7 @@ class ShotsFragment : Fragment(){
         val filter = sharedPref.getInt("ShotFilter", Filtros.PREDETERMINADO)
         val order= sharedPref.getInt("ShotsOrder",Ordenes.PREDETERMINADO)
         val adapter = ShotsAdapter(context)
-
+        Toast.makeText(context,"Deberia ordenar: " + order, Toast.LENGTH_SHORT).show()
         tomasViewModel.getFilteredShotList(usuarioID,filter,order).observe(this, Observer {
             adapter.submitList(it)
         })

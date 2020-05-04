@@ -84,6 +84,7 @@
     <string name="por_extremidad">Por extremidad:</string>
     <string name="por_posicion">Por posición:</string>
     <string name="reportes">Reportes</string>
+    <string name="anadir_imagen_de_perfil">Añadir imagen de perfil</string>
     <array name="generos">
         <item>Masculino</item>
         <item>Femenino</item>
@@ -145,7 +146,6 @@
     </string-array>
 
     <string-array name="ordenes">
-        <item>Orden predeterminado</item>
         <item>Más recientes primero</item>
         <item>Más antiguas primero</item>
     </string-array>
@@ -153,5 +153,10 @@
     <string-array name="reportes">
         <item>Generar nuevo reporte</item>
         <item>Ver reportes generados</item>
+    </string-array>
+
+    <string-array name="formato_reportes">
+        <item>Formato predeterminado</item>
+        <item>Formato con filtros actuales</item>
     </string-array>
 </resources>

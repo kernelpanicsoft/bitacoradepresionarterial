@@ -21,8 +21,8 @@ const val DEFAULT_NOTIFICATION_CHANEL_ID = "primary_notification_channel"
 
 object Ordenes{
     const val PREDETERMINADO = 99
-    const val ANTIGUEDAD_ASC = 98
-    const val ANTIGUEDAD_DESC = 97
+    const val ANTIGUEDAD_ASC = 1
+    const val ANTIGUEDAD_DESC = 0
 }
 
 object Filtros{

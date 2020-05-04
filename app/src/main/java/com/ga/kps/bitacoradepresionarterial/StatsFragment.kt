@@ -25,6 +25,7 @@ import model.Toma
 import room.components.viewmodels.TomaViewModel
 import helpers.Filtros
 import helpers.Ordenes
+import helpers.Valoracion
 
 class StatsFragment : Fragment(), OnChartValueSelectedListener {
     lateinit var tomaViewModel: TomaViewModel
@@ -162,7 +163,20 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
 
     private fun setDataForPieChart(shots: List<CantidadTomasPorValoracion>){
         val pieEntries = ArrayList<PieEntry>()
+        val colors: ArrayList<Int>  = ArrayList()
+        val colorsArray = resources.getIntArray(R.array.colors_for_evaluation)
+        //for(a in colorsArray) colors.add(a)
+
         for(i in shots){
+            when(i.categoria){
+                Valoracion.HIPOTENSION -> colors.add(context!!.getColor(R.color.hipotension))
+                Valoracion.NORMAL -> colors.add(context!!.getColor(R.color.normalBP))
+                Valoracion.PREHIPERTENSION -> colors.add(context!!.getColor(R.color.prehipertensionBP))
+                Valoracion.HIPERTENSION_1 -> colors.add(context!!.getColor(R.color.hipertension1))
+                Valoracion.HIPERTENSION_2 -> colors.add(context!!.getColor(R.color.hipertension2))
+                Valoracion.CRISIS -> colors.add(context!!.getColor(R.color.hipertensioncrysis))
+            }
+
             pieEntries.add(
                 PieEntry(i.cantidad!!.toFloat(),getNameOfType(i.categoria))
 
@@ -178,9 +192,7 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
         dataSet.valueTextColor = Color.BLACK
         dataSet.valueFormatter = PercentFormatter(distributionPC)
 
-        val colors: ArrayList<Int>  = ArrayList()
-        val colorsArray = resources.getIntArray(R.array.colors_for_evaluation)
-        for(a in colorsArray) colors.add(a)
+
         dataSet.colors = colors
         val data = PieData(dataSet)
         distributionPC.data = data

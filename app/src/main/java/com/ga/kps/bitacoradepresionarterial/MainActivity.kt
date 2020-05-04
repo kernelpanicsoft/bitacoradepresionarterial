@@ -153,29 +153,36 @@ class MainActivity : AppCompatActivity() {
                // notificationManager.sendNotificationForReminder("Hola mundo","Como estan")
                 val builder = AlertDialog.Builder(this)
                 builder.setTitle(getString(R.string.reportes))
+                builder.setItems(R.array.formato_reportes) { dialog, which ->
+                    when(which){
+                        0 -> { }
+                        1 -> { }
+                    }
+                }
+
+                val dialog = builder.create()
+                dialog.show()
 
             }
             R.id.itemSort ->{
                 val builder = AlertDialog.Builder(this)
                 builder.setTitle(getString(R.string.ordenar))
-                builder.setItems(R.array.ordenes, DialogInterface.OnClickListener { dialog, which ->
+                builder.setItems(R.array.ordenes) { dialog, which ->
                     with(sharedPref.edit()){
                         when(which){
-                            0 ->{
-                                putInt("ShotsOrder",Ordenes.PREDETERMINADO)
-                            }
-                            1 -> {
+                            0 -> {
                                 putInt("ShotsOrder",Ordenes.ANTIGUEDAD_ASC)
                             }
-                            2 -> {
+                            1 -> {
                                 putInt("ShotsOrder",Ordenes.ANTIGUEDAD_DESC)
                             }
                             else -> putInt("ShotsOrder",Ordenes.PREDETERMINADO)
                         }
                         apply()
-                    }
+                        updateDisplayedShots()
 
-                })
+                    }
+                }
 
                 val dialog = builder.create()
                 dialog.show()
