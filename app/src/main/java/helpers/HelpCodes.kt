@@ -71,3 +71,12 @@ object Posicion{
     const val DE_PIE = 4003
 }
 
+object Permisos_solicitados{
+    const val ALMACENAMIENTO_EXTERNO = 1047
+}
+
+object Codigos_solicitud{
+    const val SELECCIONAR_IMAGEN = 929
+    const val SOLICITAR_IMAGEN_DESDE_CAMARA = 930
+}
+

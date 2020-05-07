@@ -1,19 +1,39 @@
 package com.ga.kps.bitacoradepresionarterial
 
+import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.database.Cursor
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Matrix
+import android.media.ExifInterface
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.SyncStateContract
+import android.os.Environment
+import android.provider.MediaStore
+import android.view.Menu
 import android.view.MenuItem
 import android.widget.RadioButton
-import androidx.lifecycle.ViewModelProviders
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
+import helpers.Codigos_solicitud
 import helpers.Genero
+import helpers.Permisos_solicitados
 import kotlinx.android.synthetic.main.activity_add_user.*
 import model.Usuario
 import room.components.viewmodels.UsuarioViewModel
-import java.text.DateFormat
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -22,6 +42,7 @@ class AddUserActivity : AppCompatActivity() {
     private val calendario: Calendar = Calendar.getInstance()
     private val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US)
     private val sdfDisplayDate = SimpleDateFormat.getDateInstance()
+    private var mCurrentPhotoPath: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +53,7 @@ class AddUserActivity : AppCompatActivity() {
         ab!!.setDisplayHomeAsUpEnabled(true)
         title = getString(R.string.registrar_usuario)
 
-        usuarioViewModel = ViewModelProviders.of(this).get(UsuarioViewModel::class.java)
+        usuarioViewModel = ViewModelProvider(this).get(UsuarioViewModel::class.java)
 
         fechaNacimientoBT.setOnClickListener {
             val datePickerFragment = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
@@ -73,11 +94,40 @@ class AddUserActivity : AppCompatActivity() {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_add_profile_pic,menu)
+        return true
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             android.R.id.home ->{
                 onBackPressed()
                 return true
+            }
+            R.id.item_add_photo -> {
+                val builder = AlertDialog.Builder(this@AddUserActivity)
+                builder.setTitle(getString(R.string.elegir_imagen_perfil_desde))
+                builder.setItems(R.array.fuente_imagen){ dialog, which ->
+                    when(which){
+                        // pick from gallery
+                        0 -> {
+                            if(ContextCompat.checkSelfPermission(this@AddUserActivity, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+                                ActivityCompat.requestPermissions(this@AddUserActivity,
+                                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                                    Permisos_solicitados.ALMACENAMIENTO_EXTERNO)
+                            }else{
+                                pickFromGallery()
+                            }
+                        }
+                        // take a photo
+                        1 -> {
+                            dispatchTakePictureIntent()
+                        }
+                    }
+                }
+                val dialog = builder.create()
+                dialog.show()
             }
         }
         return super.onOptionsItemSelected(item)
@@ -86,5 +136,224 @@ class AddUserActivity : AppCompatActivity() {
     private fun saveUserToDB(usuario: Usuario){
         usuarioViewModel.insert(usuario)
         setResult(Activity.RESULT_OK)
+    }
+
+    private fun pickFromGallery(){
+        Intent(Intent.ACTION_PICK).also { selectPictureIntent ->
+            selectPictureIntent .type = "image/*"
+            val mimeTypes = arrayOf("image/jpg", "image/png")
+            selectPictureIntent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
+            startActivityForResult(selectPictureIntent,Codigos_solicitud.SELECCIONAR_IMAGEN)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == Codigos_solicitud.SELECCIONAR_IMAGEN && resultCode == Activity.RESULT_OK){
+            val selectedImageUri = data?.data
+            val filePathColum = arrayOf(MediaStore.Images.Media.DATA)
+            val cursor: Cursor? = this.contentResolver.query(selectedImageUri!!, filePathColum,null, null, null)
+            cursor?.moveToFirst()
+            val columnIndex = cursor?.getColumnIndex(filePathColum[0])
+            val imgDecodableString = cursor?.getString(columnIndex!!)
+            cursor?.close()
+
+            val bmpOptions = BitmapFactory.Options().apply {
+                inJustDecodeBounds = true
+                BitmapFactory.decodeFile(imgDecodableString, this)
+                val photoW: Int = outWidth
+                val photoH: Int = outHeight
+
+                val scaleFactor : Int = Math.min(photoW / resources.getDimension(R.dimen.UserProfileImageSingle).toInt() , photoH / resources.getDimension(R.dimen.UserProfileImageSingle).toInt() )
+
+                inJustDecodeBounds = false
+                inSampleSize = scaleFactor
+
+            }
+
+            val imageFile : File? = try{
+                createImageFile()
+            } catch (ex : IOException){
+                null
+            }
+
+            val out = FileOutputStream(imageFile)
+            val exif = ExifInterface(imgDecodableString)
+            val orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED)
+
+            BitmapFactory.decodeFile(imgDecodableString, bmpOptions).also { bitmap ->
+
+                var rotatedBitmap : Bitmap? = null
+
+
+                when (orientation) {
+                    ExifInterface.ORIENTATION_ROTATE_90 -> {
+                        rotatedBitmap = rotateImage(bitmap,90f)
+                    }
+                    ExifInterface.ORIENTATION_ROTATE_180 -> {
+                        rotatedBitmap = rotateImage(bitmap,180f)
+                    }
+                    ExifInterface.ORIENTATION_ROTATE_270 -> {
+                        rotatedBitmap = rotateImage(bitmap, 270f)
+                    }
+                    ExifInterface.ORIENTATION_NORMAL -> {
+                        rotatedBitmap = bitmap
+                    }
+                    else -> {
+                        rotatedBitmap = bitmap
+                    }
+                }
+                rotatedBitmap?.compress(Bitmap.CompressFormat.JPEG,85,out)
+            }
+
+            out.close()
+
+
+            displayPic()
+
+        }
+        if(requestCode == Codigos_solicitud.SOLICITAR_IMAGEN_DESDE_CAMARA && resultCode == Activity.RESULT_OK){
+            setPic()
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        when(requestCode){
+            Permisos_solicitados.ALMACENAMIENTO_EXTERNO ->{
+                if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    pickFromGallery()
+                }else{
+                    Toast.makeText(this@AddUserActivity, getString(R.string.mensaje_permisos_galeria),Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    private fun displayPic(){
+        BitmapFactory.decodeFile(mCurrentPhotoPath)?.also { scaledBitmap ->
+            profileIV.setImageBitmap(scaledBitmap)
+        }
+    }
+
+    @Throws(IOException::class)
+    private fun createImageFile() : File {
+
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val storageDir : File = getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!
+        return File.createTempFile(
+            "JPEG_${timeStamp}_",
+            ".jpg",
+            storageDir
+        ).apply {
+            mCurrentPhotoPath = absolutePath
+        }
+
+    }
+
+    @Throws(IOException::class)
+    private fun deleteImageFile(){
+        val photoFile = File(mCurrentPhotoPath)
+        val photoUri: Uri = FileProvider.getUriForFile(
+            this,
+            "com.kps.spart.android.fileprovider",
+            photoFile
+        )
+
+        this.contentResolver.delete(photoUri,null,null)
+    }
+
+    @Throws(IOException::class)
+    private fun compressImage(scaledBitmap : Bitmap){
+        val photoFile = File(mCurrentPhotoPath)
+
+        val out = FileOutputStream(photoFile)
+        scaledBitmap.compress(Bitmap.CompressFormat.JPEG,85,out)
+        out.close()
+    }
+
+    fun rotateImage(source : Bitmap, angle : Float) : Bitmap{
+        val matrix = Matrix()
+        matrix.postRotate(angle)
+
+        return Bitmap.createBitmap(source,0,0,source.width,source.height,matrix,true)
+    }
+
+    private fun determinatePicOrientation(bmOptions : BitmapFactory.Options){
+        val exif = ExifInterface(mCurrentPhotoPath)
+        val orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION,ExifInterface.ORIENTATION_UNDEFINED)
+        if(!mCurrentPhotoPath.isBlank()){
+            BitmapFactory.decodeFile(mCurrentPhotoPath,bmOptions)?.also { bitmap ->
+                var rotatedBitmap : Bitmap? = null
+                when(orientation){
+                    ExifInterface.ORIENTATION_ROTATE_90 -> {
+                        rotatedBitmap = rotateImage(bitmap,90f)
+                    }
+                    ExifInterface.ORIENTATION_ROTATE_180 -> {
+                        rotatedBitmap = rotateImage(bitmap,180f)
+                    }
+                    ExifInterface.ORIENTATION_ROTATE_270 -> {
+                        rotatedBitmap = rotateImage(bitmap, 270f)
+                    }
+                    ExifInterface.ORIENTATION_NORMAL -> {
+                        rotatedBitmap = bitmap
+                    }
+                    else -> {
+                        rotatedBitmap = bitmap
+                    }
+                }
+                compressImage(rotatedBitmap)
+            }
+
+
+        }
+    }
+
+    private fun dispatchTakePictureIntent(){
+        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+            takePictureIntent.resolveActivity(packageManager)?.also {
+               val photoFile: File? = try{
+                   createImageFile()
+               } catch (ex: IOException){
+                   null
+               }
+                photoFile?.also {
+                    val photoURI: Uri = FileProvider.getUriForFile(
+                        this,
+                        "com.ga.kps.bitacoradepresionarterial",
+                        it
+                    )
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                    startActivityForResult(takePictureIntent,Codigos_solicitud.SOLICITAR_IMAGEN_DESDE_CAMARA)
+                }
+            }
+        }
+    }
+
+    private fun setPic(){
+        val targetW: Int = resources.getDimension(R.dimen.UserProfileImageSingle).toInt()
+        val targetH: Int = resources.getDimension(R.dimen.UserProfileImageSingle).toInt()
+
+        val bmOptions = BitmapFactory.Options().apply {
+            inJustDecodeBounds = true
+
+            val photoW: Int = outWidth
+            val photoH: Int = outHeight
+
+            val scaleFactor: Int = Math.min(photoW / targetW, photoH / targetH)
+
+            inJustDecodeBounds = false
+            inSampleSize = scaleFactor
+            inPurgeable = true
+        }
+
+        determinatePicOrientation(bmOptions)
+
+        BitmapFactory.decodeFile(mCurrentPhotoPath)?.also {  bitmap ->
+            profileIV.setImageBitmap(bitmap)
+        }
     }
 }
