@@ -73,7 +73,7 @@ class AddUserActivity : AppCompatActivity() {
                 Snackbar.make(it,getString(R.string.es_necesario_especificar_nombre_apellidos), Snackbar.LENGTH_LONG).show()
             }else{
                 val newUser = Usuario(0)
-                newUser.imagen_perfil = "aux"
+                newUser.imagen_perfil = mCurrentPhotoPath
                 newUser.nombre = nombreET.text.toString()
                 newUser.apellidos = apellidosET.text.toString()
                 newUser.fecha_nacimiento = sdf.format(calendario.time)
@@ -103,7 +103,7 @@ class AddUserActivity : AppCompatActivity() {
         when(item.itemId){
             android.R.id.home ->{
                 onBackPressed()
-                return true
+                return true 
             }
             R.id.item_add_photo -> {
                 val builder = AlertDialog.Builder(this@AddUserActivity)
@@ -112,13 +112,7 @@ class AddUserActivity : AppCompatActivity() {
                     when(which){
                         // pick from gallery
                         0 -> {
-                            if(ContextCompat.checkSelfPermission(this@AddUserActivity, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
-                                ActivityCompat.requestPermissions(this@AddUserActivity,
-                                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                                    Permisos_solicitados.ALMACENAMIENTO_EXTERNO)
-                            }else{
-                                pickFromGallery()
-                            }
+
                         }
                         // take a photo
                         1 -> {
@@ -138,106 +132,6 @@ class AddUserActivity : AppCompatActivity() {
         setResult(Activity.RESULT_OK)
     }
 
-    private fun pickFromGallery(){
-        Intent(Intent.ACTION_PICK).also { selectPictureIntent ->
-            selectPictureIntent .type = "image/*"
-            val mimeTypes = arrayOf("image/jpg", "image/png")
-            selectPictureIntent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
-            startActivityForResult(selectPictureIntent,Codigos_solicitud.SELECCIONAR_IMAGEN)
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == Codigos_solicitud.SELECCIONAR_IMAGEN && resultCode == Activity.RESULT_OK){
-            val selectedImageUri = data?.data
-            val filePathColum = arrayOf(MediaStore.Images.Media.DATA)
-            val cursor: Cursor? = this.contentResolver.query(selectedImageUri!!, filePathColum,null, null, null)
-            cursor?.moveToFirst()
-            val columnIndex = cursor?.getColumnIndex(filePathColum[0])
-            val imgDecodableString = cursor?.getString(columnIndex!!)
-            cursor?.close()
-
-            val bmpOptions = BitmapFactory.Options().apply {
-                inJustDecodeBounds = true
-                BitmapFactory.decodeFile(imgDecodableString, this)
-                val photoW: Int = outWidth
-                val photoH: Int = outHeight
-
-                val scaleFactor : Int = Math.min(photoW / resources.getDimension(R.dimen.UserProfileImageSingle).toInt() , photoH / resources.getDimension(R.dimen.UserProfileImageSingle).toInt() )
-
-                inJustDecodeBounds = false
-                inSampleSize = scaleFactor
-
-            }
-
-            val imageFile : File? = try{
-                createImageFile()
-            } catch (ex : IOException){
-                null
-            }
-
-            val out = FileOutputStream(imageFile)
-            val exif = ExifInterface(imgDecodableString)
-            val orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED)
-
-            BitmapFactory.decodeFile(imgDecodableString, bmpOptions).also { bitmap ->
-
-                var rotatedBitmap : Bitmap? = null
-
-
-                when (orientation) {
-                    ExifInterface.ORIENTATION_ROTATE_90 -> {
-                        rotatedBitmap = rotateImage(bitmap,90f)
-                    }
-                    ExifInterface.ORIENTATION_ROTATE_180 -> {
-                        rotatedBitmap = rotateImage(bitmap,180f)
-                    }
-                    ExifInterface.ORIENTATION_ROTATE_270 -> {
-                        rotatedBitmap = rotateImage(bitmap, 270f)
-                    }
-                    ExifInterface.ORIENTATION_NORMAL -> {
-                        rotatedBitmap = bitmap
-                    }
-                    else -> {
-                        rotatedBitmap = bitmap
-                    }
-                }
-                rotatedBitmap?.compress(Bitmap.CompressFormat.JPEG,85,out)
-            }
-
-            out.close()
-
-
-            displayPic()
-
-        }
-        if(requestCode == Codigos_solicitud.SOLICITAR_IMAGEN_DESDE_CAMARA && resultCode == Activity.RESULT_OK){
-            setPic()
-        }
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        when(requestCode){
-            Permisos_solicitados.ALMACENAMIENTO_EXTERNO ->{
-                if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    pickFromGallery()
-                }else{
-                    Toast.makeText(this@AddUserActivity, getString(R.string.mensaje_permisos_galeria),Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-    }
-
-    private fun displayPic(){
-        BitmapFactory.decodeFile(mCurrentPhotoPath)?.also { scaledBitmap ->
-            profileIV.setImageBitmap(scaledBitmap)
-        }
-    }
 
     @Throws(IOException::class)
     private fun createImageFile() : File {
@@ -332,6 +226,17 @@ class AddUserActivity : AppCompatActivity() {
             }
         }
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == Codigos_solicitud.SELECCIONAR_IMAGEN && resultCode == Activity.RESULT_OK){
+
+        }
+        if(requestCode == Codigos_solicitud.SOLICITAR_IMAGEN_DESDE_CAMARA && resultCode == Activity.RESULT_OK){
+            setPic()
+        }
+    }
+
 
     private fun setPic(){
         val targetW: Int = resources.getDimension(R.dimen.UserProfileImageSingle).toInt()

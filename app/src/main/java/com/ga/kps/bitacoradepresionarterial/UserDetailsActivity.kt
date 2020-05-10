@@ -3,9 +3,10 @@ package com.ga.kps.bitacoradepresionarterial
 import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -13,7 +14,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import helpers.Genero
 import kotlinx.android.synthetic.main.activity_user_details.*
 import model.Usuario
@@ -42,7 +43,7 @@ class UserDetailsActivity : AppCompatActivity() {
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
         val usuarioID = sharedPref.getInt("actualUserID", -1)
 
-        usuarioViewModel = ViewModelProviders.of(this).get(UsuarioViewModel::class.java)
+        usuarioViewModel = ViewModelProvider(this).get(UsuarioViewModel::class.java)
 
        Log.e("Fallo",usuarioID.toString())
         usuarioLive = usuarioViewModel.getUsuario(usuarioID)
@@ -107,6 +108,11 @@ class UserDetailsActivity : AppCompatActivity() {
                 generoTV.text = getString(R.string.femenino)
             }
         }
+
+        if(!usuario.imagen_perfil.isNullOrBlank()) {
+            setUserPic(usuario.imagen_perfil)
+        }
+
     }
 
     private fun getDiffYears(first: Date, last: Date) : Int{
@@ -134,4 +140,12 @@ class UserDetailsActivity : AppCompatActivity() {
             finish()
         }
     }
+
+    private fun setUserPic(path: String?){
+        BitmapFactory.decodeFile(path)?.also {
+            profilePicIV.setImageBitmap(it)
+        }
+    }
+
+
 }
