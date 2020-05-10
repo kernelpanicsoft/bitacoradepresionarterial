@@ -1,9 +1,11 @@
 package com.ga.kps.bitacoradepresionarterial
 
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.ListAdapter
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
@@ -30,6 +32,7 @@ class UsersAdapter(val context: Context) : ListAdapter<Usuario, UsersAdapter.Vie
     inner class ViewHolder(v: View) : RecyclerView.ViewHolder(v){
         val nombreUsuario = v.findViewById<TextView>(R.id.nombreUsuarioTV)
         val apellidosUsuario = v.findViewById<TextView>(R.id.apellidosUsuarioTV)
+        val imagenUsuario = v.findViewById<ImageView>(R.id.profileIV)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -44,6 +47,14 @@ class UsersAdapter(val context: Context) : ListAdapter<Usuario, UsersAdapter.Vie
 
         holder.nombreUsuario.text = usuarioActual.nombre
         holder.apellidosUsuario.text = usuarioActual.apellidos
+
+
+        if(!usuarioActual.imagen_perfil.isNullOrEmpty()){
+            BitmapFactory.decodeFile(usuarioActual.imagen_perfil)?.also {
+                holder.imagenUsuario.setImageBitmap(it)
+            }
+        }
+
     }
 
     fun getUsuarioAt(position: Int): Usuario{
@@ -57,6 +68,7 @@ class UsersAdapter(val context: Context) : ListAdapter<Usuario, UsersAdapter.Vie
     override fun onClick(v: View?) {
         listener!!.onClick(v)
     }
+
 
 
 }
