@@ -144,6 +144,7 @@ class UserDetailsActivity : AppCompatActivity() {
     private fun setUserPic(path: String?){
         BitmapFactory.decodeFile(path)?.also {
             profilePicIV.setImageBitmap(it)
+
         }
     }
 
