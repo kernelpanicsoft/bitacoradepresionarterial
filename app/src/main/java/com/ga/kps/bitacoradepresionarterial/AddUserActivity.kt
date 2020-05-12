@@ -113,7 +113,7 @@ class AddUserActivity : AppCompatActivity() {
                     when(which){
                         // pick from gallery
                         0 -> {
-
+                            performFileSearch()
                         }
                         // take a photo
                         1 -> {
@@ -154,7 +154,7 @@ class AddUserActivity : AppCompatActivity() {
         val photoFile = File(mCurrentPhotoPath)
         val photoUri: Uri = FileProvider.getUriForFile(
             this,
-            "com.kps.spart.android.fileprovider",
+            "com.ga.kps.bitacoradepresionarterial",
             photoFile
         )
 
@@ -164,7 +164,6 @@ class AddUserActivity : AppCompatActivity() {
     @Throws(IOException::class)
     private fun compressImage(scaledBitmap : Bitmap){
         val photoFile = File(mCurrentPhotoPath)
-        Log.d("Resoluacion","Propiedades: " + scaledBitmap.height + " | " + scaledBitmap.width)
         val out = FileOutputStream(photoFile)
         scaledBitmap.compress(Bitmap.CompressFormat.JPEG,85,out)
         out.close()
@@ -177,35 +176,6 @@ class AddUserActivity : AppCompatActivity() {
         return Bitmap.createBitmap(source,0,0,source.width,source.height,matrix,true)
     }
 
-    private fun determinatePicOrientation(bmOptions : BitmapFactory.Options){
-        val exif = ExifInterface(mCurrentPhotoPath)
-        val orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION,ExifInterface.ORIENTATION_UNDEFINED)
-        if(!mCurrentPhotoPath.isBlank()){
-            BitmapFactory.decodeFile(mCurrentPhotoPath,bmOptions)?.also { bitmap ->
-                var rotatedBitmap : Bitmap? = null
-                when(orientation){
-                    ExifInterface.ORIENTATION_ROTATE_90 -> {
-                        rotatedBitmap = rotateImage(bitmap,90f)
-                    }
-                    ExifInterface.ORIENTATION_ROTATE_180 -> {
-                        rotatedBitmap = rotateImage(bitmap,180f)
-                    }
-                    ExifInterface.ORIENTATION_ROTATE_270 -> {
-                        rotatedBitmap = rotateImage(bitmap, 270f)
-                    }
-                    ExifInterface.ORIENTATION_NORMAL -> {
-                        rotatedBitmap = bitmap
-                    }
-                    else -> {
-                        rotatedBitmap = bitmap
-                    }
-                }
-                compressImage(rotatedBitmap)
-            }
-
-
-        }
-    }
 
     private fun dispatchTakePictureIntent(){
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
@@ -243,27 +213,60 @@ class AddUserActivity : AppCompatActivity() {
         val targetW: Int = resources.getDimension(R.dimen.UserProfileImageSingle).toInt()
         val targetH: Int = resources.getDimension(R.dimen.UserProfileImageSingle).toInt()
 
-
         val bmOptions = BitmapFactory.Options().apply {
             inJustDecodeBounds = true
-
+            BitmapFactory.decodeFile(mCurrentPhotoPath,this)
             val photoW: Int = outWidth
             val photoH: Int = outHeight
 
             val scaleFactor: Int = Math.min(photoW / targetW, photoH / targetH)
 
             inJustDecodeBounds = false
-            Log.d("ScaleFator: ", scaleFactor.toString() + " | " + photoW + " | " + targetW + " | " + photoH + " | " + targetH)
+            //Log.d("ScaleFator: ", scaleFactor.toString() + " | " + photoW + " | " + targetW + " | " + photoH + " | " + targetH)
             inSampleSize = scaleFactor
             inPurgeable = true
         }
 
-        determinatePicOrientation(bmOptions)
+        val exif = ExifInterface(mCurrentPhotoPath)
+        val orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION,ExifInterface.ORIENTATION_UNDEFINED)
 
+        BitmapFactory.decodeFile(mCurrentPhotoPath,bmOptions)?.also { bitmap ->
+            var rotatedBitmap : Bitmap? = null
+            when(orientation){
+                ExifInterface.ORIENTATION_ROTATE_90 -> {
+                    rotatedBitmap = rotateImage(bitmap,90f)
+                }
+                ExifInterface.ORIENTATION_ROTATE_180 -> {
+                    rotatedBitmap = rotateImage(bitmap,180f)
+                }
+                ExifInterface.ORIENTATION_ROTATE_270 -> {
+                    rotatedBitmap = rotateImage(bitmap, 270f)
+                }
+                ExifInterface.ORIENTATION_NORMAL -> {
+                    rotatedBitmap = bitmap
+                }
+                else -> {
+                    rotatedBitmap = bitmap
+                }
+            }
+            compressImage(rotatedBitmap)
 
+        }
 
-        BitmapFactory.decodeFile(mCurrentPhotoPath)?.also {  bitmap ->
+        BitmapFactory.decodeFile(mCurrentPhotoPath)?.also {bitmap ->
+
             profileIV.setImageBitmap(bitmap)
         }
     }
+
+    private fun performFileSearch(){
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "image/*"
+        }
+
+        startActivityForResult(intent,Codigos_solicitud.SELECCIONAR_IMAGEN)
+    }
+
+
 }
