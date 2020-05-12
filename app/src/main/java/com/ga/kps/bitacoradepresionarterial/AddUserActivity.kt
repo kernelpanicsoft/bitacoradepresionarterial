@@ -15,6 +15,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
+import android.os.ParcelFileDescriptor
 import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
@@ -33,6 +34,7 @@ import kotlinx.android.synthetic.main.activity_add_user.*
 import model.Usuario
 import room.components.viewmodels.UsuarioViewModel
 import java.io.File
+import java.io.FileDescriptor
 import java.io.FileOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -201,7 +203,11 @@ class AddUserActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == Codigos_solicitud.SELECCIONAR_IMAGEN && resultCode == Activity.RESULT_OK){
-
+            data?.data?.also { uri ->
+                val bitmap= getBitmapFromUri(uri)
+                saveImageIntoFile(bitmap)
+                setPic()
+            }
         }
         if(requestCode == Codigos_solicitud.SOLICITAR_IMAGEN_DESDE_CAMARA && resultCode == Activity.RESULT_OK){
             setPic()
@@ -268,5 +274,18 @@ class AddUserActivity : AppCompatActivity() {
         startActivityForResult(intent,Codigos_solicitud.SELECCIONAR_IMAGEN)
     }
 
+    private fun getBitmapFromUri(uri: Uri): Bitmap{
+        val parcelFileDescriptor: ParcelFileDescriptor? = contentResolver.openFileDescriptor(uri,"r")
+        val fileDescriptor: FileDescriptor = parcelFileDescriptor!!.fileDescriptor
+        val image: Bitmap = BitmapFactory.decodeFileDescriptor(fileDescriptor)
+        parcelFileDescriptor.close()
+        return image;
+    }
 
+    private fun saveImageIntoFile(bitmap: Bitmap){
+        createImageFile()
+        val out = FileOutputStream(createImageFile())
+        bitmap.compress(Bitmap.CompressFormat.JPEG,100,out)
+
+    }
 }
