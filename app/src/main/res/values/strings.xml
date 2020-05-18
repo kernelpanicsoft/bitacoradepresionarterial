@@ -87,6 +87,11 @@
     <string name="anadir_imagen_de_perfil">Añadir imagen de perfil</string>
     <string name="elegir_imagen_perfil_desde">Eleguir imagen desde:</string>
     <string name="mensaje_permisos_galeria">Es necesario permitir los permisos de lectura de medios multimedia para poder abrir la galería</string>
+    <string name="reporte_creado_satisfactoriamente">Reporte creado satisfactoriamente</string>
+    <string name="ocurrio_un_error_crear_reporte">Ocurrió un error al crear el reporte</string>
+    <string name="reportes_creados">Reportes creados</string>
+    <string name="abrir_reporte">Abrir reporte</string>
+    <string name="compartir">Compartir</string>
     <array name="generos">
         <item>Masculino</item>
         <item>Femenino</item>
@@ -158,8 +163,9 @@
     </string-array>
 
     <string-array name="formato_reportes">
-        <item>Formato predeterminado</item>
-        <item>Formato con filtros actuales</item>
+        <item>Crear con formato predeterminado</item>
+        <item>Crear con formato con filtros actuales</item>
+        <item>Ver reportes creados</item>
     </string-array>
 
     <string-array name="fuente_imagen">

@@ -3,4 +3,8 @@
     <external-path
         name="my_images"
         path="Android/data/com.ga.kps.bitacoradepresionarterial/files/Pictures"/>
+
+    <external-path
+        name="my_reports"
+        path="Android/data/com.ga.kps.bitacoradepresionarterial/files/Documents"/>
 </paths>

@@ -2,11 +2,14 @@ package com.ga.kps.bitacoradepresionarterial
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.Application
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.res.AssetManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
 import androidx.preference.PreferenceManager
 import android.view.Menu
 import android.view.MenuItem
@@ -16,13 +19,25 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
+import com.tom_roush.pdfbox.pdmodel.PDDocument
+import com.tom_roush.pdfbox.pdmodel.PDPage
+import com.tom_roush.pdfbox.pdmodel.PDPageContentStream
+import com.tom_roush.pdfbox.pdmodel.font.PDFont
+import com.tom_roush.pdfbox.pdmodel.font.PDType1Font
+import com.tom_roush.pdfbox.util.PDFBoxResourceLoader
 import helpers.*
 import kotlinx.android.synthetic.main.activity_main.*
-import notifications.system.NotificationsManager
+import java.io.File
+import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
     lateinit var sharedPref: SharedPreferences
     private lateinit var adapter: ViewPagerAdapter
+    private lateinit var root: File
+    private lateinit var assetManager: AssetManager
+
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,6 +105,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+
+        setup()
+    }
+
     override fun onResume() {
         super.onResume()
 
@@ -155,8 +176,16 @@ class MainActivity : AppCompatActivity() {
                 builder.setTitle(getString(R.string.reportes))
                 builder.setItems(R.array.formato_reportes) { dialog, which ->
                     when(which){
-                        0 -> { }
-                        1 -> { }
+                        0 -> {
+                            createPDF()
+                        }
+                        1 -> {
+
+                        }
+                        2 -> {
+                            val nav = Intent(this@MainActivity, ReportListActivity::class.java)
+                            startActivity(nav)
+                        }
                     }
                 }
 
@@ -180,7 +209,6 @@ class MainActivity : AppCompatActivity() {
                         }
                         apply()
                         updateDisplayedShots()
-
                     }
                 }
 
@@ -312,5 +340,44 @@ class MainActivity : AppCompatActivity() {
         shotsFragment.displaySortedShotList()
         val statsFragment = adapter.getItem(1) as StatsFragment
         statsFragment.getSortedShotListForChart()
+    }
+
+    private fun setup(){
+        PDFBoxResourceLoader.init(applicationContext)
+
+        root = applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)!!
+        assetManager = assets
+
+    }
+
+    fun createPDF(){
+        val document = PDDocument()
+        val page = PDPage()
+        document.addPage(page)
+
+        val font : PDFont = PDType1Font.HELVETICA
+
+        val contentStream:  PDPageContentStream
+
+        try{
+            contentStream = PDPageContentStream(document, page)
+            contentStream.beginText()
+            contentStream.setNonStrokingColor(0,0,0)
+            contentStream.setFont(font,12f)
+            contentStream.newLineAtOffset(100f,700f)
+            contentStream.showText("Hello world")
+            contentStream.endText()
+
+            contentStream.close()
+
+            val path = root.absolutePath + "/Created.pdf"
+            document.save(path)
+            document.close()
+            Toast.makeText(this@MainActivity, getString(R.string.reporte_creado_satisfactoriamente), Toast.LENGTH_SHORT).show()
+
+
+        } catch (e: IOException){
+            Toast.makeText(this@MainActivity, getString(R.string.ocurrio_un_error_crear_reporte), Toast.LENGTH_SHORT).show()
+        }
     }
 }
