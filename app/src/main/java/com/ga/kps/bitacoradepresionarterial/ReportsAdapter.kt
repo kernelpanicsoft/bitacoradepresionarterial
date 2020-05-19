@@ -1,20 +1,18 @@
 package com.ga.kps.bitacoradepresionarterial
 
 import android.content.Context
-import android.view.LayoutInflater
-import android.view.MenuInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import java.io.File
 import java.util.*
 
-class ReportsAdapter(val context: Context) : ListAdapter<File,ReportsAdapter.ViewHolder>(DIFF_CALLBACK()), View.OnClickListener {
+class ReportsAdapter(val context: Context) : ListAdapter<File,ReportsAdapter.ViewHolder>(DIFF_CALLBACK()), View.OnClickListener, PopupMenu.OnMenuItemClickListener {
     private var listener: View.OnClickListener? = null
 
     class DIFF_CALLBACK: DiffUtil.ItemCallback<File>(){
@@ -47,7 +45,9 @@ class ReportsAdapter(val context: Context) : ListAdapter<File,ReportsAdapter.Vie
         holder.fechaReporte.text = lastModDate.toString()
 
         holder.opcionesReporte.setOnClickListener {
-            val popup = PopupMenu(it.context, it)
+            val popup = PopupMenu(it.context, it).apply {
+                setOnMenuItemClickListener(this@ReportsAdapter)
+            }
             val inflater: MenuInflater = popup.menuInflater
             inflater.inflate(R.menu.menu_report, popup.menu)
             popup.show()
@@ -65,5 +65,19 @@ class ReportsAdapter(val context: Context) : ListAdapter<File,ReportsAdapter.Vie
 
     override fun onClick(v: View?) {
         listener!!.onClick(v)
+    }
+
+    override fun onMenuItemClick(item: MenuItem): Boolean{
+        return when(item.itemId){
+            R.id.item_share ->{
+                Toast.makeText(context,"Estas compartiendo", Toast.LENGTH_SHORT).show()
+                true
+            }
+            R.id.item_delete ->{
+                Toast.makeText(context,"Estas eliminando", Toast.LENGTH_SHORT).show()
+                true
+            }
+            else -> false
+        }
     }
 }
