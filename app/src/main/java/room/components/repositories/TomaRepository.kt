@@ -34,6 +34,11 @@ class TomaRepository(application: Application) {
         return tomaDao.getTomasUsuario(id)
     }
 
+    fun gettomasUsuarioOrdenadas(id: Int, order: Int): LiveData<List<Toma>>{
+        return tomaDao.getTomasUsuarioOrdendas(id, order)
+    }
+
+
     fun getTomasUsuarioAsc(id: Int): LiveData<List<Toma>>{
         return tomaDao.getTomasUsuarioAsc(id)
     }

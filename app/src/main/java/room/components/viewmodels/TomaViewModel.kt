@@ -66,31 +66,37 @@ class TomaViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun getFilteredShotList(id: Int, filter: Int, order: Int) : LiveData<List<Toma>>{
-            when(filter / 1000){
+            Log.d("GetFilteredShotList",id.toString() + " | "+ filter.toString() + " | " + order.toString())
+            when(filter){
                 Filtros.PREDETERMINADO -> {
-                    shots.addSource(repository.getTomasUsuario(id)){values ->
+                    shots.addSource(repository.gettomasUsuarioOrdenadas(id,order)){values ->
                         shots.value = values
                     }
+                    Log.d("Filtro", "Filtro predeterminado")
                 }
                 Filtros.VALORACION -> {
                     shots.addSource(repository.getTomasPorValoracion(id,filter,order)){ values ->
                         shots.value = values
                     }
+                    Log.d("Filtro", "Filtro Valoracion")
                 }
                 Filtros.MOMENTO -> {
                     shots.addSource(repository.getTomasPorMomento(id,filter,order)){ values ->
                         shots.value = values
                     }
+                    Log.d("Filtro", "Filtro momento")
                 }
                 Filtros.EXTREMIDAD -> {
                     shots.addSource(repository.getTomasPorExtremidad(id,filter,order)){ values ->
                         shots.value = values
                     }
+                    Log.d("Filtro", "Filtro Extremidad")
                 }
                 Filtros.POSICION -> {
                     shots.addSource(repository.getTomasPorPosicion(id,filter,order)){ values ->
                         shots.value = values
                     }
+                    Log.d("Filtro", "Filtro Posicion")
                 }
             }
 

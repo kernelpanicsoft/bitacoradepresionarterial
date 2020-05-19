@@ -20,7 +20,7 @@ const val SIN_USUARIO_ACTIVO = -1
 const val DEFAULT_NOTIFICATION_CHANEL_ID = "primary_notification_channel"
 
 object Ordenes{
-    const val PREDETERMINADO = 99
+    const val PREDETERMINADO = 1
     const val ANTIGUEDAD_ASC = 1
     const val ANTIGUEDAD_DESC = 0
 }

@@ -350,7 +350,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun createPDF(){
+    private fun createPDF(){
         val document = PDDocument()
         val page = PDPage()
         document.addPage(page)

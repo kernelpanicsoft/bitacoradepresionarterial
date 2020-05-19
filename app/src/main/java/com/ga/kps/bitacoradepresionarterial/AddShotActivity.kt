@@ -134,7 +134,7 @@ class AddShotActivity : AppCompatActivity() {
                     5 -> momento = Momento.ANTES_COMER
                     6 -> momento = Momento.DESPUES_COMER
                 }
-                momento = position
+
             }
         }
 

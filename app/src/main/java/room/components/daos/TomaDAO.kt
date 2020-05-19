@@ -31,6 +31,9 @@ interface TomaDAO {
     @Query("SELECT * FROM Toma WHERE Toma.usuario_id = :id ")
     fun getTomasUsuario(id: Int) : LiveData<List<Toma>>
 
+    @Query("SELECT * FROM Toma WHERE TOma.usuario_id = :id ORDER BY CASE WHEN :order = 1 THEN date(Toma.fecha_hora) END ASC, CASE WHEN :order = 0 THEN date(Toma.fecha_hora) END DESC")
+    fun getTomasUsuarioOrdendas(id: Int, order: Int) : LiveData<List<Toma>>
+
     @Query("SELECT * FROM Toma WHERE Toma.usuario_id = :id AND Toma.valoracion = :valoracion ORDER BY CASE WHEN :order = 1 THEN date(Toma.fecha_hora) END ASC, CASE WHEN :order = 0 THEN date(Toma.fecha_hora) END DESC")
     fun getTomasUsuarioPorValoracion(id: Int, valoracion: Int, order: Int) : LiveData<List<Toma>>
 
