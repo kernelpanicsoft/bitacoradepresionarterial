@@ -1,18 +1,23 @@
 package com.ga.kps.bitacoradepresionarterial
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import java.io.File
+import java.io.IOException
 import java.util.*
 
-class ReportsAdapter(val context: Context) : ListAdapter<File,ReportsAdapter.ViewHolder>(DIFF_CALLBACK()), View.OnClickListener, PopupMenu.OnMenuItemClickListener {
+class ReportsAdapter(val context: Context) : ListAdapter<File,ReportsAdapter.ViewHolder>(DIFF_CALLBACK()), View.OnClickListener {
     private var listener: View.OnClickListener? = null
 
     class DIFF_CALLBACK: DiffUtil.ItemCallback<File>(){
@@ -45,11 +50,42 @@ class ReportsAdapter(val context: Context) : ListAdapter<File,ReportsAdapter.Vie
         holder.fechaReporte.text = lastModDate.toString()
 
         holder.opcionesReporte.setOnClickListener {
-            val popup = PopupMenu(it.context, it).apply {
-                setOnMenuItemClickListener(this@ReportsAdapter)
-            }
+            val popup = PopupMenu(it.context, it)
             val inflater: MenuInflater = popup.menuInflater
             inflater.inflate(R.menu.menu_report, popup.menu)
+            popup.setOnMenuItemClickListener { menuItem: MenuItem ->
+                 when(menuItem.itemId){
+                    R.id.item_share ->{
+                        val intentShareFile = Intent(Intent.ACTION_SEND)
+                        if(reporteActual.exists()){
+                            intentShareFile.setType("application/pdf")
+
+                            val reportUri: Uri = FileProvider.getUriForFile(
+                                context,
+                                "com.ga.kps.bitacoradepresionarterial",
+                                reporteActual
+                            )
+
+                            intentShareFile.putExtra(Intent.EXTRA_STREAM, reportUri)
+                            intentShareFile.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.compartir_reporte))
+                            intentShareFile.putExtra(Intent.EXTRA_TEXT,context.getString(R.string.compartir_reporte))
+                            context.startActivity(Intent.createChooser(intentShareFile, context.getString(R.string.compartir_reporte_intent)))
+                        }
+                        true
+                    }
+                    R.id.item_delete ->{
+                        menuItem.menuInfo
+                       // deleteReport(reporteActual)
+                        Log.d("ListaReportes",this.currentList.size.toString() + " | " + position)
+                       // var list = currentList
+                       // list.removeAt(position)
+                       // notifyItemRemoved(position)
+
+                        true
+                    }
+                    else -> false
+            }
+            }
             popup.show()
 
         }
@@ -67,17 +103,17 @@ class ReportsAdapter(val context: Context) : ListAdapter<File,ReportsAdapter.Vie
         listener!!.onClick(v)
     }
 
-    override fun onMenuItemClick(item: MenuItem): Boolean{
-        return when(item.itemId){
-            R.id.item_share ->{
-                Toast.makeText(context,"Estas compartiendo", Toast.LENGTH_SHORT).show()
-                true
-            }
-            R.id.item_delete ->{
-                Toast.makeText(context,"Estas eliminando", Toast.LENGTH_SHORT).show()
-                true
-            }
-            else -> false
-        }
+
+    @Throws(IOException::class)
+    private fun deleteReport(reportFile: File){
+        val reportUri: Uri = FileProvider.getUriForFile(
+            context,
+            "com.ga.kps.bitacoradepresionarterial",
+            reportFile
+        )
+
+        context.contentResolver.delete(reportUri,null,null)
     }
+
+
 }

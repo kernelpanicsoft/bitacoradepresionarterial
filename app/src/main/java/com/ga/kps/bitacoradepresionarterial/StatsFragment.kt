@@ -40,7 +40,7 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
 
         with(statsChartLC) {
             setTouchEnabled(false)
-           // setOnChartValueSelectedListener(this)
+            // setOnChartValueSelectedListener(this)
             setDrawGridBackground(false)
             description.isEnabled = false
             setScaleEnabled(false)

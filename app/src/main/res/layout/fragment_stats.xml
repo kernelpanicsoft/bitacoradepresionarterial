@@ -101,7 +101,8 @@
                     android:text="@string/ver_detalles"
                     android:textColor="@color/colorAccent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:visibility="gone" />
 
                 <com.github.mikephil.charting.charts.LineChart
                     android:id="@+id/statsChartLC"

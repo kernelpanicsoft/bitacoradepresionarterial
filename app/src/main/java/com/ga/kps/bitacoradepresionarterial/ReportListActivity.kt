@@ -16,10 +16,13 @@ import kotlinx.android.synthetic.main.activity_report_list.*
 import java.io.File
 
 class ReportListActivity : AppCompatActivity() {
+    lateinit var adapter: ReportsAdapter
+    lateinit var fileList: ArrayList<File>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_report_list)
+
 
         setSupportActionBar(toolbar)
         val ab = supportActionBar
@@ -35,8 +38,9 @@ class ReportListActivity : AppCompatActivity() {
         mLayoutManager.stackFromEnd = true
         reportsRV.layoutManager = mLayoutManager
 
-        val adapter = ReportsAdapter(this)
-        adapter.submitList(getFilesList())
+        adapter = ReportsAdapter(this)
+        fileList = getFilesList()
+        adapter.submitList(fileList)
 
         reportsRV.adapter = adapter
 
@@ -60,7 +64,6 @@ class ReportListActivity : AppCompatActivity() {
             }
 
         })
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -76,7 +79,8 @@ class ReportListActivity : AppCompatActivity() {
             }
 
             R.id.item_edit -> {
-                getFilesList()
+                fileList.removeAt(0)
+                adapter.notifyDataSetChanged()
             }
 
         }

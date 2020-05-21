@@ -92,6 +92,8 @@
     <string name="reportes_creados">Reportes creados</string>
     <string name="abrir_reporte">Abrir reporte</string>
     <string name="compartir">Compartir</string>
+    <string name="compartir_reporte">Compartir reporte....</string>
+    <string name="compartir_reporte_intent">Compartir reporte</string>
     <array name="generos">
         <item>Masculino</item>
         <item>Femenino</item>

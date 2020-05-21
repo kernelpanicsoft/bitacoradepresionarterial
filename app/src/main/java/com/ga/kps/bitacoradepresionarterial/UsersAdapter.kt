@@ -2,15 +2,19 @@ package com.ga.kps.bitacoradepresionarterial
 
 import android.content.Context
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.ListAdapter
 import android.widget.TextView
+import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import model.Usuario
+import java.io.File
+import java.io.IOException
 
 class UsersAdapter(val context: Context) : ListAdapter<Usuario, UsersAdapter.ViewHolder>(DIFF_CALLBACK()), View.OnClickListener {
     private var listener : View.OnClickListener? = null
@@ -68,6 +72,8 @@ class UsersAdapter(val context: Context) : ListAdapter<Usuario, UsersAdapter.Vie
     override fun onClick(v: View?) {
         listener!!.onClick(v)
     }
+
+
 
 
 
