@@ -28,8 +28,8 @@ import helpers.Ordenes
 import helpers.Valoracion
 
 class StatsFragment : Fragment(), OnChartValueSelectedListener {
-    lateinit var tomaViewModel: TomaViewModel
-    var currenctShotID : Int = -1
+    private lateinit var tomaViewModel: TomaViewModel
+    private var currenctShotID : Int = -1
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_stats, container, false)
@@ -38,6 +38,7 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
     override fun onResume() {
         super.onResume()
 
+        detallesTV.setOnClickListener(null)
         with(statsChartLC) {
             setTouchEnabled(false)
             // setOnChartValueSelectedListener(this)
@@ -84,11 +85,7 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
             setDataForPieChart(it)
         })
 
-        detallesTV.setOnClickListener {
-            val nav = Intent(context,ShotDetailActivity::class.java)
-            nav.putExtra("SHOT_ID", currenctShotID)
-            startActivity(nav)
-        }
+
     }
 
     private fun setData(shotList: List<Toma>){
@@ -107,27 +104,27 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
 
         val  dataSetSistolica = LineDataSet(entriesSistolica,getString(R.string.sistolica_label))
         with(dataSetSistolica){
-            color = ContextCompat.getColor(context!!,R.color.colorPrimary)
-            valueTextColor = ContextCompat.getColor(context!!,R.color.colorPrimary)
-            setCircleColor(ContextCompat.getColor(context!!,R.color.colorPrimary))
+            color = ContextCompat.getColor(requireContext(),R.color.colorPrimary)
+            valueTextColor = ContextCompat.getColor(requireContext(),R.color.colorPrimary)
+            setCircleColor(ContextCompat.getColor(requireContext(),R.color.colorPrimary))
             setDrawCircleHole(false)
             setDrawValues(false)
         }
 
         val  dataSetDiastolica = LineDataSet(entriesDiastolica,getString(R.string.diastolica_label))
         with(dataSetDiastolica){
-            color = ContextCompat.getColor(context!!,R.color.colorPrimaryDark)
-            valueTextColor = ContextCompat.getColor(context!!,R.color.colorPrimaryDark)
-            setCircleColor(ContextCompat.getColor(context!!,R.color.colorPrimaryDark))
+            color = ContextCompat.getColor(requireContext(),R.color.colorPrimaryDark)
+            valueTextColor = ContextCompat.getColor(requireContext(),R.color.colorPrimaryDark)
+            setCircleColor(ContextCompat.getColor(requireContext(),R.color.colorPrimaryDark))
             setDrawCircleHole(false)
             setDrawValues(false)
         }
 
         val  dataSetPulso = LineDataSet(entriesPulso,getString(R.string.pulso_label))
         with(dataSetPulso){
-            color = ContextCompat.getColor(context!!,R.color.colorAccent)
-            valueTextColor = ContextCompat.getColor(context!!,R.color.colorAccent)
-            setCircleColor(ContextCompat.getColor(context!!,R.color.colorAccent))
+            color = ContextCompat.getColor(requireContext(),R.color.colorAccent)
+            valueTextColor = ContextCompat.getColor(requireContext(),R.color.colorAccent)
+            setCircleColor(ContextCompat.getColor(requireContext(),R.color.colorAccent))
             setDrawCircleHole(false)
             setDrawValues(false)
         }
@@ -143,12 +140,21 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
     }
 
     override fun onNothingSelected() {
+        detallesTV.setOnClickListener(null)
+        sistolicaValorTV.text = "0"
+        diastolicaValorTV.text = "0"
+        pulsoValorTV.text = "0"
     }
 
     override fun onValueSelected(e: Entry?, h: Highlight?) {
         tomaViewModel.getToma(e?.data as Int).observe(viewLifecycleOwner,object:   NonNullObserver<Toma>() {
             override fun onNonNullChanged(toma: Toma) {
                 populateShotDataToUI(toma)
+                detallesTV.setOnClickListener {
+                    val nav = Intent(context,ShotDetailActivity::class.java)
+                    nav.putExtra("SHOT_ID", currenctShotID)
+                    startActivity(nav)
+                }
             }
         })
     }
@@ -169,12 +175,12 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
 
         for(i in shots){
             when(i.categoria){
-                Valoracion.HIPOTENSION -> colors.add(context!!.getColor(R.color.hipotension))
-                Valoracion.NORMAL -> colors.add(context!!.getColor(R.color.normalBP))
-                Valoracion.PREHIPERTENSION -> colors.add(context!!.getColor(R.color.prehipertensionBP))
-                Valoracion.HIPERTENSION_1 -> colors.add(context!!.getColor(R.color.hipertension1))
-                Valoracion.HIPERTENSION_2 -> colors.add(context!!.getColor(R.color.hipertension2))
-                Valoracion.CRISIS -> colors.add(context!!.getColor(R.color.hipertensioncrysis))
+                Valoracion.HIPOTENSION -> colors.add(requireContext().getColor(R.color.hipotension))
+                Valoracion.NORMAL -> colors.add(requireContext().getColor(R.color.normalBP))
+                Valoracion.PREHIPERTENSION -> colors.add(requireContext().getColor(R.color.prehipertensionBP))
+                Valoracion.HIPERTENSION_1 -> colors.add(requireContext().getColor(R.color.hipertension1))
+                Valoracion.HIPERTENSION_2 -> colors.add(requireContext().getColor(R.color.hipertension2))
+                Valoracion.CRISIS -> colors.add(requireContext().getColor(R.color.hipertensioncrysis))
             }
 
             pieEntries.add(
@@ -204,12 +210,15 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
         return valoracionArray!![value!!-1000]
     }
 
+
+
     abstract class NonNullObserver<Toma> : Observer<Toma>{
         abstract fun onNonNullChanged(toma: Toma)
 
         override fun onChanged(t: Toma) {
             t?.let { onNonNullChanged(it) }
         }
+
     }
 
     fun getSortedShotListForChart(){
