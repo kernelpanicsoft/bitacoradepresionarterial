@@ -94,6 +94,10 @@
     <string name="compartir">Compartir</string>
     <string name="compartir_reporte">Compartir reporte....</string>
     <string name="compartir_reporte_intent">Compartir reporte</string>
+    <string name="reporte">Reporte_</string>
+    <string name="crear_nuev_reporte">Crear nuevo reporte</string>
+    <string name="crear">Crear</string>
+    <string name="nombre_del_reporte">Nombre del reporte:</string>
     <array name="generos">
         <item>Masculino</item>
         <item>Femenino</item>

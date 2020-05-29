@@ -3,6 +3,7 @@ package com.ga.kps.bitacoradepresionarterial
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.Application
+import android.app.Dialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
@@ -13,6 +14,7 @@ import android.os.Environment
 import androidx.preference.PreferenceManager
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.EditText
 import android.widget.Toast
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
@@ -27,8 +29,12 @@ import com.tom_roush.pdfbox.pdmodel.font.PDType1Font
 import com.tom_roush.pdfbox.util.PDFBoxResourceLoader
 import helpers.*
 import kotlinx.android.synthetic.main.activity_main.*
+import model.Reporte
 import java.io.File
 import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
     lateinit var sharedPref: SharedPreferences
@@ -177,10 +183,11 @@ class MainActivity : AppCompatActivity() {
                 builder.setItems(R.array.formato_reportes) { dialog, which ->
                     when(which){
                         0 -> {
-                            createPDF()
+                            // createPDF()
+                            displayDialogForReportCreation()
                         }
                         1 -> {
-
+                            displayDialogForReportCreation()
                         }
                         2 -> {
                             val nav = Intent(this@MainActivity, ReportListActivity::class.java)
@@ -350,7 +357,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun createPDF(){
+    private fun createPDF(reportName: String){
         val document = PDDocument()
         val page = PDPage()
         document.addPage(page)
@@ -365,19 +372,54 @@ class MainActivity : AppCompatActivity() {
             contentStream.setNonStrokingColor(0,0,0)
             contentStream.setFont(font,12f)
             contentStream.newLineAtOffset(100f,700f)
-            contentStream.showText("Hello world")
+            contentStream.showText(reportName)
             contentStream.endText()
 
             contentStream.close()
 
-            val path = root.absolutePath + "/Created.pdf"
+            val path = root.absolutePath + "/"+ reportName + ".pdf"
             document.save(path)
             document.close()
             Toast.makeText(this@MainActivity, getString(R.string.reporte_creado_satisfactoriamente), Toast.LENGTH_SHORT).show()
 
+            val reporte = Reporte(0)
+            reporte.public_name = reportName
+            reporte.file = path
+
+            val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
+            val usuarioID = sharedPref.getInt("actualUserID", -1)
+            reporte.usuario_id = usuarioID
 
         } catch (e: IOException){
             Toast.makeText(this@MainActivity, getString(R.string.ocurrio_un_error_crear_reporte), Toast.LENGTH_SHORT).show()
         }
     }
+
+    private fun createReportName(): String{
+        val timeStamp: String = SimpleDateFormat("yyyy_MM_dd_HHmmss").format(Date())
+        val reportName = getString(R.string.reporte) + timeStamp
+        return reportName
+    }
+
+    private fun displayDialogForReportCreation(){
+        val builder = AlertDialog.Builder(this@MainActivity)
+
+        builder.setTitle(getString(R.string.crear_nuev_reporte))
+        val inflater = layoutInflater
+        val layoutView = inflater.inflate(R.layout.report_builder_dialog_content,null)
+        builder.setView(layoutView)
+        val fileName = layoutView.findViewById<EditText>(R.id.nombreReporteET)
+        fileName.setText(createReportName())
+        builder.setPositiveButton(getString(R.string.crear)){ dialog, which ->
+            createPDF(fileName.text.toString())
+        }
+        builder.setNegativeButton(getString(R.string.cancelar)){ dialog, which ->
+
+        }
+
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+
 }

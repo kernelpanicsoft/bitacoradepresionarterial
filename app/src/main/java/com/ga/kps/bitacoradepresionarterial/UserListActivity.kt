@@ -10,7 +10,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import helpers.REGISTRAR_USUARIO
@@ -49,7 +49,7 @@ class UserListActivity : AppCompatActivity() {
         RV.layoutManager = mLayoutManager
 
         val adapter = UsersAdapter(this)
-        usuarioViewModel = ViewModelProviders.of(this).get(UsuarioViewModel::class.java)
+        usuarioViewModel = ViewModelProvider(this).get(UsuarioViewModel::class.java)
         usuarioViewModel.getAllUsuarios().observe(this, Observer {
             adapter.submitList(it)
         })
@@ -58,8 +58,8 @@ class UserListActivity : AppCompatActivity() {
 
         adapter.setOnClickListener(View.OnClickListener {
             val usuario = adapter.getUsuarioAt(RecViewUsuarios.getChildAdapterPosition(it))
-            val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
-            with(sharedPref.edit()){
+            val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+            with(sharedPreferences.edit()){
                 putInt("actualUserID",usuario.id)
                 apply()
                 Log.d("actualUserSelected", it.toString())

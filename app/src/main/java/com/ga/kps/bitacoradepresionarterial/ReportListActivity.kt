@@ -11,17 +11,24 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.FileProvider
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_report_list.*
+import model.Reporte
+import room.components.viewmodels.ReportesViewModel
 import java.io.File
 
 class ReportListActivity : AppCompatActivity() {
     lateinit var adapter: ReportsAdapter
     lateinit var fileList: ArrayList<File>
+    lateinit var reportesViewModel: ReportesViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_report_list)
+
 
 
         setSupportActionBar(toolbar)
@@ -38,15 +45,22 @@ class ReportListActivity : AppCompatActivity() {
         mLayoutManager.stackFromEnd = true
         reportsRV.layoutManager = mLayoutManager
 
+        val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
+        val usuarioID = sharedPref.getInt("actualUserID", -1)
+
+        reportesViewModel = ViewModelProvider(this).get(ReportesViewModel::class.java)
+        reportesViewModel.getReportesUsuario(usuarioID).observe(this, Observer {
+            adapter.submitList(it)
+        })
+
         adapter = ReportsAdapter(this)
         fileList = getFilesList()
-        adapter.submitList(fileList)
 
         reportsRV.adapter = adapter
 
         adapter.setOnClickListener(View.OnClickListener {
             val intent = Intent(Intent.ACTION_VIEW)
-
+/*
             val uriforFile: Uri = FileProvider.getUriForFile(
                 this,
                 "com.ga.kps.bitacoradepresionarterial",
@@ -63,7 +77,10 @@ class ReportListActivity : AppCompatActivity() {
                 startActivity(chooser)
             }
 
+ */
+
         })
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -79,8 +96,8 @@ class ReportListActivity : AppCompatActivity() {
             }
 
             R.id.item_edit -> {
-                fileList.removeAt(0)
-                adapter.notifyDataSetChanged()
+            reportesViewModel.insert(Reporte(0,"HOla", "Helo.pdf",1))
+
             }
 
         }
