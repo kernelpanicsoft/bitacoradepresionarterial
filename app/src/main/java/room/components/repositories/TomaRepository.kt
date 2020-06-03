@@ -71,6 +71,10 @@ class TomaRepository(application: Application) {
         return tomaDao.getTomasUsuarioPorPosicion(id, position,orden)
     }
 
+    fun getTomasUsuarioReporteAsc(id: Int) : List<Toma>{
+        return tomaDao.getTomasUsuarioReporteAsc(id)
+    }
+
 
 
     private class InsertTomaAsyncTask constructor(private val tomaDAO: TomaDAO) : AsyncTask<Toma, Void, Void>(){

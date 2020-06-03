@@ -51,7 +51,6 @@ class ShotsFragment : Fragment(){
 
         tomasViewModel.getFilteredShotList(usuarioID,filter,order).observe(this, Observer {
             adapter.submitList(it)
-
         })
         RV.adapter = adapter
 
@@ -75,5 +74,6 @@ class ShotsFragment : Fragment(){
            // Log.d("Detalles lista: ", it.toString())
         })
     }
+
 
 }

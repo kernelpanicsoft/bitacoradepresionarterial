@@ -66,7 +66,7 @@ class TomaViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun getFilteredShotList(id: Int, filter: Int, order: Int) : LiveData<List<Toma>>{
-            Log.d("GetFilteredShotList",id.toString() + " | "+ filter.toString() + " | " + order.toString())
+            //Log.d("GetFilteredShotList",id.toString() + " | "+ filter.toString() + " | " + order.toString())
             when(filter){
                 Filtros.PREDETERMINADO -> {
                     shots.addSource(repository.gettomasUsuarioOrdenadas(id,order)){values ->
@@ -101,6 +101,10 @@ class TomaViewModel(application: Application) : AndroidViewModel(application) {
             }
 
         return shots
+    }
+
+    fun getTomasReporte(id: Int): List<Toma>{
+        return repository.getTomasUsuarioReporteAsc(id)
     }
 
 

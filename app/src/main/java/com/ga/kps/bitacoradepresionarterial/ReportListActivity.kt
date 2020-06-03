@@ -53,18 +53,18 @@ class ReportListActivity : AppCompatActivity() {
             adapter.submitList(it)
         })
 
-        adapter = ReportsAdapter(this)
+        adapter = ReportsAdapter(this, reportesViewModel)
         fileList = getFilesList()
 
         reportsRV.adapter = adapter
 
         adapter.setOnClickListener(View.OnClickListener {
             val intent = Intent(Intent.ACTION_VIEW)
-/*
+
             val uriforFile: Uri = FileProvider.getUriForFile(
                 this,
                 "com.ga.kps.bitacoradepresionarterial",
-                adapter.getReporteAt(reportsRV.getChildAdapterPosition(it)))
+                adapter.getReportFileAt(reportsRV.getChildAdapterPosition(it)))
 
             intent.setDataAndType(uriforFile,"application/pdf")
             intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
@@ -76,28 +76,17 @@ class ReportListActivity : AppCompatActivity() {
             if(intent.resolveActivity(packageManager) != null){
                 startActivity(chooser)
             }
-
- */
-
         })
 
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_edit, menu)
-        return true
-    }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             android.R.id.home -> {
                 onBackPressed()
                 return true
-            }
-
-            R.id.item_edit -> {
-            reportesViewModel.insert(Reporte(0,"HOla", "Helo.pdf",1))
-
             }
 
         }

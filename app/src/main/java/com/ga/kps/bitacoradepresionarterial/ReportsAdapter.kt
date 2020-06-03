@@ -10,15 +10,17 @@ import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.FileProvider
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import model.Reporte
+import room.components.viewmodels.ReportesViewModel
 import java.io.File
 import java.io.IOException
 import java.util.*
 
-class ReportsAdapter(val context: Context) : ListAdapter<Reporte,ReportsAdapter.ViewHolder>(DIFF_CALLBACK()), View.OnClickListener {
+class ReportsAdapter(val context: Context,val reportesViewModel: ReportesViewModel) : ListAdapter<Reporte,ReportsAdapter.ViewHolder>(DIFF_CALLBACK()), View.OnClickListener {
     private var listener: View.OnClickListener? = null
 
     class DIFF_CALLBACK: DiffUtil.ItemCallback<Reporte>(){
@@ -48,7 +50,7 @@ class ReportsAdapter(val context: Context) : ListAdapter<Reporte,ReportsAdapter.
         val reporteActual = getItem(position)
         val file = getFileForItem(reporteActual.file!!)
         val lastModDate = Date(file.lastModified())
-        holder.nombreReporte.text = reporteActual.file
+        holder.nombreReporte.text = reporteActual.public_name
         holder.fechaReporte.text = lastModDate.toString()
 
         holder.opcionesReporte.setOnClickListener {
@@ -59,14 +61,14 @@ class ReportsAdapter(val context: Context) : ListAdapter<Reporte,ReportsAdapter.
                  when(menuItem.itemId){
                     R.id.item_share ->{
                         val intentShareFile = Intent(Intent.ACTION_SEND)
-                        /*
-                        if(reporteActual.exists()){
+                        val file = File(reporteActual.file)
+                        if(file.exists()){
                             intentShareFile.setType("application/pdf")
 
                             val reportUri: Uri = FileProvider.getUriForFile(
                                 context,
                                 "com.ga.kps.bitacoradepresionarterial",
-                                reporteActual
+                                file
                             )
 
                             intentShareFile.putExtra(Intent.EXTRA_STREAM, reportUri)
@@ -75,17 +77,13 @@ class ReportsAdapter(val context: Context) : ListAdapter<Reporte,ReportsAdapter.
                             context.startActivity(Intent.createChooser(intentShareFile, context.getString(R.string.compartir_reporte_intent)))
                         }
 
-                         */
+
                         true
                     }
                     R.id.item_delete ->{
                         menuItem.menuInfo
-                       // deleteReport(reporteActual)
-                        Log.d("ListaReportes",this.currentList.size.toString() + " | " + position)
-                       // var list = currentList
-                       // list.removeAt(position)
-
-                        notifyDataSetChanged()
+                        deleteReport(File(reporteActual.file!!))
+                        reportesViewModel.delete(reporteActual)
 
                         true
                     }
@@ -100,6 +98,11 @@ class ReportsAdapter(val context: Context) : ListAdapter<Reporte,ReportsAdapter.
     fun getReporteAt(position: Int): Reporte{
         return getItem(position)
     }
+
+    fun getReportFileAt(position: Int): File{
+        return File(getItem(position).file)
+    }
+
 
     fun setOnClickListener(listAdapter: View.OnClickListener){
         this.listener = listAdapter

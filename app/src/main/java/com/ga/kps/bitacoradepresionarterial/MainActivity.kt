@@ -2,15 +2,15 @@ package com.ga.kps.bitacoradepresionarterial
 
 import android.app.Activity
 import android.app.AlertDialog
-import android.app.Application
-import android.app.Dialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.AssetManager
+import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
+import android.util.Log
 import androidx.preference.PreferenceManager
 import android.view.Menu
 import android.view.MenuItem
@@ -20,6 +20,7 @@ import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
 import com.tom_roush.pdfbox.pdmodel.PDDocument
 import com.tom_roush.pdfbox.pdmodel.PDPage
@@ -29,7 +30,12 @@ import com.tom_roush.pdfbox.pdmodel.font.PDType1Font
 import com.tom_roush.pdfbox.util.PDFBoxResourceLoader
 import helpers.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import model.Reporte
+import model.Toma
+import room.components.viewmodels.ReportesViewModel
+import room.components.viewmodels.TomaViewModel
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -128,6 +134,8 @@ class MainActivity : AppCompatActivity() {
             startActivity(nav)
         }
 
+
+
     }
 
     private fun setupViewPager(pager: ViewPager){
@@ -176,8 +184,8 @@ class MainActivity : AppCompatActivity() {
                 drawer_layout.openDrawer(GravityCompat.START)
             }
             R.id.itemExport ->{
-               // val notificationManager = NotificationsManager(this)
-               // notificationManager.sendNotificationForReminder("Hola mundo","Como estan")
+                // val notificationManager = NotificationsManager(this)
+                // notificationManager.sendNotificationForReminder("Hola mundo","Como estan")
                 val builder = AlertDialog.Builder(this)
                 builder.setTitle(getString(R.string.reportes))
                 builder.setItems(R.array.formato_reportes) { dialog, which ->
@@ -346,7 +354,7 @@ class MainActivity : AppCompatActivity() {
         val shotsFragment = adapter.getItem(0) as ShotsFragment
         shotsFragment.displaySortedShotList()
         val statsFragment = adapter.getItem(1) as StatsFragment
-        statsFragment.getSortedShotListForChart()
+        statsFragment.setSortedShotListForChart()
     }
 
     private fun setup(){
@@ -358,6 +366,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun createPDF(reportName: String){
+        val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
+        val usuarioID = sharedPref.getInt("actualUserID", -1)
+        val order = sharedPref.getInt("ShotsOrder",Ordenes.PREDETERMINADO)
+        val filter = sharedPref.getInt("ShotFilter", Filtros.PREDETERMINADO)
+
         val document = PDDocument()
         val page = PDPage()
         document.addPage(page)
@@ -371,29 +384,105 @@ class MainActivity : AppCompatActivity() {
             contentStream.beginText()
             contentStream.setNonStrokingColor(0,0,0)
             contentStream.setFont(font,12f)
-            contentStream.newLineAtOffset(100f,700f)
-            contentStream.showText(reportName)
-            contentStream.endText()
+            contentStream.newLineAtOffset(30f,750f)
+            contentStream.showText(getString(R.string.reporte_de_presion_arterial))
+            contentStream.newLineAtOffset(0f, -15f)
+            contentStream.showText("Nombre: Carlos Eduardo Corona Hernández")
+            contentStream.newLineAtOffset(0f, -15f)
+            contentStream.showText("Fecha de nacimiento: 25 de abril de 1993 (25 Años)")
+            contentStream.newLineAtOffset(0f, -25f)
+            contentStream.showText(getString(R.string.fecha))
+            contentStream.newLineAtOffset(90f, 0f)
+            contentStream.showText(getString(R.string.sistolica))
+            contentStream.newLineAtOffset(70f, 0f)
+            contentStream.showText(getString(R.string.diastolica))
+            contentStream.newLineAtOffset(70f, 0f)
+            contentStream.showText(getString(R.string.pulso))
+            contentStream.newLineAtOffset(70f, 0f)
+            contentStream.showText(getString(R.string.extremidad))
+            contentStream.newLineAtOffset(90f, 0f)
+            contentStream.showText(getString(R.string.posicion))
+            contentStream.newLineAtOffset(70f, 0f)
+            contentStream.showText(getString(R.string.momento_dia))
+            /*
+            val tomasViewModel = ViewModelProvider(this).get(TomaViewModel::class.java)
+            val listaTomas = tomasViewModel.getFilteredShotList(usuarioID,filter,order)
+            listaTomas.observe(this, androidx.lifecycle.Observer {
+                contentStream.newLineAtOffset(-460f, -15f)
+                contentStream.showText("ASASS")
+                if(listaTomas.value == null){
+                    Log.d("TomasReporte","Es null")
+                }else{
+                    Log.d("TomasReporte","No Es null")
+                }
+                for( toma in it){
+                    Log.d("TomasReporte", toma.toString())
+                    contentStream.newLineAtOffset(-460f, -15f)
+                    contentStream.showText("ASASS")
+                    contentStream.newLineAtOffset(90f, 0f)
+                    contentStream.showText(toma.sistolica.toString())
+                    contentStream.newLineAtOffset(70f, 0f)
+                    contentStream.showText(toma.diastolica.toString())
+                    contentStream.newLineAtOffset(70f, 0f)
+                    contentStream.showText(toma.pulso.toString())
+                }
+            })
+*/
 
-            contentStream.close()
+            val toma1 = Toma(1,1,1,1,"lkjlkjk",1,1,"Hola",1,1,1)
+            val toma2 = Toma(2,2,2,2,"hjgfhf",1,1,"Hola",1,1,1)
+            val toma3 = Toma(3,3,3,3,"sdasdad",1,1,"Hola",1,1,1)
 
-            val path = root.absolutePath + "/"+ reportName + ".pdf"
-            document.save(path)
-            document.close()
+            contentStream.newLineAtOffset(-460f, -15f)
+           /* val lista = listOf<Toma>(toma1,toma2,toma3)
+            for(toma in lista){
+                contentStream.showText(toma.fecha_hora)
+                contentStream.newLineAtOffset(90f, 0f)
+                contentStream.showText(toma.sistolica.toString())
+                contentStream.newLineAtOffset(70f, 0f)
+                contentStream.showText(toma.diastolica.toString())
+                contentStream.newLineAtOffset(70f, 0f)
+                contentStream.showText(toma.pulso.toString())
+            }
+            */
+            var listaTomas :  List<Toma>
+            var variable = "adadfsf"
+            GlobalScope.launch {
+                listaTomas = getListForDefaultReport(usuarioID)
+
+                for(toma in listaTomas){
+                    contentStream.showText(toma.fecha_hora)
+                    contentStream.newLineAtOffset(90f, 0f)
+                    contentStream.showText(toma.sistolica.toString())
+                    contentStream.newLineAtOffset(70f, 0f)
+                    contentStream.showText(toma.diastolica.toString())
+                    contentStream.newLineAtOffset(70f, 0f)
+                    contentStream.showText(toma.pulso.toString())
+                }
+
+                contentStream.close()
+
+
+                val path = root.absolutePath + "/"+ reportName + ".pdf"
+                document.save(path)
+                document.close()
+
+                val reporte = Reporte(0)
+                reporte.public_name = reportName
+                reporte.file = path
+
+                reporte.usuario_id = usuarioID
+                val reporteViewModel = ViewModelProvider(this@MainActivity).get(ReportesViewModel::class.java)
+                reporteViewModel.insert(reporte)
+            }
             Toast.makeText(this@MainActivity, getString(R.string.reporte_creado_satisfactoriamente), Toast.LENGTH_SHORT).show()
 
-            val reporte = Reporte(0)
-            reporte.public_name = reportName
-            reporte.file = path
-
-            val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
-            val usuarioID = sharedPref.getInt("actualUserID", -1)
-            reporte.usuario_id = usuarioID
 
         } catch (e: IOException){
             Toast.makeText(this@MainActivity, getString(R.string.ocurrio_un_error_crear_reporte), Toast.LENGTH_SHORT).show()
         }
     }
+
 
     private fun createReportName(): String{
         val timeStamp: String = SimpleDateFormat("yyyy_MM_dd_HHmmss").format(Date())
@@ -421,5 +510,35 @@ class MainActivity : AppCompatActivity() {
         dialog.show()
     }
 
+    private suspend fun getListForDefaultReport(id: Int) : List<Toma>{
+        val tomasViewModel = ViewModelProvider(this).get(TomaViewModel::class.java)
+        return tomasViewModel.getTomasReporte(id)
+    }
+
+
+    private class InsertTomaEnReporteAsyncTask constructor(private val contentStream: PDPageContentStream) : AsyncTask<List<Toma>,Void,Void>(){
+        override fun onPreExecute() {
+
+
+        }
+
+        override fun doInBackground(vararg p0: List<Toma>): Void?{
+            for(toma in p0[0]){
+                contentStream.newLineAtOffset(-460f, -15f)
+                contentStream.showText(toma.fecha_hora)
+                contentStream.newLineAtOffset(90f, 0f)
+                contentStream.showText(toma.sistolica.toString())
+                contentStream.newLineAtOffset(70f, 0f)
+                contentStream.showText(toma.diastolica.toString())
+                contentStream.newLineAtOffset(70f, 0f)
+                contentStream.showText(toma.pulso.toString())
+            }
+            return null
+        }
+
+        override fun onPostExecute(result: Void?) {
+            contentStream.close()
+        }
+    }
 
 }

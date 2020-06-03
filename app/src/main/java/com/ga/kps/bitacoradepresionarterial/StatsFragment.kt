@@ -221,7 +221,7 @@ class StatsFragment : Fragment(), OnChartValueSelectedListener {
 
     }
 
-    fun getSortedShotListForChart(){
+    fun setSortedShotListForChart(){
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
         val usuarioID = sharedPref.getInt("actualUserID", -1)
         val filter = sharedPref.getInt("ShotFilter", Filtros.PREDETERMINADO)
