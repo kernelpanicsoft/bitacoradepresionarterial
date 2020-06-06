@@ -38,7 +38,9 @@ import room.components.viewmodels.ReportesViewModel
 import room.components.viewmodels.TomaViewModel
 import java.io.File
 import java.io.IOException
+import java.text.DateFormat
 import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -371,13 +373,19 @@ class MainActivity : AppCompatActivity() {
         val order = sharedPref.getInt("ShotsOrder",Ordenes.PREDETERMINADO)
         val filter = sharedPref.getInt("ShotFilter", Filtros.PREDETERMINADO)
 
+        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US)
+        val sdfReportDate = SimpleDateFormat.getDateInstance(DateFormat.SHORT)
+        val sdfReportTime = SimpleDateFormat.getTimeInstance(DateFormat.SHORT)
+
+        val shotEvaluatorHelper: ShotEvaluatorHelper = ShotEvaluatorHelper(this)
+
         val document = PDDocument()
         val page = PDPage()
         document.addPage(page)
 
         val font : PDFont = PDType1Font.HELVETICA
 
-        val contentStream:  PDPageContentStream
+        var contentStream:  PDPageContentStream
 
         try{
             contentStream = PDPageContentStream(document, page)
@@ -391,73 +399,52 @@ class MainActivity : AppCompatActivity() {
             contentStream.newLineAtOffset(0f, -15f)
             contentStream.showText("Fecha de nacimiento: 25 de abril de 1993 (25 Años)")
             contentStream.newLineAtOffset(0f, -25f)
+
+
             contentStream.showText(getString(R.string.fecha))
-            contentStream.newLineAtOffset(90f, 0f)
+            contentStream.newLineAtOffset(150f, 0f)
             contentStream.showText(getString(R.string.sistolica))
             contentStream.newLineAtOffset(70f, 0f)
             contentStream.showText(getString(R.string.diastolica))
             contentStream.newLineAtOffset(70f, 0f)
             contentStream.showText(getString(R.string.pulso))
             contentStream.newLineAtOffset(70f, 0f)
-            contentStream.showText(getString(R.string.extremidad))
-            contentStream.newLineAtOffset(90f, 0f)
-            contentStream.showText(getString(R.string.posicion))
-            contentStream.newLineAtOffset(70f, 0f)
             contentStream.showText(getString(R.string.momento_dia))
-            /*
-            val tomasViewModel = ViewModelProvider(this).get(TomaViewModel::class.java)
-            val listaTomas = tomasViewModel.getFilteredShotList(usuarioID,filter,order)
-            listaTomas.observe(this, androidx.lifecycle.Observer {
-                contentStream.newLineAtOffset(-460f, -15f)
-                contentStream.showText("ASASS")
-                if(listaTomas.value == null){
-                    Log.d("TomasReporte","Es null")
-                }else{
-                    Log.d("TomasReporte","No Es null")
-                }
-                for( toma in it){
-                    Log.d("TomasReporte", toma.toString())
-                    contentStream.newLineAtOffset(-460f, -15f)
-                    contentStream.showText("ASASS")
-                    contentStream.newLineAtOffset(90f, 0f)
-                    contentStream.showText(toma.sistolica.toString())
-                    contentStream.newLineAtOffset(70f, 0f)
-                    contentStream.showText(toma.diastolica.toString())
-                    contentStream.newLineAtOffset(70f, 0f)
-                    contentStream.showText(toma.pulso.toString())
-                }
-            })
-*/
-
-            val toma1 = Toma(1,1,1,1,"lkjlkjk",1,1,"Hola",1,1,1)
-            val toma2 = Toma(2,2,2,2,"hjgfhf",1,1,"Hola",1,1,1)
-            val toma3 = Toma(3,3,3,3,"sdasdad",1,1,"Hola",1,1,1)
-
-            contentStream.newLineAtOffset(-460f, -15f)
-           /* val lista = listOf<Toma>(toma1,toma2,toma3)
-            for(toma in lista){
-                contentStream.showText(toma.fecha_hora)
-                contentStream.newLineAtOffset(90f, 0f)
-                contentStream.showText(toma.sistolica.toString())
-                contentStream.newLineAtOffset(70f, 0f)
-                contentStream.showText(toma.diastolica.toString())
-                contentStream.newLineAtOffset(70f, 0f)
-                contentStream.showText(toma.pulso.toString())
-            }
-            */
             var listaTomas :  List<Toma>
-            var variable = "adadfsf"
+            contentStream.newLineAtOffset(-360f, -20f)
+
+
             GlobalScope.launch {
                 listaTomas = getListForDefaultReport(usuarioID)
+                var date: Date? = null
+                var calendar = Calendar.getInstance()
+                for((index, toma) in listaTomas.withIndex()){
+                    date = sdf.parse(toma.fecha_hora!!)
+                    calendar.time = date
 
-                for(toma in listaTomas){
-                    contentStream.showText(toma.fecha_hora)
-                    contentStream.newLineAtOffset(90f, 0f)
+                    contentStream.showText(sdfReportDate.format(calendar.time) + " " + sdfReportTime.format(calendar.time))
+                    contentStream.newLineAtOffset(150f, 0f)
                     contentStream.showText(toma.sistolica.toString())
                     contentStream.newLineAtOffset(70f, 0f)
                     contentStream.showText(toma.diastolica.toString())
                     contentStream.newLineAtOffset(70f, 0f)
                     contentStream.showText(toma.pulso.toString())
+                    contentStream.newLineAtOffset(70f, 0f)
+                    contentStream.showText(shotEvaluatorHelper.getMomentString(toma.momento!!))
+                    contentStream.newLineAtOffset(-360f, -25f)
+
+                    if(index > 1 && index % 26 == 0){
+                        contentStream.close()
+                       val newPage = PDPage()
+                        document.addPage(newPage)
+                        contentStream = PDPageContentStream(document, page)
+                        contentStream.beginText()
+                        contentStream.setNonStrokingColor(0,0,0)
+                        contentStream.setFont(font,12f)
+
+
+                        Log.d("PaginaNueva", "Pagina")
+                    }
                 }
 
                 contentStream.close()
