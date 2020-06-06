@@ -437,13 +437,13 @@ class MainActivity : AppCompatActivity() {
                         contentStream.close()
                        val newPage = PDPage()
                         document.addPage(newPage)
-                        contentStream = PDPageContentStream(document, page)
+                        contentStream = PDPageContentStream(document, newPage)
                         contentStream.beginText()
                         contentStream.setNonStrokingColor(0,0,0)
                         contentStream.setFont(font,12f)
+                        contentStream.newLineAtOffset(30f,750f)
 
 
-                        Log.d("PaginaNueva", "Pagina")
                     }
                 }
 

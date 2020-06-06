@@ -49,6 +49,6 @@ interface TomaDAO {
     @Query("SELECT Toma.valoracion as categoria, COUNT(Toma.valoracion) as cantidad FROM Toma WHERE Toma.usuario_id = :id GROUP BY Toma.valoracion")
     fun getValoracionTomasUsuario(id: Int) : LiveData<List<CantidadTomasPorValoracion>>
 
-    @Query("SELECT * FROM Toma WHERE Toma.usuario_id = :id ORDER BY date(Toma.fecha_hora) ASC")
+    @Query("SELECT * FROM Toma WHERE Toma.usuario_id = :id ORDER BY date(Toma.fecha_hora) DESC")
     fun getTomasUsuarioReporteAsc(id: Int) : List<Toma>
 }
