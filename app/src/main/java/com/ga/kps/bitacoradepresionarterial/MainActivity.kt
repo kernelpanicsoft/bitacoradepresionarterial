@@ -34,6 +34,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import model.Reporte
 import model.Toma
+import notifications.system.NotificationsManager
 import room.components.viewmodels.ReportesViewModel
 import room.components.viewmodels.TomaViewModel
 import java.io.File
@@ -197,7 +198,8 @@ class MainActivity : AppCompatActivity() {
                             displayDialogForReportCreation()
                         }
                         1 -> {
-                            displayDialogForReportCreation()
+                            val notificationManager = NotificationsManager(this@MainActivity)
+                            notificationManager.sendNotificationForReportCreation("Hola","Mundo")
                         }
                         2 -> {
                             val nav = Intent(this@MainActivity, ReportListActivity::class.java)
@@ -502,30 +504,5 @@ class MainActivity : AppCompatActivity() {
         return tomasViewModel.getTomasReporte(id)
     }
 
-
-    private class InsertTomaEnReporteAsyncTask constructor(private val contentStream: PDPageContentStream) : AsyncTask<List<Toma>,Void,Void>(){
-        override fun onPreExecute() {
-
-
-        }
-
-        override fun doInBackground(vararg p0: List<Toma>): Void?{
-            for(toma in p0[0]){
-                contentStream.newLineAtOffset(-460f, -15f)
-                contentStream.showText(toma.fecha_hora)
-                contentStream.newLineAtOffset(90f, 0f)
-                contentStream.showText(toma.sistolica.toString())
-                contentStream.newLineAtOffset(70f, 0f)
-                contentStream.showText(toma.diastolica.toString())
-                contentStream.newLineAtOffset(70f, 0f)
-                contentStream.showText(toma.pulso.toString())
-            }
-            return null
-        }
-
-        override fun onPostExecute(result: Void?) {
-            contentStream.close()
-        }
-    }
 
 }

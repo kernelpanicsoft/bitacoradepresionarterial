@@ -12,6 +12,7 @@ class SplashScreenActivity : AppCompatActivity() {
 
         val notificationChannel = NotificationsManager(this)
         notificationChannel.createNotificationChannel()
+        notificationChannel.createNofiticationChannelForReports()
 
         startActivity(Intent(this, MainActivity::class.java))
         finish()

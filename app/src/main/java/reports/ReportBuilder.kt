@@ -7,7 +7,7 @@ import android.os.Environment
 import com.tom_roush.pdfbox.util.PDFBoxResourceLoader
 import java.io.File
 
-class ReportBuilder(private val applicationContext: Context) {
+class ReportBuilder(private val context: Context) {
 
     lateinit var root: File
     lateinit var assetManager: AssetManager
@@ -16,9 +16,9 @@ class ReportBuilder(private val applicationContext: Context) {
 
     private fun setup(){
 
-        PDFBoxResourceLoader.init(applicationContext)
-        root = applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)!!
-        assetManager = applicationContext.assets
+        PDFBoxResourceLoader.init(context)
+        root = context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)!!
+        assetManager = context.assets
 
     }
 }
