@@ -80,3 +80,8 @@ object Codigos_solicitud{
     const val SOLICITAR_IMAGEN_DESDE_CAMARA = 930
 }
 
+object Tipo_Reporte{
+    const val PREDETERMINADO = 800
+    const val FILTROS_ACTUALES = 801
+}
+

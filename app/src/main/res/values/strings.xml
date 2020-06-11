@@ -100,6 +100,7 @@
     <string name="nombre_del_reporte">Nombre del reporte:</string>
     <string name="reporte_de_presion_arterial">Reporte de presión arterial</string>
     <string name="reporte_creado">Reporte creado</string>
+    <string name="fecha_nacimiento_reporte">Fecha de nacimiento:</string>
     <array name="generos">
         <item>Masculino</item>
         <item>Femenino</item>

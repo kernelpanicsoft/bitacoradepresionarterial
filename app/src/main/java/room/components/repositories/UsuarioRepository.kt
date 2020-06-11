@@ -39,6 +39,9 @@ class UsuarioRepository (application: Application){
         return usuarioDao.getLastUserID()
     }
 
+    fun getUsuarioForReport(id: Int) : Usuario{
+        return usuarioDao.getUsuarioForReport(id)
+    }
 
 
     private class InsertUsuarioAsyncTask constructor(private val usuarioDAO: UsuarioDAO) : AsyncTask<Usuario, Void, Void>(){

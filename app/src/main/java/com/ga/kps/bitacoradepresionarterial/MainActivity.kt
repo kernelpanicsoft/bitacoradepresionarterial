@@ -121,12 +121,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-
-        setup()
-    }
-
     override fun onResume() {
         super.onResume()
 
@@ -195,15 +189,12 @@ class MainActivity : AppCompatActivity() {
                 builder.setItems(R.array.formato_reportes) { dialog, which ->
                     when(which){
                         0 -> {
-                            // createPDF()
-                            displayDialogForReportCreation()
+                            displayDialogForReportCreation(Tipo_Reporte.PREDETERMINADO)
                         }
                         1 -> {
                           //  val notificationManager = NotificationsManager(this@MainActivity)
                           //  notificationManager.sendNotificationForReportCreation("Hola","Mundo")
-                            val reportBuilder =  ReportBuilder(application)
-                            reportBuilder.setup()
-                            reportBuilder.createPDF("HOlaREporte")
+                            displayDialogForReportCreation(Tipo_Reporte.FILTROS_ACTUALES)
 
                         }
                         2 -> {
@@ -366,117 +357,6 @@ class MainActivity : AppCompatActivity() {
         statsFragment.setSortedShotListForChart()
     }
 
-    private fun setup(){
-        PDFBoxResourceLoader.init(applicationContext)
-
-        root = applicationContext.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)!!
-        assetManager = assets
-
-    }
-
-    private fun createPDF(reportName: String){
-        val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
-        val usuarioID = sharedPref.getInt("actualUserID", -1)
-        val order = sharedPref.getInt("ShotsOrder",Ordenes.PREDETERMINADO)
-        val filter = sharedPref.getInt("ShotFilter", Filtros.PREDETERMINADO)
-
-        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US)
-        val sdfReportDate = SimpleDateFormat.getDateInstance(DateFormat.SHORT)
-        val sdfReportTime = SimpleDateFormat.getTimeInstance(DateFormat.SHORT)
-
-        val shotEvaluatorHelper: ShotEvaluatorHelper = ShotEvaluatorHelper(this)
-
-        val document = PDDocument()
-        val page = PDPage()
-        document.addPage(page)
-
-        val font : PDFont = PDType1Font.HELVETICA
-
-        var contentStream:  PDPageContentStream
-
-        try{
-            contentStream = PDPageContentStream(document, page)
-            contentStream.beginText()
-            contentStream.setNonStrokingColor(0,0,0)
-            contentStream.setFont(font,12f)
-            contentStream.newLineAtOffset(30f,750f)
-            contentStream.showText(getString(R.string.reporte_de_presion_arterial))
-            contentStream.newLineAtOffset(0f, -15f)
-            contentStream.showText("Nombre: Carlos Eduardo Corona Hernández")
-            contentStream.newLineAtOffset(0f, -15f)
-            contentStream.showText("Fecha de nacimiento: 25 de abril de 1993 (25 Años)")
-            contentStream.newLineAtOffset(0f, -25f)
-
-
-            contentStream.showText(getString(R.string.fecha))
-            contentStream.newLineAtOffset(150f, 0f)
-            contentStream.showText(getString(R.string.sistolica))
-            contentStream.newLineAtOffset(70f, 0f)
-            contentStream.showText(getString(R.string.diastolica))
-            contentStream.newLineAtOffset(70f, 0f)
-            contentStream.showText(getString(R.string.pulso))
-            contentStream.newLineAtOffset(70f, 0f)
-            contentStream.showText(getString(R.string.momento_dia))
-            var listaTomas :  List<Toma>
-            contentStream.newLineAtOffset(-360f, -20f)
-
-            Thread(Runnable {
-                listaTomas = getListForDefaultReport(usuarioID)
-                var date: Date? = null
-                var calendar = Calendar.getInstance()
-                for((index, toma) in listaTomas.withIndex()){
-                    date = sdf.parse(toma.fecha_hora!!)
-                    calendar.time = date
-
-                    contentStream.showText(sdfReportDate.format(calendar.time) + " " + sdfReportTime.format(calendar.time))
-                    contentStream.newLineAtOffset(150f, 0f)
-                    contentStream.showText(toma.sistolica.toString())
-                    contentStream.newLineAtOffset(70f, 0f)
-                    contentStream.showText(toma.diastolica.toString())
-                    contentStream.newLineAtOffset(70f, 0f)
-                    contentStream.showText(toma.pulso.toString())
-                    contentStream.newLineAtOffset(70f, 0f)
-                    contentStream.showText(shotEvaluatorHelper.getMomentString(toma.momento!!))
-                    contentStream.newLineAtOffset(-360f, -25f)
-
-                    if(index > 1 && index % 26 == 0){
-                        contentStream.close()
-                        val newPage = PDPage()
-                        document.addPage(newPage)
-                        contentStream = PDPageContentStream(document, newPage)
-                        contentStream.beginText()
-                        contentStream.setNonStrokingColor(0,0,0)
-                        contentStream.setFont(font,12f)
-                        contentStream.newLineAtOffset(30f,750f)
-
-
-                    }
-                }
-
-                contentStream.close()
-
-
-                val path = root.absolutePath + "/"+ reportName + ".pdf"
-                document.save(path)
-                document.close()
-
-                val reporte = Reporte(0)
-                reporte.public_name = reportName
-                reporte.file = path
-
-                reporte.usuario_id = usuarioID
-                val reporteViewModel = ViewModelProvider(this@MainActivity).get(ReportesViewModel::class.java)
-                reporteViewModel.insert(reporte)
-            }).start()
-
-            Toast.makeText(this@MainActivity, getString(R.string.reporte_creado_satisfactoriamente), Toast.LENGTH_SHORT).show()
-
-
-        } catch (e: IOException){
-            Toast.makeText(this@MainActivity, getString(R.string.ocurrio_un_error_crear_reporte), Toast.LENGTH_SHORT).show()
-        }
-    }
-
 
     private fun createReportName(): String{
         val timeStamp: String = SimpleDateFormat("yyyy_MM_dd_HHmmss").format(Date())
@@ -484,7 +364,8 @@ class MainActivity : AppCompatActivity() {
         return reportName
     }
 
-    private fun displayDialogForReportCreation(){
+    private fun displayDialogForReportCreation(reportType : Int){
+
         val builder = AlertDialog.Builder(this@MainActivity)
 
         builder.setTitle(getString(R.string.crear_nuev_reporte))
@@ -493,21 +374,28 @@ class MainActivity : AppCompatActivity() {
         builder.setView(layoutView)
         val fileName = layoutView.findViewById<EditText>(R.id.nombreReporteET)
         fileName.setText(createReportName())
-        builder.setPositiveButton(getString(R.string.crear)){ dialog, which ->
-            createPDF(fileName.text.toString())
-        }
-        builder.setNegativeButton(getString(R.string.cancelar)){ dialog, which ->
+        builder.setPositiveButton(getString(R.string.crear)){ _, _ ->
+            when(reportType){
+                Tipo_Reporte.PREDETERMINADO ->{
+                    val reportBuilder = ReportBuilder(application)
+                    reportBuilder.setup()
+                    reportBuilder.createPDF(fileName.text.toString())
 
+                }
+                Tipo_Reporte.FILTROS_ACTUALES ->{
+
+                }
+            }
+
+        }
+        builder.setNegativeButton(getString(R.string.cancelar)){ _, _ ->
         }
 
         val dialog = builder.create()
         dialog.show()
     }
 
-    private fun getListForDefaultReport(id: Int) : List<Toma>{
-        val tomasViewModel = ViewModelProvider(this).get(TomaViewModel::class.java)
-        return tomasViewModel.getTomasReporte(id)
-    }
+
 
 
 }

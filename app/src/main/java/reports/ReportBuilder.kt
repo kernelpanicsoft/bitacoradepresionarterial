@@ -25,9 +25,12 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import android.app.Application
+import android.util.Log
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import model.Usuario
 import room.components.repositories.ReporteRepository
+import room.components.repositories.UsuarioRepository
 
 class ReportBuilder(private val application: Application) {
 
@@ -45,6 +48,8 @@ class ReportBuilder(private val application: Application) {
     }
 
     fun createPDF(reportName: String){
+        Log.d("ReportBuilder","Estas llamando a crear reporte 2")
+
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(application)
         val usuarioID = sharedPref.getInt("actualUserID", -1)
         val order = sharedPref.getInt("ShotsOrder", Ordenes.PREDETERMINADO)
@@ -65,32 +70,38 @@ class ReportBuilder(private val application: Application) {
         var contentStream: PDPageContentStream
 
         try{
-            contentStream = PDPageContentStream(document, page)
-            contentStream.beginText()
-            contentStream.setNonStrokingColor(0,0,0)
-            contentStream.setFont(font,12f)
-            contentStream.newLineAtOffset(30f,750f)
-            contentStream.showText(application.getString(R.string.reporte_de_presion_arterial))
-            contentStream.newLineAtOffset(0f, -15f)
-            contentStream.showText("Nombre: Reporte desde reporte builder")
-            contentStream.newLineAtOffset(0f, -15f)
-            contentStream.showText("Fecha de nacimiento: 25 de abril de 1993 (25 Años)")
-            contentStream.newLineAtOffset(0f, -25f)
-
-
-            contentStream.showText(application.getString(R.string.fecha))
-            contentStream.newLineAtOffset(150f, 0f)
-            contentStream.showText(application.getString(R.string.sistolica))
-            contentStream.newLineAtOffset(70f, 0f)
-            contentStream.showText(application.getString(R.string.diastolica))
-            contentStream.newLineAtOffset(70f, 0f)
-            contentStream.showText(application.getString(R.string.pulso))
-            contentStream.newLineAtOffset(70f, 0f)
-            contentStream.showText(application.getString(R.string.momento_dia))
-            var listaTomas :  List<Toma>
-            contentStream.newLineAtOffset(-360f, -20f)
 
             Thread(Runnable {
+                val usuario = getUserForReport(usuarioID)
+                contentStream = PDPageContentStream(document, page)
+                contentStream.beginText()
+                contentStream.setNonStrokingColor(0,0,0)
+                contentStream.setFont(font,12f)
+                contentStream.newLineAtOffset(30f,750f)
+                contentStream.showText(application.getString(R.string.reporte_de_presion_arterial))
+                contentStream.newLineAtOffset(0f, -15f)
+                contentStream.showText(usuario.nombre + " " + usuario.apellidos)
+                contentStream.newLineAtOffset(0f, -15f)
+
+                val calendarAux = Calendar.getInstance()
+                calendarAux.time = sdf.parse(usuario.fecha_nacimiento)
+                contentStream.showText(application.getString(R.string.fecha_nacimiento_reporte) + " " + sdfReportDate.format(calendarAux.time))
+                contentStream.newLineAtOffset(0f, -25f)
+
+
+                contentStream.showText(application.getString(R.string.fecha))
+                contentStream.newLineAtOffset(150f, 0f)
+                contentStream.showText(application.getString(R.string.sistolica))
+                contentStream.newLineAtOffset(70f, 0f)
+                contentStream.showText(application.getString(R.string.diastolica))
+                contentStream.newLineAtOffset(70f, 0f)
+                contentStream.showText(application.getString(R.string.pulso))
+                contentStream.newLineAtOffset(70f, 0f)
+                contentStream.showText(application.getString(R.string.momento_dia))
+
+                var listaTomas :  List<Toma>
+                contentStream.newLineAtOffset(-360f, -20f)
+
                 listaTomas = getListForDefaultReport(usuarioID)
                 var date: Date? = null
                 var calendar = Calendar.getInstance()
@@ -157,6 +168,11 @@ class ReportBuilder(private val application: Application) {
             val reporteRepository = ReporteRepository(application)
             reporteRepository.insert(report)
         }
+    }
+
+    private fun getUserForReport(id: Int) : Usuario{
+        val usuarioRepository = UsuarioRepository(application)
+        return usuarioRepository.getUsuarioForReport(id)
     }
 
 }
