@@ -51,6 +51,7 @@ class ReportListActivity : AppCompatActivity() {
         reportesViewModel = ViewModelProvider(this).get(ReportesViewModel::class.java)
         reportesViewModel.getReportesUsuario(usuarioID).observe(this, Observer {
             adapter.submitList(it)
+
         })
 
         adapter = ReportsAdapter(this, reportesViewModel)

@@ -35,6 +35,7 @@ import kotlinx.coroutines.launch
 import model.Reporte
 import model.Toma
 import notifications.system.NotificationsManager
+import reports.ReportBuilder
 import room.components.viewmodels.ReportesViewModel
 import room.components.viewmodels.TomaViewModel
 import java.io.File
@@ -198,8 +199,12 @@ class MainActivity : AppCompatActivity() {
                             displayDialogForReportCreation()
                         }
                         1 -> {
-                            val notificationManager = NotificationsManager(this@MainActivity)
-                            notificationManager.sendNotificationForReportCreation("Hola","Mundo")
+                          //  val notificationManager = NotificationsManager(this@MainActivity)
+                          //  notificationManager.sendNotificationForReportCreation("Hola","Mundo")
+                            val reportBuilder =  ReportBuilder(application)
+                            reportBuilder.setup()
+                            reportBuilder.createPDF("HOlaREporte")
+
                         }
                         2 -> {
                             val nav = Intent(this@MainActivity, ReportListActivity::class.java)
@@ -415,8 +420,7 @@ class MainActivity : AppCompatActivity() {
             var listaTomas :  List<Toma>
             contentStream.newLineAtOffset(-360f, -20f)
 
-
-            GlobalScope.launch {
+            Thread(Runnable {
                 listaTomas = getListForDefaultReport(usuarioID)
                 var date: Date? = null
                 var calendar = Calendar.getInstance()
@@ -437,7 +441,7 @@ class MainActivity : AppCompatActivity() {
 
                     if(index > 1 && index % 26 == 0){
                         contentStream.close()
-                       val newPage = PDPage()
+                        val newPage = PDPage()
                         document.addPage(newPage)
                         contentStream = PDPageContentStream(document, newPage)
                         contentStream.beginText()
@@ -463,7 +467,8 @@ class MainActivity : AppCompatActivity() {
                 reporte.usuario_id = usuarioID
                 val reporteViewModel = ViewModelProvider(this@MainActivity).get(ReportesViewModel::class.java)
                 reporteViewModel.insert(reporte)
-            }
+            }).start()
+
             Toast.makeText(this@MainActivity, getString(R.string.reporte_creado_satisfactoriamente), Toast.LENGTH_SHORT).show()
 
 
@@ -499,7 +504,7 @@ class MainActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    private suspend fun getListForDefaultReport(id: Int) : List<Toma>{
+    private fun getListForDefaultReport(id: Int) : List<Toma>{
         val tomasViewModel = ViewModelProvider(this).get(TomaViewModel::class.java)
         return tomasViewModel.getTomasReporte(id)
     }

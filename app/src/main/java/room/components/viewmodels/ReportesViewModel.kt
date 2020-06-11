@@ -7,50 +7,27 @@ import androidx.lifecycle.LiveData
 import model.Reporte
 import room.components.BPADataBase
 import room.components.daos.ReporteDAO
+import room.components.repositories.ReporteRepository
 
 class ReportesViewModel(application: Application): AndroidViewModel(application)  {
-    val reportesDao: ReporteDAO
 
-    init {
-        val dataBase = BPADataBase.getInstance(application)
-        reportesDao = dataBase.reporteDao()
-    }
+    val repository: ReporteRepository = ReporteRepository(application)
+
 
     fun insert(reporte: Reporte){
-        InsertReportAsyncTask(reportesDao).execute(reporte)
+        repository.insert(reporte)
     }
 
     fun update(reporte: Reporte){
-        UpdateReportAsyncTask(reportesDao).execute(reporte)
+        repository.update(reporte)
     }
 
     fun delete(reporte: Reporte){
-        DeleteReporteAsyncTask(reportesDao).execute(reporte)
+        repository.delete(reporte)
     }
 
     fun getReportesUsuario(id: Int) : LiveData<List<Reporte>>{
-        return reportesDao.getReportesUsuario(id)
-    }
-
-    private class InsertReportAsyncTask constructor(private val reporteDAO: ReporteDAO) : AsyncTask<Reporte, Void, Void>(){
-        override fun doInBackground(vararg p0: Reporte): Void? {
-           reporteDAO.insert(p0[0])
-            return null
-        }
-    }
-
-    private class UpdateReportAsyncTask constructor(private val reporteDAO: ReporteDAO) : AsyncTask<Reporte, Void, Void>(){
-        override fun doInBackground(vararg p0: Reporte): Void? {
-            reporteDAO.update(p0[0])
-            return null
-        }
-    }
-
-    private class DeleteReporteAsyncTask constructor(private val reporteDAO: ReporteDAO) : AsyncTask<Reporte, Void, Void>(){
-        override fun doInBackground(vararg p0: Reporte): Void? {
-            reporteDAO.delete(p0[0])
-            return null
-        }
+        return repository.getReportesUsuario(id)
     }
 
 
