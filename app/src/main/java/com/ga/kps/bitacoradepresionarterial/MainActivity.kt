@@ -182,8 +182,6 @@ class MainActivity : AppCompatActivity() {
                 drawer_layout.openDrawer(GravityCompat.START)
             }
             R.id.itemExport ->{
-                // val notificationManager = NotificationsManager(this)
-                // notificationManager.sendNotificationForReminder("Hola mundo","Como estan")
                 val builder = AlertDialog.Builder(this)
                 builder.setTitle(getString(R.string.reportes))
                 builder.setItems(R.array.formato_reportes) { dialog, which ->
@@ -192,10 +190,7 @@ class MainActivity : AppCompatActivity() {
                             displayDialogForReportCreation(Tipo_Reporte.PREDETERMINADO)
                         }
                         1 -> {
-                          //  val notificationManager = NotificationsManager(this@MainActivity)
-                          //  notificationManager.sendNotificationForReportCreation("Hola","Mundo")
                             displayDialogForReportCreation(Tipo_Reporte.FILTROS_ACTUALES)
-
                         }
                         2 -> {
                             val nav = Intent(this@MainActivity, ReportListActivity::class.java)
@@ -377,10 +372,8 @@ class MainActivity : AppCompatActivity() {
         builder.setPositiveButton(getString(R.string.crear)){ _, _ ->
             when(reportType){
                 Tipo_Reporte.PREDETERMINADO ->{
-                    val reportBuilder = ReportBuilder(application)
-                    reportBuilder.setup()
-                    reportBuilder.createPDF(fileName.text.toString())
-
+                    val notificationManager = NotificationsManager(application)
+                    notificationManager.sendNotificationForReportCreation(getString(R.string.reporte_de_presion_arterial),"",fileName.text.toString())
                 }
                 Tipo_Reporte.FILTROS_ACTUALES ->{
 

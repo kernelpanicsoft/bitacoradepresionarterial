@@ -10,7 +10,7 @@ class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
 
-        val notificationChannel = NotificationsManager(this)
+        val notificationChannel = NotificationsManager(application)
         notificationChannel.createNotificationChannel()
         notificationChannel.createNofiticationChannelForReports()
 

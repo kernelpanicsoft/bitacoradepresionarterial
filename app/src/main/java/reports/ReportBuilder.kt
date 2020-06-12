@@ -147,11 +147,7 @@ class ReportBuilder(private val application: Application) {
 
                 reporte.usuario_id = usuarioID
                 insertReportOnDB(reporte)
-
             }).start()
-
-            Toast.makeText(application, application.getString(R.string.reporte_creado_satisfactoriamente), Toast.LENGTH_SHORT).show()
-
 
         } catch (e: IOException){
             Toast.makeText(application, application.getString(R.string.ocurrio_un_error_crear_reporte), Toast.LENGTH_SHORT).show()
