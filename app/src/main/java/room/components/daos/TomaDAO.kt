@@ -51,4 +51,16 @@ interface TomaDAO {
 
     @Query("SELECT * FROM Toma WHERE Toma.usuario_id = :id ORDER BY date(Toma.fecha_hora) DESC")
     fun getTomasUsuarioReporteAsc(id: Int) : List<Toma>
+
+    @Query("SELECT * FROM Toma WHERE Toma.usuario_id = :id AND Toma.valoracion = :valoracion ORDER BY CASE WHEN :order = 1 THEN date(Toma.fecha_hora) END ASC, CASE WHEN :order = 0 THEN date(Toma.fecha_hora) END DESC")
+    fun getTomasUsuarioPorValoracionReporte(id: Int, valoracion: Int, order: Int) : List<Toma>
+
+    @Query("SELECT * FROM Toma WHERE Toma.usuario_id = :id AND Toma.momento = :momento ORDER BY CASE WHEN :order = 1 THEN date(Toma.fecha_hora) END ASC, CASE WHEN :order = 0 THEN date(Toma.fecha_hora) END DESC")
+    fun getTomasUsuarioPorMomentoReporte(id: Int, momento: Int, order: Int) : List<Toma>
+
+    @Query("SELECT * FROM Toma WHERE Toma.usuario_id = :id AND Toma.extremidad = :extremidad ORDER BY CASE WHEN :order = 1 THEN date(Toma.fecha_hora) END ASC, CASE WHEN :order = 0 THEN date(Toma.fecha_hora) END DESC")
+    fun getTomasUsuarioPorExtremidadReporte(id: Int, extremidad: Int, order: Int) : List<Toma>
+
+    @Query("SELECT * FROM Toma WHERE Toma.usuario_id = :id AND Toma.posicion = :posicion ORDER BY CASE WHEN :order = 1 THEN date(Toma.fecha_hora) END ASC, CASE WHEN :order = 0 THEN date(Toma.fecha_hora) END DESC")
+    fun getTomasUsuarioPorPosicionReporte(id: Int, posicion: Int, order: Int) : List<Toma>
 }

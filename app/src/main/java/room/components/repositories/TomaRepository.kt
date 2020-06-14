@@ -4,6 +4,7 @@ import android.app.Application
 import android.os.AsyncTask
 import android.util.Log
 import androidx.lifecycle.LiveData
+import helpers.Filtros
 import model.CantidadTomasPorValoracion
 import model.Toma
 import room.components.BPADataBase
@@ -75,7 +76,29 @@ class TomaRepository(application: Application) {
         return tomaDao.getTomasUsuarioReporteAsc(id)
     }
 
+    fun getFilteredShotListForReport(id: Int, filter: Int, order: Int) : List<Toma>{
+        when(filter){
+            Filtros.PREDETERMINADO -> {
+                return tomaDao.getTomasUsuarioReporteAsc(id)
+            }
+            Filtros.VALORACION -> {
+                return tomaDao.getTomasUsuarioPorValoracionReporte(id, filter, order)
+            }
+            Filtros.MOMENTO -> {
+                return tomaDao.getTomasUsuarioPorMomentoReporte(id, filter, order)
+            }
+            Filtros.EXTREMIDAD -> {
+                return tomaDao.getTomasUsuarioPorExtremidadReporte(id, filter, order)
+            }
+            Filtros.POSICION -> {
+                return tomaDao.getTomasUsuarioPorPosicionReporte(id, filter, order)
+            }
+            else -> {
+                return  tomaDao.getTomasUsuarioReporteAsc(id)
+            }
 
+        }
+    }
 
     private class InsertTomaAsyncTask constructor(private val tomaDAO: TomaDAO) : AsyncTask<Toma, Void, Void>(){
         override fun doInBackground(vararg params: Toma): Void? {

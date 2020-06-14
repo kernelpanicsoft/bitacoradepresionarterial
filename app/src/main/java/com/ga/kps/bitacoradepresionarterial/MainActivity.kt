@@ -370,13 +370,13 @@ class MainActivity : AppCompatActivity() {
         val fileName = layoutView.findViewById<EditText>(R.id.nombreReporteET)
         fileName.setText(createReportName())
         builder.setPositiveButton(getString(R.string.crear)){ _, _ ->
+            val notificationManager = NotificationsManager(application)
             when(reportType){
                 Tipo_Reporte.PREDETERMINADO ->{
-                    val notificationManager = NotificationsManager(application)
-                    notificationManager.sendNotificationForReportCreation(getString(R.string.reporte_de_presion_arterial),"",fileName.text.toString())
+                    notificationManager.sendNotificationForReportCreation(getString(R.string.reporte_de_presion_arterial),"",fileName.text.toString(),Tipo_Reporte.PREDETERMINADO)
                 }
                 Tipo_Reporte.FILTROS_ACTUALES ->{
-
+                    notificationManager.sendNotificationForReportCreation(getString(R.string.reporte_de_presion_arterial),"",fileName.text.toString(),Tipo_Reporte.FILTROS_ACTUALES)
                 }
             }
 

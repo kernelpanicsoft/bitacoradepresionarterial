@@ -43,28 +43,6 @@ class TomaViewModel(application: Application) : AndroidViewModel(application) {
     }
 
 
-    fun getSortedShotList(id: Int, order: Int) : LiveData<List<Toma>>{
-        when(order){
-            Ordenes.PREDETERMINADO ->{
-                    shots.addSource(repository.getTomasUsuario(id)){ values ->
-                        shots.value = values
-                    }
-            }
-            Ordenes.ANTIGUEDAD_ASC ->{
-                    shots.addSource(repository.getTomasUsuarioAsc(id)){ values->
-                        shots.value = values
-                    }
-            }
-            Ordenes.ANTIGUEDAD_DESC ->{
-                    shots.addSource(repository.getTomasUsuarioDesc(id)){ values ->
-                        shots.value = values
-                    }
-            }
-        }
-
-        return shots
-    }
-
     fun getFilteredShotList(id: Int, filter: Int, order: Int) : LiveData<List<Toma>>{
             //Log.d("GetFilteredShotList",id.toString() + " | "+ filter.toString() + " | " + order.toString())
             when(filter){
@@ -103,9 +81,7 @@ class TomaViewModel(application: Application) : AndroidViewModel(application) {
         return shots
     }
 
-    fun getTomasReporte(id: Int): List<Toma>{
-        return repository.getTomasUsuarioReporteAsc(id)
-    }
+
 
 
 }

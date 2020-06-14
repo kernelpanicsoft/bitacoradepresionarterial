@@ -26,6 +26,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import android.app.Application
 import android.util.Log
+import helpers.Tipo_Reporte
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import model.Usuario
@@ -47,13 +48,12 @@ class ReportBuilder(private val application: Application) {
 
     }
 
-    fun createPDF(reportName: String){
+    fun createPDF(reportName: String, reportType: Int){
         Log.d("ReportBuilder","Estas llamando a crear reporte 2")
 
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(application)
         val usuarioID = sharedPref.getInt("actualUserID", -1)
-        val order = sharedPref.getInt("ShotsOrder", Ordenes.PREDETERMINADO)
-        val filter = sharedPref.getInt("ShotFilter", Filtros.PREDETERMINADO)
+
 
         val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US)
         val sdfReportDate = SimpleDateFormat.getDateInstance(DateFormat.SHORT)
@@ -102,9 +102,17 @@ class ReportBuilder(private val application: Application) {
                 var listaTomas :  List<Toma>
                 contentStream.newLineAtOffset(-360f, -20f)
 
+                when(reportType){
+                    Tipo_Reporte.PREDETERMINADO ->{
+                        listaTomas = getListForDefaultReport(usuarioID)
+                    }
+                    Tipo_Reporte.FILTROS_ACTUALES ->{
+                        listaTomas = getListForFilteredReport(usuarioID)
+                    }
+                }
                 listaTomas = getListForDefaultReport(usuarioID)
                 var date: Date? = null
-                var calendar = Calendar.getInstance()
+                val calendar = Calendar.getInstance()
                 for((index, toma) in listaTomas.withIndex()){
                     date = sdf.parse(toma.fecha_hora!!)
                     calendar.time = date
@@ -157,6 +165,17 @@ class ReportBuilder(private val application: Application) {
     private fun getListForDefaultReport(id: Int) : List<Toma>{
         val tomasRepository : TomaRepository = TomaRepository(application)
         return tomasRepository.getTomasUsuarioReporteAsc(id)
+    }
+
+    private fun getListForFilteredReport(id: Int) : List<Toma>{
+        val sharedPref = PreferenceManager.getDefaultSharedPreferences(application)
+        val usuarioID = sharedPref.getInt("actualUserID", -1)
+        val filter = sharedPref.getInt("ShotFilter", Filtros.PREDETERMINADO)
+        val order= sharedPref.getInt("ShotsOrder",Ordenes.PREDETERMINADO)
+
+        val tomasRepository = TomaRepository(application)
+
+        return tomasRepository.getFilteredShotListForReport(usuarioID,filter,order)
     }
 
     private fun insertReportOnDB(report: Reporte){

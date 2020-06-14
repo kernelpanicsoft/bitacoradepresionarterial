@@ -9,9 +9,12 @@ import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.preference.PreferenceManager
 import com.ga.kps.bitacoradepresionarterial.R
 import com.ga.kps.bitacoradepresionarterial.ReportListActivity
 import helpers.DEFAULT_NOTIFICATION_CHANEL_ID
+import helpers.Filtros
+import helpers.Ordenes
 import reports.ReportBuilder
 import java.text.SimpleDateFormat
 import java.util.*
@@ -66,8 +69,51 @@ class NotificationsManager(val application: Application) {
         val notificationManager: NotificationManager = application.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.notify(createNotificationID(),notificationBuilder.build())
     }
+/*
+    fun sendNotificationForReportWithFiltersCreation(title: String, content: String, fileName: String){
+        val sharedPref = PreferenceManager.getDefaultSharedPreferences(application)
+        val usuarioID = sharedPref.getInt("actualUserID", -1)
+        val filter = sharedPref.getInt("ShotFilter", Filtros.PREDETERMINADO)
+        val order= sharedPref.getInt("ShotsOrder", Ordenes.PREDETERMINADO)
 
-    fun sendNotificationForReportCreation(title: String, content: String, fileName: String){
+        val notificationID = createNotificationID()
+        val notificationBuilder= NotificationCompat.Builder(application, DEFAULT_NOTIFICATION_CHANEL_ID).apply {
+            setContentTitle(title)
+            setContentText(content)
+            setSmallIcon(R.drawable.ic_bpa_notification)
+            setPriority(NotificationCompat.PRIORITY_LOW)
+            setOnlyAlertOnce(true)
+            setOngoing(true)
+        }
+
+        val PROGRESS_MAX = 100
+        val PROGRESS_CURRENT = 0
+
+        NotificationManagerCompat.from(application).apply{
+            notificationBuilder.setProgress(PROGRESS_MAX,PROGRESS_CURRENT,false)
+            notify(notificationID, notificationBuilder.build())
+
+            //Crea el reporte asyncronamente
+            Thread(Runnable {
+                val reportBuilder = ReportBuilder(application)
+                reportBuilder.setup()
+                reportBuilder.createPDF(fileName)
+
+                notificationBuilder.setContentTitle(application.getString(R.string.reporte_creado))
+                    .setContentText(application.getString(R.string.toca_aqui_abrir_reportes))
+                    .setProgress(0,0,false)
+
+                val notificationIntent = Intent(application, ReportListActivity::class.java)
+                val notificationPendingIntent = PendingIntent.getActivity(application, notificationID, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+                notificationBuilder.setContentIntent(notificationPendingIntent)
+                notify(notificationID, notificationBuilder.build())
+
+            }).start()
+
+        }
+    }
+*/
+    fun sendNotificationForReportCreation(title: String, content: String, fileName: String, reportType: Int){
         val notificationID = createNotificationID()
         val notificationBuilder= NotificationCompat.Builder(application, DEFAULT_NOTIFICATION_CHANEL_ID).apply {
             setContentTitle(title)
@@ -89,7 +135,7 @@ class NotificationsManager(val application: Application) {
             Thread(Runnable {
                val reportBuilder = ReportBuilder(application)
                 reportBuilder.setup()
-                reportBuilder.createPDF(fileName)
+                reportBuilder.createPDF(fileName, reportType)
 
                 notificationBuilder.setContentTitle(application.getString(R.string.reporte_creado))
                     .setContentText(application.getString(R.string.toca_aqui_abrir_reportes))
