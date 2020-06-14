@@ -83,9 +83,11 @@ class ReportBuilder(private val application: Application) {
                 contentStream.showText(usuario.nombre + " " + usuario.apellidos)
                 contentStream.newLineAtOffset(0f, -15f)
 
+
                 val calendarAux = Calendar.getInstance()
-                calendarAux.time = sdf.parse(usuario.fecha_nacimiento)
-                contentStream.showText(application.getString(R.string.fecha_nacimiento_reporte) + " " + sdfReportDate.format(calendarAux.time))
+                calendarAux.time = sdf.parse(usuario.fecha_nacimiento!!)!!
+                val edad = getDiffYears(calendarAux.time,Calendar.getInstance().time)
+                contentStream.showText(application.getString(R.string.fecha_nacimiento_reporte) + " " + sdfReportDate.format(calendarAux.time) + " " +  application.getString(R.string.edad_placeholder, edad))
                 contentStream.newLineAtOffset(0f, -25f)
 
 
@@ -188,6 +190,22 @@ class ReportBuilder(private val application: Application) {
     private fun getUserForReport(id: Int) : Usuario{
         val usuarioRepository = UsuarioRepository(application)
         return usuarioRepository.getUsuarioForReport(id)
+    }
+
+    private fun getDiffYears(first: Date, last: Date) : Int{
+        val a = getCalendar(first)
+        val b = getCalendar(last)
+        var diff = b.get(Calendar.YEAR) - a.get(Calendar.YEAR)
+        if(a.get(Calendar.MONTH) == b.get(Calendar.MONTH) && a.get(Calendar.DATE) > b.get(Calendar.DATE)){
+            diff--
+        }
+        return diff
+    }
+
+    private fun getCalendar(date: Date) : Calendar{
+        val cal = Calendar.getInstance(Locale.US)
+        cal.time = date
+        return cal
     }
 
 }

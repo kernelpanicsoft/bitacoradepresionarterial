@@ -122,6 +122,7 @@ class NotificationsManager(val application: Application) {
             setPriority(NotificationCompat.PRIORITY_LOW)
             setOnlyAlertOnce(true)
             setOngoing(true)
+            setAutoCancel(true)
         }
 
         val PROGRESS_MAX = 100
@@ -140,6 +141,7 @@ class NotificationsManager(val application: Application) {
                 notificationBuilder.setContentTitle(application.getString(R.string.reporte_creado))
                     .setContentText(application.getString(R.string.toca_aqui_abrir_reportes))
                     .setProgress(0,0,false)
+                    .setOngoing(false)
 
                 val notificationIntent = Intent(application, ReportListActivity::class.java)
                 val notificationPendingIntent = PendingIntent.getActivity(application, notificationID, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT)
