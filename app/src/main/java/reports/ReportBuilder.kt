@@ -49,7 +49,7 @@ class ReportBuilder(private val application: Application) {
     }
 
     fun createPDF(reportName: String, reportType: Int){
-        Log.d("ReportBuilder","Estas llamando a crear reporte 2")
+        Log.d("ReportBuilder","Estas llamando a crear reporte " + reportType)
 
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(application)
         val usuarioID = sharedPref.getInt("actualUserID", -1)
@@ -105,14 +105,11 @@ class ReportBuilder(private val application: Application) {
                 contentStream.newLineAtOffset(-360f, -20f)
 
                 when(reportType){
-                    Tipo_Reporte.PREDETERMINADO ->{
-                        listaTomas = getListForDefaultReport(usuarioID)
-                    }
-                    Tipo_Reporte.FILTROS_ACTUALES ->{
-                        listaTomas = getListForFilteredReport(usuarioID)
-                    }
+                    Tipo_Reporte.PREDETERMINADO -> listaTomas = getListForDefaultReport(usuarioID)
+                    Tipo_Reporte.FILTROS_ACTUALES -> listaTomas = getListForFilteredReport(usuarioID)
+                    else ->  listaTomas = getListForDefaultReport(usuarioID)
                 }
-                listaTomas = getListForDefaultReport(usuarioID)
+
                 var date: Date? = null
                 val calendar = Calendar.getInstance()
                 for((index, toma) in listaTomas.withIndex()){
@@ -174,6 +171,9 @@ class ReportBuilder(private val application: Application) {
         val usuarioID = sharedPref.getInt("actualUserID", -1)
         val filter = sharedPref.getInt("ShotFilter", Filtros.PREDETERMINADO)
         val order= sharedPref.getInt("ShotsOrder",Ordenes.PREDETERMINADO)
+
+        Log.d("FiltroReporteG", usuarioID.toString() + " | " + filter + " | " + order)
+
 
         val tomasRepository = TomaRepository(application)
 

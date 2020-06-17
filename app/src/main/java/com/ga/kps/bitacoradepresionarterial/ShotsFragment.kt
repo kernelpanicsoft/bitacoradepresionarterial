@@ -48,10 +48,9 @@ class ShotsFragment : Fragment(){
         val adapter = ShotsAdapter(context)
         tomasViewModel = ViewModelProvider(this).get(TomaViewModel::class.java)
 
-        Log.d("DetallesFiltroO", usuarioID.toString() + " | " + filter + " | " + order)
+
         tomasViewModel.getFilteredShotList(usuarioID,filter,order).observe(this, Observer {
-            Log.d("DetallesFiltro", usuarioID.toString() + " | " + filter + " | " + order)
-            Log.d("DetallesListaOR", it.toString())
+
             adapter.submitList(it)
         })
         RV.adapter = adapter
@@ -70,11 +69,11 @@ class ShotsFragment : Fragment(){
         val filter = sharedPref.getInt("ShotFilter", Filtros.PREDETERMINADO)
         val order= sharedPref.getInt("ShotsOrder",Ordenes.PREDETERMINADO)
         val adapter = ShotsAdapter(context)
-        Toast.makeText(context,"Deberia ordenar: " + order + " FIltrar: " + filter, Toast.LENGTH_SHORT).show()
+       // Toast.makeText(context,"Deberia ordenar: " + order + " FIltrar: " + filter, Toast.LENGTH_SHORT).show()
         tomasViewModel.getFilteredShotList(usuarioID,filter,order).observe(this, Observer {
-            Log.d("DetallesLista", it.toString())
+
             adapter.submitList(it)
-            Log.d("DetallesLista", it.toString())
+          //  Log.d("DetallesLista", it.toString())
         })
     }
 

@@ -78,23 +78,32 @@ class TomaRepository(application: Application) {
     }
 
     fun getFilteredShotListForReport(id: Int, filter: Int, order: Int) : List<Toma>{
+        Log.d("FiltroReporte", id.toString() + " " + filter + " " + order)
         when(filter / 1000){
             Filtros.PREDETERMINADO -> {
+                Log.d("FiltroReporte", "Predeterminado " + filter)
                 return tomaDao.getTomasUsuarioReporteAsc(id)
             }
             Filtros.VALORACION -> {
+                Log.d("FiltroReporte", "Valoracion " + filter)
                 return tomaDao.getTomasUsuarioPorValoracionReporte(id, filter, order)
             }
             Filtros.MOMENTO -> {
+                Log.d("FiltroReporte", "Momento " + filter)
                 return tomaDao.getTomasUsuarioPorMomentoReporte(id, filter, order)
             }
             Filtros.EXTREMIDAD -> {
+                Log.d("FiltroReporte", "Extremidad " + filter)
                 return tomaDao.getTomasUsuarioPorExtremidadReporte(id, filter, order)
             }
             Filtros.POSICION -> {
+                Log.d("FiltroReporte", "Posicion " + filter)
+
                 return tomaDao.getTomasUsuarioPorPosicionReporte(id, filter, order)
             }
             else -> {
+                Log.d("FiltroReporte", "Else " + filter)
+
                 return  tomaDao.getTomasUsuarioReporteAsc(id)
             }
 
