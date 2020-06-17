@@ -57,6 +57,7 @@ class TomaRepository(application: Application) {
     }
 
     fun getTomasPorValoracion(id: Int, valoracion: Int, orden: Int) : LiveData<List<Toma>>{
+        Log.d("TomasPorValoracionR",id.toString() + " | " + valoracion + " | " + orden)
         return tomaDao.getTomasUsuarioPorValoracion(id,valoracion,orden)
     }
 
@@ -77,7 +78,7 @@ class TomaRepository(application: Application) {
     }
 
     fun getFilteredShotListForReport(id: Int, filter: Int, order: Int) : List<Toma>{
-        when(filter){
+        when(filter / 1000){
             Filtros.PREDETERMINADO -> {
                 return tomaDao.getTomasUsuarioReporteAsc(id)
             }

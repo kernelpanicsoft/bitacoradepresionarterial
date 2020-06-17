@@ -31,6 +31,7 @@ object Filtros{
     const val MOMENTO = 2
     const val EXTREMIDAD = 3
     const val POSICION = 4
+
 }
 
 object Valoracion{

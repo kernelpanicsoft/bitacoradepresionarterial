@@ -49,8 +49,6 @@ import kotlin.collections.ArrayList
 class MainActivity : AppCompatActivity() {
     lateinit var sharedPref: SharedPreferences
     private lateinit var adapter: ViewPagerAdapter
-    private lateinit var root: File
-    private lateinit var assetManager: AssetManager
 
 
 

@@ -34,7 +34,7 @@ class BloodPressureEvaluatorHelper (val context: Context) {
             Valoracion.PREHIPERTENSION
         }else if(sys <= 139 || dia <= 89){
             Valoracion.HIPERTENSION_1
-        }else if(sys >= 140 || dia >= 90){
+        }else if((sys >= 140 || dia >= 90) && (sys < 180 || dia < 119)){
             Valoracion.HIPERTENSION_2
         }else if(sys >= 180 || dia >= 120){
             Valoracion.CRISIS
