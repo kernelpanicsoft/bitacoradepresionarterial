@@ -14,6 +14,7 @@ import com.ga.kps.bitacoradepresionarterial.R
 import com.ga.kps.bitacoradepresionarterial.ReportListActivity
 import helpers.DEFAULT_NOTIFICATION_CHANEL_ID
 import helpers.Filtros
+import helpers.NOTIFICATION_CHANNEL_FOR_REMINDERS_ID
 import helpers.Ordenes
 import reports.ReportBuilder
 import java.text.SimpleDateFormat
@@ -28,7 +29,7 @@ class NotificationsManager(val application: Application) {
             val name = "BPA_notifiaction_channel"
             val descriptionText = "Allows BPA display notifications"
             val importance = NotificationManager.IMPORTANCE_HIGH
-            val channel = NotificationChannel(DEFAULT_NOTIFICATION_CHANEL_ID, name, importance).apply {
+            val channel = NotificationChannel(NOTIFICATION_CHANNEL_FOR_REMINDERS_ID, name, importance).apply {
                 description = descriptionText
             }
             // Register the channel with the system
@@ -54,65 +55,6 @@ class NotificationsManager(val application: Application) {
 
     }
 
-    private fun getNotificationBuilder(title: String, content: String) : NotificationCompat.Builder{
-        val builder = NotificationCompat.Builder(application, DEFAULT_NOTIFICATION_CHANEL_ID)
-            .setSmallIcon(R.drawable.ic_bpa_notification)
-            .setContentTitle(title)
-            .setContentText(content)
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setAutoCancel(true)
-        return builder
-    }
-
-    fun sendNotificationForReminder(title: String, content: String){
-        val notificationBuilder = getNotificationBuilder(title,content)
-        val notificationManager: NotificationManager = application.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.notify(createNotificationID(),notificationBuilder.build())
-    }
-/*
-    fun sendNotificationForReportWithFiltersCreation(title: String, content: String, fileName: String){
-        val sharedPref = PreferenceManager.getDefaultSharedPreferences(application)
-        val usuarioID = sharedPref.getInt("actualUserID", -1)
-        val filter = sharedPref.getInt("ShotFilter", Filtros.PREDETERMINADO)
-        val order= sharedPref.getInt("ShotsOrder", Ordenes.PREDETERMINADO)
-
-        val notificationID = createNotificationID()
-        val notificationBuilder= NotificationCompat.Builder(application, DEFAULT_NOTIFICATION_CHANEL_ID).apply {
-            setContentTitle(title)
-            setContentText(content)
-            setSmallIcon(R.drawable.ic_bpa_notification)
-            setPriority(NotificationCompat.PRIORITY_LOW)
-            setOnlyAlertOnce(true)
-            setOngoing(true)
-        }
-
-        val PROGRESS_MAX = 100
-        val PROGRESS_CURRENT = 0
-
-        NotificationManagerCompat.from(application).apply{
-            notificationBuilder.setProgress(PROGRESS_MAX,PROGRESS_CURRENT,false)
-            notify(notificationID, notificationBuilder.build())
-
-            //Crea el reporte asyncronamente
-            Thread(Runnable {
-                val reportBuilder = ReportBuilder(application)
-                reportBuilder.setup()
-                reportBuilder.createPDF(fileName)
-
-                notificationBuilder.setContentTitle(application.getString(R.string.reporte_creado))
-                    .setContentText(application.getString(R.string.toca_aqui_abrir_reportes))
-                    .setProgress(0,0,false)
-
-                val notificationIntent = Intent(application, ReportListActivity::class.java)
-                val notificationPendingIntent = PendingIntent.getActivity(application, notificationID, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-                notificationBuilder.setContentIntent(notificationPendingIntent)
-                notify(notificationID, notificationBuilder.build())
-
-            }).start()
-
-        }
-    }
-*/
     fun sendNotificationForReportCreation(title: String, content: String, fileName: String, reportType: Int){
         val notificationID = createNotificationID()
         val notificationBuilder= NotificationCompat.Builder(application, DEFAULT_NOTIFICATION_CHANEL_ID).apply {

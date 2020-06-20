@@ -5,12 +5,8 @@ import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.res.AssetManager
-import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Environment
-import android.util.Log
 import androidx.preference.PreferenceManager
 import android.view.Menu
 import android.view.MenuItem
@@ -20,29 +16,13 @@ import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
-import com.tom_roush.pdfbox.pdmodel.PDDocument
-import com.tom_roush.pdfbox.pdmodel.PDPage
-import com.tom_roush.pdfbox.pdmodel.PDPageContentStream
-import com.tom_roush.pdfbox.pdmodel.font.PDFont
-import com.tom_roush.pdfbox.pdmodel.font.PDType1Font
-import com.tom_roush.pdfbox.util.PDFBoxResourceLoader
 import helpers.*
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import model.Reporte
-import model.Toma
+import notifications.system.AlarmsManagerForReminder
 import notifications.system.NotificationsManager
-import reports.ReportBuilder
-import room.components.viewmodels.ReportesViewModel
-import room.components.viewmodels.TomaViewModel
-import java.io.File
-import java.io.IOException
-import java.text.DateFormat
+import notifications.system.NotificationsManagerForReminders
 import java.text.SimpleDateFormat
-import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -114,6 +94,13 @@ class MainActivity : AppCompatActivity() {
                     val nav = Intent(this, SettingsActivity::class.java)
                     startActivity(nav)
                 }
+                R.id.nav_test ->{
+                    val calendar = Calendar.getInstance()
+
+                    val alarm = AlarmsManagerForReminder(this)
+                    alarm.createAlarmForNotification(calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE+1), 12)
+                }
+
             }
             true
         }

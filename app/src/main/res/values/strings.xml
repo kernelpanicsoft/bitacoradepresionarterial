@@ -102,6 +102,7 @@
     <string name="reporte_creado">Reporte creado</string>
     <string name="fecha_nacimiento_reporte">Fecha de nacimiento:</string>
     <string name="toca_aqui_abrir_reportes">Toca aquí para abrir la lista de reportes</string>
+    <string name="acerca_de">Acerca de</string>
     <array name="generos">
         <item>Masculino</item>
         <item>Femenino</item>

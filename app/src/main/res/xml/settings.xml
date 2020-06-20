@@ -1,23 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:iconSpaceReserved="false">
 
     <PreferenceCategory
         app:key="appDetails"
-        app:title="Acerca de"
+        app:title="@string/acerca_de"
+        app:iconSpaceReserved="false"
         >
         <PreferenceScreen
             android:title="@string/politica_de_privacidad"
             android:key="policitica_de_privacidad"
-            android:summary="@string/leer_politica_privacidad"/>
+            android:summary="@string/leer_politica_privacidad"
+            app:iconSpaceReserved="false"/>
         <PreferenceScreen
             android:title="@string/calificanos_en_ps"
             android:key="calificar_play_store"
-            android:summary="@string/tu_opinion_es_importante"/>
+            android:summary="@string/tu_opinion_es_importante"
+            app:iconSpaceReserved="false"/>
         <PreferenceScreen
             android:title="@string/version"
             android:key="version_app"
-            android:summary="1.0"/>
+            android:summary="1.0"
+            app:iconSpaceReserved="false"/>
 
     </PreferenceCategory>
 </PreferenceScreen>

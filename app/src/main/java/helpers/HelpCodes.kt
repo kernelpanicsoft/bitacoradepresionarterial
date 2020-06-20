@@ -18,6 +18,7 @@ const val ELIMINAR_USUARIO = 1002
 const val SIN_USUARIO_ACTIVO = -1
 
 const val DEFAULT_NOTIFICATION_CHANEL_ID = "primary_notification_channel"
+const val NOTIFICATION_CHANNEL_FOR_REMINDERS_ID = "secondary_notification_channel"
 
 object Ordenes{
     const val PREDETERMINADO = 1
