@@ -23,4 +23,7 @@ interface RecordatorioDAO {
 
     @Query("SELECT * FROM RECORDATORIO")
     fun getAllRecordatorios() : LiveData<List<Recordatorio>>
+
+    @Query("SELECT * FROM Recordatorio")
+    fun getAllRecordatoriosForService() : List<Recordatorio>
 }

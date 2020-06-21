@@ -102,51 +102,51 @@ class AddReminderActivity : AppCompatActivity() {
             when(view.id){
                 R.id.luCB -> {
                     if(checked){
-                        recordatorio.dias_de_semana = recordatorio.dias_de_semana + "0"
-                    }else{
-                        recordatorio.dias_de_semana = recordatorio.dias_de_semana?.replace("0","")
-                    }
-                }
-                R.id.maCB -> {
-                    if(checked){
                         recordatorio.dias_de_semana = recordatorio.dias_de_semana + "1"
                     }else{
                         recordatorio.dias_de_semana = recordatorio.dias_de_semana?.replace("1","")
                     }
                 }
-                R.id.miCB -> {
+                R.id.maCB -> {
                     if(checked){
                         recordatorio.dias_de_semana = recordatorio.dias_de_semana + "2"
                     }else{
                         recordatorio.dias_de_semana = recordatorio.dias_de_semana?.replace("2","")
                     }
                 }
-                R.id.juCB -> {
+                R.id.miCB -> {
                     if(checked){
                         recordatorio.dias_de_semana = recordatorio.dias_de_semana + "3"
                     }else{
                         recordatorio.dias_de_semana = recordatorio.dias_de_semana?.replace("3","")
                     }
                 }
-                R.id.viCB -> {
+                R.id.juCB -> {
                     if(checked){
                         recordatorio.dias_de_semana = recordatorio.dias_de_semana + "4"
                     }else{
                         recordatorio.dias_de_semana = recordatorio.dias_de_semana?.replace("4","")
                     }
                 }
-                R.id.saCB -> {
+                R.id.viCB -> {
                     if(checked){
                         recordatorio.dias_de_semana = recordatorio.dias_de_semana + "5"
                     }else{
                         recordatorio.dias_de_semana = recordatorio.dias_de_semana?.replace("5","")
                     }
                 }
-                R.id.doCB -> {
+                R.id.saCB -> {
                     if(checked){
                         recordatorio.dias_de_semana = recordatorio.dias_de_semana + "6"
                     }else{
                         recordatorio.dias_de_semana = recordatorio.dias_de_semana?.replace("6","")
+                    }
+                }
+                R.id.doCB -> {
+                    if(checked){
+                        recordatorio.dias_de_semana = recordatorio.dias_de_semana + "7"
+                    }else{
+                        recordatorio.dias_de_semana = recordatorio.dias_de_semana?.replace("7","")
                     }
                 }
             }

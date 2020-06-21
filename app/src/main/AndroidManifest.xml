@@ -8,8 +8,7 @@
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:allowBackup="true"
@@ -19,7 +18,11 @@
         android:roundIcon="@mipmap/ic_launcher_bpa_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ReportListActivity"></activity>
+        <service
+            android:name=".RemindersSetupIntentService"
+            android:exported="false"></service>
+
+        <activity android:name=".ReportListActivity" />
         <activity
             android:name=".SplashScreenActivity"
             android:theme="@style/SplashTheme">
@@ -51,17 +54,17 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <receiver android:name=".BPABroadcastReceiver"
+        <receiver
+            android:name=".BPABroadcastReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-
-        <receiver android:name=".AlarmBroadcastReceiver"
-            android:exported="false"/>
-
+        <receiver
+            android:name=".AlarmBroadcastReceiver"
+            android:exported="false" />
     </application>
 
 </manifest>

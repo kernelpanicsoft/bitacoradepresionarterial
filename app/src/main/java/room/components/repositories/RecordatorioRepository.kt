@@ -40,6 +40,10 @@ class RecordatorioRepository(application: Application){
         return recordatorioDao.getAllRecordatorios()
     }
 
+    fun getRecordatoriosForService() : List<Recordatorio>{
+        return recordatorioDao.getAllRecordatoriosForService()
+    }
+
     private class InsertRecordatorioAsyncTask constructor(private val recordatorioDAO: RecordatorioDAO) : AsyncTask<Recordatorio, Void, Void>(){
         override fun doInBackground(vararg params: Recordatorio): Void? {
             recordatorioDAO.insert(params[0])

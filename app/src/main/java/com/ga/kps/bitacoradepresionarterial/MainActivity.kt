@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.preference.PreferenceManager
 import android.view.Menu
 import android.view.MenuItem
@@ -97,8 +98,12 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_test ->{
                     val calendar = Calendar.getInstance()
 
-                    val alarm = AlarmsManagerForReminder(this)
-                    alarm.createAlarmForNotification(calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE+1), 12)
+                  //  val alarm = AlarmsManagerForReminder(this)
+                  //  alarm.createAlarmForNotification(calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE+1), 12)
+                  //  Intent(this, RemindersSetupIntentService::class.java).also {intent ->
+                  //      startService(intent)
+                  //  }  calendar.get(Calendar.DAY_OF_WEEK).toString()
+                    Log.d("DiaDeHoy", Calendar.SATURDAY.toString())
                 }
 
             }

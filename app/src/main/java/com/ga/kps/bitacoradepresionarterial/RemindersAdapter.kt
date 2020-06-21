@@ -75,31 +75,31 @@ class RemindersAdapter(val context: Context?) : ListAdapter<Recordatorio, Remind
 
         for(day in arrayOfDays){
             when(day){
-                '0' -> {
+                '1' -> {
                     holder.luTV.setTextColor(Color.WHITE)
                     holder.luTV.setBackgroundResource(R.drawable.text_view_circle)
                 }
-                '1' -> {
+                '2' -> {
                     holder.maTV.setTextColor(Color.WHITE)
                     holder.maTV.setBackgroundResource(R.drawable.text_view_circle)
                 }
-                '2' -> {
+                '3' -> {
                     holder.miTV.setTextColor(Color.WHITE)
                     holder.miTV.setBackgroundResource(R.drawable.text_view_circle)
                 }
-                '3' -> {
+                '4' -> {
                     holder.juTV.setTextColor(Color.WHITE)
                     holder.juTV.setBackgroundResource(R.drawable.text_view_circle)
                 }
-                '4' -> {
+                '5' -> {
                     holder.viTV.setTextColor(Color.WHITE)
                     holder.viTV.setBackgroundResource(R.drawable.text_view_circle)
                 }
-                '5' -> {
+                '6' -> {
                     holder.saTV.setTextColor(Color.WHITE)
                     holder.saTV.setBackgroundResource(R.drawable.text_view_circle)
                 }
-                '6' -> {
+                '7' -> {
                     holder.doTV.setTextColor(Color.WHITE)
                     holder.doTV.setBackgroundResource(R.drawable.text_view_circle)
                 }

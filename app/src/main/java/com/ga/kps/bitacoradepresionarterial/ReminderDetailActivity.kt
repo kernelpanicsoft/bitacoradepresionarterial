@@ -107,31 +107,31 @@ class ReminderDetailActivity : AppCompatActivity() {
 
         for(day in arrayOfDays){
             when(day){
-                '0' -> {
+                '1' -> {
                     luTV.setTextColor(Color.WHITE)
                     luTV.setBackgroundResource(R.drawable.text_view_circle)
                 }
-                '1' -> {
+                '2' -> {
                     maTV.setTextColor(Color.WHITE)
                     maTV.setBackgroundResource(R.drawable.text_view_circle)
                 }
-                '2' -> {
+                '3' -> {
                     miTV.setTextColor(Color.WHITE)
                     miTV.setBackgroundResource(R.drawable.text_view_circle)
                 }
-                '3' -> {
+                '4' -> {
                     juTV.setTextColor(Color.WHITE)
                     juTV.setBackgroundResource(R.drawable.text_view_circle)
                 }
-                '4' -> {
+                '5' -> {
                     viTV.setTextColor(Color.WHITE)
                     viTV.setBackgroundResource(R.drawable.text_view_circle)
                 }
-                '5' -> {
+                '6' -> {
                     saTV.setTextColor(Color.WHITE)
                     saTV.setBackgroundResource(R.drawable.text_view_circle)
                 }
-                '6' -> {
+                '7' -> {
                     doTV.setTextColor(Color.WHITE)
                     doTV.setBackgroundResource(R.drawable.text_view_circle)
                 }

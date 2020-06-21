@@ -49,7 +49,7 @@ class ReportBuilder(private val application: Application) {
     }
 
     fun createPDF(reportName: String, reportType: Int){
-        Log.d("ReportBuilder","Estas llamando a crear reporte " + reportType)
+        //Log.d("ReportBuilder","Estas llamando a crear reporte " + reportType)
 
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(application)
         val usuarioID = sharedPref.getInt("actualUserID", -1)
