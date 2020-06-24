@@ -48,6 +48,7 @@
     <string name="es_necesario_especificar_sis_dia_pul">Es necesario especificar al menos la presión sistólica, diastólica y pulso.</string>
     <string name="edad_placeholder">( %1$d )</string>
     <string name="opciones_de_usuario">Opciones de usuario</string>
+    <string name="esta_seguro_eliminar_usuario">¿Esta seguro de eliminar este usuario?</string>
     <string name="eliminar_usuario_mensaje">Al eliminar un usuario todos sus registros, estadísticas, reportes y recordatorios serán eliminados también, ¿Desea continuar?</string>
     <string name="politica_de_privacidad">Política de privacidad</string>
     <string name="leer_politica_privacidad">Leer la política privacidad y términos de uso de la aplicación.</string>
@@ -183,5 +184,5 @@
         <item>Galería</item>
         <item>Cámara</item>
     </string-array>
-    <string name="esta_seguro_eliminar_usuario">¿Esta seguro de eliminar este usuario?</string>
+
 </resources>
