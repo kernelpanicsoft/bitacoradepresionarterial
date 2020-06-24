@@ -59,8 +59,8 @@
     <string name="mensaje_anadir_recordatorio">It is necessary to choose at least one day of repetition for the reminder.</string>
     <string name="L">M</string>
     <string name="ma">T</string>
-    <string name="ju">T</string>
     <string name="mi">W</string>
+    <string name="ju">T</string>
     <string name="vi">F</string>
     <string name="sa">S</string>
     <string name="dom">S</string>
@@ -89,7 +89,7 @@
     <string name="nota_label">Note</string>
     <string name="fecha_label">Date and time</string>
     <string name="posicion_label">Position</string>
-    <string name="estado">State:</string>
+    <string name="estado">Status:</string>
     <string name="valores">Values</string>
     <string name="detalles_de_toma">Entry details:</string>
     <string name="ppm">bpm</string>
@@ -185,4 +185,6 @@
         <item>Gallery</item>
         <item>Camera</item>
     </string-array>
+    <string name="bienvenido">Welcome</string>
+    <string name="primer_usuario_mensaje">In order to use the application it is necessary to register the first user. Do you want to register it now?</string>
 </resources>

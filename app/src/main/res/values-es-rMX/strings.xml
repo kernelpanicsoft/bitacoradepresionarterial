@@ -184,5 +184,7 @@
         <item>Galería</item>
         <item>Cámara</item>
     </string-array>
+    <string name="bienvenido">Bienvenido</string>
+    <string name="primer_usuario_mensaje">Para poder usar la aplicación es necesario registrar al primer usuario. ¿Desea registrarlo ahora?</string>
 
 </resources>

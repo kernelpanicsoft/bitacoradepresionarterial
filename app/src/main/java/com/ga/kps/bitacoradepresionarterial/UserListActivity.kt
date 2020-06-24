@@ -1,6 +1,7 @@
 package com.ga.kps.bitacoradepresionarterial
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -13,6 +14,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import helpers.REGISTRAR_PRIMER_USUARIO
 import helpers.REGISTRAR_USUARIO
 import kotlinx.android.synthetic.main.activity_user_list.*
 import room.components.viewmodels.UsuarioViewModel
@@ -32,6 +34,20 @@ class UserListActivity : AppCompatActivity() {
         val usuarioID = sharedPref.getInt("actualUserID", -1)
         if(usuarioID != -1) {
             ab!!.setDisplayHomeAsUpEnabled(true)
+        }
+
+        val firstRunMessage = sharedPref.getBoolean("FirstRun",true)
+
+        if(firstRunMessage){
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle(getString(R.string.bienvenido))
+            builder.setMessage(getString(R.string.primer_usuario_mensaje))
+            builder.setPositiveButton(getString(R.string.registrar_usuario)){ _, _ ->
+                val nav = Intent(this, AddUserActivity::class.java)
+                startActivityForResult(nav, REGISTRAR_PRIMER_USUARIO)
+            }
+            val dialog = builder.create()
+            dialog.show()
         }
         title = getString(R.string.usuarios_registrados)
 
@@ -90,6 +106,19 @@ class UserListActivity : AppCompatActivity() {
                 finish()
             })
 
+        }
+        if(requestCode == REGISTRAR_PRIMER_USUARIO && resultCode == Activity.RESULT_OK){
+            usuarioViewModel.getLastUserID().observe(this, Observer {
+                val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
+                with(sharedPref.edit()){
+                    putInt("actualUserID",it!!.toInt())
+                    putBoolean("FirstRun",false)
+                    apply()
+                    Log.d("actualUser", it.toString())
+                }
+                Toast.makeText(this,  getString(R.string.usuario_registrado_correctamente), Toast.LENGTH_SHORT).show()
+                finish()
+            })
         }
     }
 

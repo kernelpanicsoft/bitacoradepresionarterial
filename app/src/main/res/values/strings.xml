@@ -184,4 +184,6 @@
         <item>Cámara</item>
     </string-array>
     <string name="esta_seguro_eliminar_usuario">¿Esta seguro de eliminar este usuario?</string>
+    <string name="bienvenido">Bienvenido</string>
+    <string name="primer_usuario_mensaje">Para poder usar la aplicación es necesario registrar al primer usuario. ¿Desea registrarlo ahora?</string>
 </resources>

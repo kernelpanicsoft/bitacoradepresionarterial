@@ -19,10 +19,11 @@
             android:title="@string/configuracion"
             />
 
+        <!--
         <item
             android:id="@+id/nav_test"
             android:title="Pruebas"/>
-
+        -->
 
     </group>
 

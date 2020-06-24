@@ -129,7 +129,7 @@
                     android:id="@+id/miTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/ma"
+                    android:text="@string/mi"
                     app:layout_constraintBottom_toTopOf="@+id/miCB"
                     app:layout_constraintEnd_toEndOf="@+id/miCB"
                     app:layout_constraintStart_toStartOf="@+id/miCB"

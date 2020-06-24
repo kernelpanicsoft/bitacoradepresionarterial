@@ -95,16 +95,17 @@ class MainActivity : AppCompatActivity() {
                     val nav = Intent(this, SettingsActivity::class.java)
                     startActivity(nav)
                 }
-                R.id.nav_test ->{
-                    val calendar = Calendar.getInstance()
+
+                //R.id.nav_test ->{
+                 //   val calendar = Calendar.getInstance()
 
                   //  val alarm = AlarmsManagerForReminder(this)
                   //  alarm.createAlarmForNotification(calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE+1), 12)
                   //  Intent(this, RemindersSetupIntentService::class.java).also {intent ->
                   //      startService(intent)
                   //  }  calendar.get(Calendar.DAY_OF_WEEK).toString()
-                    Log.d("DiaDeHoy", Calendar.SATURDAY.toString())
-                }
+                  //  Log.d("DiaDeHoy", Calendar.SATURDAY.toString())
+                //}
 
             }
             true
