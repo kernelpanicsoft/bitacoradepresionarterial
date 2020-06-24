@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Bitacora de presión arterial</string>
+    <string name="app_name">Bitácora de presión arterial</string>
     <string name="nombre">Nombre</string>
     <string name="apellidos">Apellidos</string>
     <string name="seleccionar_fecha_de_nacimiento">Fecha de nacimiento</string>
