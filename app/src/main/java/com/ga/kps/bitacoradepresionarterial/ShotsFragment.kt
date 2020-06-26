@@ -74,7 +74,7 @@ class ShotsFragment : Fragment(){
 
             adapter.submitList(it)
 
-          //  Log.d("DetallesLista", it.toString())
+            Log.d("DetallesLista", it.toString())
         })
        // RV.layoutManager?.scrollToPosition(0)
     }
