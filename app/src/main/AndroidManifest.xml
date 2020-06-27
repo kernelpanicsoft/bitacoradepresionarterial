@@ -18,6 +18,11 @@
         android:roundIcon="@mipmap/ic_launcher_bpa_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-4604704883963264~5490143675"/>
+
         <service
             android:name=".RemindersSetupIntentService"
             android:exported="false"></service>
@@ -67,8 +72,6 @@
             android:exported="false" />
     </application>
 
-    <meta-data
-        android:name="com.google.android.gms.ads.APPLICATION_ID"
-        android:value="ca-app-pub-4604704883963264~5490143675"/>
+
 
 </manifest>
