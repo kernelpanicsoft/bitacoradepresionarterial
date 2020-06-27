@@ -6,8 +6,8 @@
 
     <color name="hipotension">#007FFF</color>
     <color name="normalBP">#00FF00</color>
-    <color name="prehipertensionBP">#ffec00</color>
-    <color name="hipertension1">#ffb600</color>
+    <color name="prehipertensionBP">#fecd21</color>
+    <color name="hipertension1">#fda733</color>
     <color name="hipertension2">#f4511e</color>
     <color name="hipertensioncrysis">#d50000</color>
 

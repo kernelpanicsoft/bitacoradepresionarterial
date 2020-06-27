@@ -70,8 +70,7 @@ class ShotDetailActivity : AppCompatActivity() {
                 builder.setTitle(getString(R.string.opciones_de_toma))
                 builder.setItems(R.array.opciones_toma, DialogInterface.OnClickListener { _, which ->
                     when (which){
-                        0 ->{ }
-                        1 ->{
+                        0 ->{
                             val builder = AlertDialog.Builder(this)
                             builder.setTitle(getString(R.string.esta_seguro_eliminar_toma))
                             builder.setMessage(getString(R.string.eliminar_toma_mensajes))

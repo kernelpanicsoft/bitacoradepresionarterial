@@ -67,4 +67,8 @@
             android:exported="false" />
     </application>
 
+    <meta-data
+        android:name="com.google.android.gms.ads.APPLICATION_ID"
+        android:value="ca-app-pub-4604704883963264~5490143675"/>
+
 </manifest>
