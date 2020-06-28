@@ -10,6 +10,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import helpers.BloodPressureEvaluatorHelper
 import kotlinx.android.synthetic.main.activity_shot_detail.*
 import model.Toma
@@ -29,6 +32,7 @@ class ShotDetailActivity : AppCompatActivity() {
     private val sdfDisplayDate = SimpleDateFormat.getDateInstance()
     private val sdfDisplayTime = SimpleDateFormat.getTimeInstance(DateFormat.SHORT)
     private lateinit var shotLiveData :  LiveData<Toma>
+    lateinit var mAdView : AdView
 
 
 
@@ -52,6 +56,9 @@ class ShotDetailActivity : AppCompatActivity() {
             populateActivityUI(it)
         })
 
+        MobileAds.initialize(this){}
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

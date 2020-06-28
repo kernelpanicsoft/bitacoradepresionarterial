@@ -9,6 +9,9 @@ import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 
 import kotlinx.android.synthetic.main.activity_reminder_detail.*
 import model.Recordatorio
@@ -25,6 +28,7 @@ class ReminderDetailActivity : AppCompatActivity() {
     private val sdfDisplayTime = SimpleDateFormat.getTimeInstance(DateFormat.SHORT)
     private lateinit var reminderLiveData : LiveData<Recordatorio>
     private lateinit var array: Array<String>
+    lateinit var mAdView : AdView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +46,10 @@ class ReminderDetailActivity : AppCompatActivity() {
         reminderLiveData.observe(this, androidx.lifecycle.Observer {
             populareActivityUI(it)
         })
+
+        MobileAds.initialize(this){}
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
