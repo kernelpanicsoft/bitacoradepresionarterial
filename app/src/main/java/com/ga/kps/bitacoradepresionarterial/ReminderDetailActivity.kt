@@ -47,6 +47,7 @@ class ReminderDetailActivity : AppCompatActivity() {
             populareActivityUI(it)
         })
 
+        mAdView = findViewById(R.id.adView)
         MobileAds.initialize(this){}
         val adRequest = AdRequest.Builder().build()
         mAdView.loadAd(adRequest)

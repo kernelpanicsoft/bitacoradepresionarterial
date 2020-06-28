@@ -9,7 +9,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
@@ -56,6 +55,7 @@ class ShotDetailActivity : AppCompatActivity() {
             populateActivityUI(it)
         })
 
+        mAdView = findViewById(R.id.adView)
         MobileAds.initialize(this){}
         val adRequest = AdRequest.Builder().build()
         mAdView.loadAd(adRequest)
