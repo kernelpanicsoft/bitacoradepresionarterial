@@ -5,7 +5,7 @@
     <string name="seleccionar_fecha_de_nacimiento">Fecha de nacimiento</string>
     <string name="masculino">Masculino</string>
     <string name="femenino">Femenino</string>
-    <string name="genero">Genero:</string>
+    <string name="genero">Género:</string>
     <string name="registrar_usuario">Registrar usuario</string>
     <string name="usuarios_registrados">Usuarios registrados</string>
     <string name="configuracion">Configuración</string>
@@ -86,7 +86,7 @@
     <string name="por_posicion">Por posición:</string>
     <string name="reportes">Reportes</string>
     <string name="anadir_imagen_de_perfil">Añadir imagen de perfil</string>
-    <string name="elegir_imagen_perfil_desde">Eleguir imagen desde:</string>
+    <string name="elegir_imagen_perfil_desde">Elegir imagen desde:</string>
     <string name="mensaje_permisos_galeria">Es necesario permitir los permisos de lectura de medios multimedia para poder abrir la galería</string>
     <string name="reporte_creado_satisfactoriamente">Reporte creado satisfactoriamente</string>
     <string name="ocurrio_un_error_crear_reporte">Ocurrió un error al crear el reporte</string>

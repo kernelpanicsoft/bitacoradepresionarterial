@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Registro de pressão arterial</string>
+    <string name="nombre">Nome</string>
+    <string name="apellidos">Sobrenomes</string>
+    <string name="seleccionar_fecha_de_nacimiento">Data de nascimento</string>
+    <string name="masculino">Masculino</string>
+    <string name="femenino">Fêmea</string>
+    <string name="genero">Gênero</string>
+    <string name="registrar_usuario">Registrar usuário</string>
+    <string name="usuarios_registrados">Usuários registrados</string>
+    <string name="configuracion">Configuração</string>
+    <string name="exportar_reportes">Exportar relatórios</string>
+    <string name="mi_perfil">Meu perfil</string>
+    <string name="cambiar_usuario">Mudar usuário</string>
+    <string name="detalles_de_perfil">Detalhes de perfil</string>
+    <string name="editar">Editar</string>
+    <string name="usuario_registrado_correctamente">Usuário registrado com sucesso</string>
+    <string name="usuario_seleccionado_correctamente">Usuário selecionado corretamente</string>
+    <string name="usuario_eliminado_correctamente">Usuário excluído com sucesso</string>
+    <string name="anadir_toma">Adicionar registro</string>
+    <string name="sistolica">Sistólica:</string>
+    <string name="diastolica">Diastólica:</string>
+    <string name="sistolica_label">Sistólica</string>
+    <string name="diastolica_label">Diastólica</string>
+    <string name="pulso">Pulso:</string>
+    <string name="pulso_label">Pulso</string>
+    <string name="extremidad">Membro</string>
+    <string name="posicion">Posição:</string>
+    <string name="momento_dia">Momento do dia:</string>
+    <string name="fecha">Data:</string>
+    <string name="hora">Hora:</string>
+    <string name="nota">Nota:</string>
+    <string name="mmhg">mmHg</string>
+    <string name="ppm">BPM</string>
+    <string name="detalles_de_toma">Detalhes do registro</string>
+    <string name="valores">Valores</string>
+    <string name="estado">Condição:</string>
+    <string name="posicion_label">Posição</string>
+    <string name="fecha_label">Data e hora</string>
+    <string name="nota_label">Nota</string>
+    <string name="ordenar_lista">Lista de classificação</string>
+    <string name="opciones_de_toma">opções de medição</string>
+    <string name="esta_seguro_eliminar_toma">Tem certeza de que pode eliminar esta medida da pressão arterial?</string>
+    <string name="eliminar_toma_mensajes">A exclusão do registro desta medição da pressão arterial é um processo irreversível. Deseja continuar?</string>
+    <string name="eliminar">Remover</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="es_necesario_especificar_nombre_apellidos">É necessário especificar pelo menos nome e sobrenome para registrar um novo perfil.</string>
+    <string name="es_necesario_especificar_sis_dia_pul">É necessário especificar pelo menos a pressão sistólica, diastólica e de pulso.</string>
+    <string name="edad_placeholder">( %1$d )</string>
+    <string name="opciones_de_usuario">Opções do usuário</string>
+    <string name="eliminar_usuario_mensaje">Quando um usuário excluir todos os seus registros, estatísticas, relatórios e lembretes também serão excluídos. Deseja continuar?</string>
+    <string name="politica_de_privacidad">Política de privacidade</string>
+    <string name="leer_politica_privacidad">Leia a política de privacidade e os termos de uso do aplicativo.</string>
+    <string name="calificanos_en_ps">Classifique-nos na loja</string>
+    <string name="tu_opinion_es_importante">Sua opinião é muito importante para nós.</string>
+    <string name="version">Versão</string>
+    <string name="filtrar">Filtro</string>
+    <string name="anadir_recordatorio">Adicionar lembrete</string>
+    <string name="tipo_recordatorio">Tipo de lembrete:</string>
+    <string name="hora_recordatorio">Hora do lembrete:</string>
+    <string name="dias_que_se_repite">Dias repetidos:</string>
+    <string name="L">Seg</string>
+    <string name="ma">Ter</string>
+    <string name="mi">Qua</string>
+    <string name="ju">Qui</string>
+    <string name="vi">Sex</string>
+    <string name="sa">Sab</string>
+    <string name="dom">Do</string>
+    <string name="mensaje_anadir_recordatorio">É necessário escolher pelo menos um dia de repetição para o lembrete.</string>
+    <string name="detalles_de_recordatorio">Detalhes do lembrete</string>
+    <string name="hora_y_dias_repite">Repita a hora e os dias</string>
+    <string name="tipo_de_recordatorio">Tipo de lembrete</string>
+    <string name="esta_seguro_eliminar_recordatorio">Tem certeza de que deseja excluir este lembrete?</string>
+    <string name="eliminar_recordatorio_mensaje">A exclusão do lembrete é um processo irreversível. Deseja continuar?</string>
+    <string name="ver_detalles">Veja detalhes</string>
+    <string name="distribucion_de_las_valoraciones">Distribuição das classificações:</string>
+    <string name="filtrar_tomas">Filmagens de filtro:</string>
+    <string name="ordenar">Ordem:</string>
+    <string name="tomas">Registros</string>
+    <string name="estadisticas">Estatisticas</string>
+    <string name="recordatorios">Lembretes</string>
+    <string name="por_evaluacion">Pela avaliação:</string>
+    <string name="por_momento_dia">Por hora do dia:</string>
+    <string name="por_extremidad">Por membro:</string>
+    <string name="por_posicion">Por posição:</string>
+    <string name="reportes">Relatórios</string>
+    <string name="anadir_imagen_de_perfil">Adicionar foto do perfil</string>
+    <string name="elegir_imagen_perfil_desde">Escolha uma imagem de:</string>
+    <string name="mensaje_permisos_galeria">É necessário permitir permissões para ler mídia multimídia para abrir a galeria</string>
+    <string name="reporte_creado_satisfactoriamente">Relatório criado com sucesso</string>
+    <string name="ocurrio_un_error_crear_reporte">Ocorreu um erro ao criar o relatório</string>
+    <string name="reportes_creados">Relatórios criados</string>
+    <string name="abrir_reporte">Abrir relatório</string>
+    <string name="compartir">Compartilhar</string>
+    <string name="compartir_reporte">Compartilhar relatório ....</string>
+    <string name="compartir_reporte_intent">Compartilhar relatório</string>
+    <string name="reporte">Relatório_</string>
+    <string name="crear_nuev_reporte">Criar novo relatório</string>
+    <string name="crear">Crio</string>
+    <string name="nombre_del_reporte">Nome do relatório:</string>
+    <string name="reporte_de_presion_arterial">Relatório de pressão arterial</string>
+    <string name="reporte_creado">Relatório criado</string>
+    <string name="fecha_nacimiento_reporte">Data de nascimento:</string>
+    <string name="toca_aqui_abrir_reportes">Toque aqui para abrir a lista de relatórios</string>
+    <string name="acerca_de">Sobre</string>
+    <string name="esta_seguro_eliminar_usuario">Tem certeza de que deseja excluir este usuário?</string>
+    <string name="bienvenido">Bem-vinda</string>
+    <string name="primer_usuario_mensaje">Para usar o aplicativo, é necessário registrar o primeiro usuário. Deseja registrá-lo agora?</string>
+
+    <array name="generos">
+        <item>Masculino</item>
+        <item>Fêmea</item>
+    </array>
+
+    <string-array name="extremidades">
+        <item>Braço esquerdo</item>
+        <item>Braço direito</item>
+        <item>Pulso esquerdo</item>
+        <item>Pulso direito</item>
+        <item>Tornozelo esquerdo</item>
+        <item>Tornozelo direito</item>
+        <item>Coxa esquerda</item>
+        <item>Coxa direita</item>
+    </string-array>
+
+    <string-array name="posiciones">
+        <item>Sentado</item>
+        <item>Mentindo</item>
+        <item>Recostado</item>
+        <item>De pé</item>
+    </string-array>
+
+    <string-array name="momento">
+        <item>Aleatória</item>
+        <item>Depois de acordar</item>
+        <item>Antes de dormir</item>
+        <item>Antes da medicação</item>
+        <item>Após medicação</item>
+        <item>Antes de comer</item>
+        <item>Depois de comer</item>
+    </string-array>
+
+    <string-array name="presion_arterial">
+        <item>Hipotensão</item>
+        <item>Normal</item>
+        <item>Pré-hipertensão</item>
+        <item>Estado de hipertensão 1</item>
+        <item>Estado de hipertensão 2</item>
+        <item>Crise de hipertensão</item>
+    </string-array>
+
+    <string-array name="opciones_toma">
+
+        <item>Remover</item>
+    </string-array>
+
+    <string-array name="tipos_recordatorio">
+        <item>Tomando pressão arterial</item>
+        <item>Tomando remedio</item>
+    </string-array>
+
+    <string-array name="filtros">
+        <item>Sem filtro</item>
+        <item>Por avaliação</item>
+        <item>Por hora do dia</item>
+        <item>Por membro</item>
+        <item>Por posição</item>
+    </string-array>
+
+    <string-array name="ordenes">
+        <item>Os mais novos primeiro</item>
+        <item>Mais velhos primeiro</item>
+    </string-array>
+
+    <string-array name="reportes">
+        <item>Gerar novo relatório</item>
+        <item>Exibir relatórios gerados</item>
+    </string-array>
+
+    <string-array name="formato_reportes">
+        <item>Criar com formato padrão</item>
+        <item>Criar com filtros atuais</item>
+        <item>Ver relatórios criados</item>
+    </string-array>
+
+    <string-array name="fuente_imagen">
+        <item>Galeria</item>
+        <item>Câmera</item>
+    </string-array>
+</resources>
