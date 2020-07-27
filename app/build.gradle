@@ -52,8 +52,14 @@ dependencies {
 
     implementation 'com.tom_roush:pdfbox-android:1.8.10.1'
 
-    implementation 'com.google.android.gms:play-services-ads:19.2.0'
+
+    implementation('com.mopub:mopub-sdk:+@aar') {
+        transitive = true
+    }
 
 
-
+    repositories {
+        // ... other project repositories
+        jcenter() // includes the MoPub SDK
+    }
 }

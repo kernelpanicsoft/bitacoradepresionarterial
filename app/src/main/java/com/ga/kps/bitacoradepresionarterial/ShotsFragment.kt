@@ -2,28 +2,29 @@ package com.ga.kps.bitacoradepresionarterial
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.preference.PreferenceManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.MobileAds
+import com.mopub.common.MoPub
+import com.mopub.common.SdkConfiguration
+import com.mopub.common.SdkInitializationListener
+import com.mopub.mobileads.MoPubView
 import helpers.Filtros
 import helpers.Ordenes
 import room.components.viewmodels.TomaViewModel
 
+
 class ShotsFragment : Fragment(){
     lateinit var RV : RecyclerView
     lateinit var tomasViewModel : TomaViewModel
-    lateinit var mAdView : AdView
+    lateinit var mAdView : MoPubView
 
 
 
@@ -32,11 +33,25 @@ class ShotsFragment : Fragment(){
         RV = v.findViewById(R.id.RecViewTomas)
         RV.setHasFixedSize(true)
 
-        MobileAds.initialize(context){}
-        mAdView = v.findViewById(R.id.adView)
-        val adRequest = AdRequest.Builder().build()
-        mAdView.loadAd(adRequest)
+
+        val sdkConfiguration = SdkConfiguration.Builder("b88f5354d5e041d18d8e3d0ffe4c6c60")
+            .withLegitimateInterestAllowed(false)
+            .build()
+
+        MoPub.initializeSdk(requireContext(),sdkConfiguration,initSdkListener())
+
+
+        mAdView = v.findViewById<MoPubView>(R.id.adView)
+        mAdView.setAdUnitId("b88f5354d5e041d18d8e3d0ffe4c6c60")
         return v
+    }
+
+    private fun initSdkListener(): SdkInitializationListener? {
+        return SdkInitializationListener { /* MoPub SDK initialized.
+               Check if you should show the consent dialog here, and make your ad requests. */
+
+            Log.d("MoPub", "Mopub Inicializado")
+        }
     }
 
     override fun onResume() {
