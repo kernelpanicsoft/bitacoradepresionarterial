@@ -13,8 +13,8 @@ android {
         applicationId "com.ga.kps.bitacoradepresionarterial"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 5
-        versionName "1.0.5"
+        versionCode 4
+        versionName "1.0.4"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -52,14 +52,8 @@ dependencies {
 
     implementation 'com.tom_roush:pdfbox-android:1.8.10.1'
 
-
-    implementation('com.mopub:mopub-sdk:+@aar') {
-        transitive = true
-    }
+    implementation 'com.google.android.gms:play-services-ads:19.3.0'
 
 
-    repositories {
-        // ... other project repositories
-        jcenter() // includes the MoPub SDK
-    }
+
 }
