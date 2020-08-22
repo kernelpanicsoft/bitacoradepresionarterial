@@ -13,15 +13,26 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import room.components.viewmodels.RecordatorioViewModel
 
 class RemindersFragment : Fragment() {
     lateinit var RV : RecyclerView
     lateinit var recordatoriosViewModel : RecordatorioViewModel
+    lateinit var mAdView : AdView
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_reminder,container, false)
         RV = v.findViewById(R.id.RecViewRecordatorios)
         RV.setHasFixedSize(true)
+
+        MobileAds.initialize(context){}
+        mAdView = v.findViewById(R.id.adView)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
         return v
     }
 

@@ -13,6 +13,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import helpers.Filtros
 import helpers.Ordenes
 import room.components.viewmodels.TomaViewModel
@@ -20,6 +23,7 @@ import room.components.viewmodels.TomaViewModel
 class ShotsFragment : Fragment(){
     lateinit var RV : RecyclerView
     lateinit var tomasViewModel : TomaViewModel
+    lateinit var mAdView : AdView
 
 
 
@@ -27,6 +31,11 @@ class ShotsFragment : Fragment(){
         val v = inflater.inflate(R.layout.fragment_shots,container, false)
         RV = v.findViewById(R.id.RecViewTomas)
         RV.setHasFixedSize(true)
+
+        MobileAds.initialize(context){}
+        mAdView = v.findViewById(R.id.adView)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
         return v
     }
 
