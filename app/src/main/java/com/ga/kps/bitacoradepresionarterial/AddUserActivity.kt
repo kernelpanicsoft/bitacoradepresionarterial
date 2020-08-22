@@ -59,7 +59,7 @@ class AddUserActivity : AppCompatActivity() {
         usuarioViewModel = ViewModelProvider(this).get(UsuarioViewModel::class.java)
 
         fechaNacimientoBT.setOnClickListener {
-            val datePickerFragment = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+            val datePickerFragment = DatePickerDialog(this, R.style.MySpinnerDatePickerStyle ,DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
                 calendario.set(Calendar.YEAR, year)
                 calendario.set(Calendar.MONTH, month)
                 calendario.set(Calendar.DAY_OF_MONTH, dayOfMonth)

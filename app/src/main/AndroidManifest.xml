@@ -25,7 +25,7 @@
 
         <service
             android:name=".RemindersSetupIntentService"
-            android:exported="false"></service>
+            android:exported="false"/>
 
         <activity android:name=".ReportListActivity" />
         <activity
